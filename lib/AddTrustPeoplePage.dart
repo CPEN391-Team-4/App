@@ -1,8 +1,12 @@
 //import 'dart:html';
 import 'dart:async';
 import 'dart:io';
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/protobuf/TrustPeople.pbgrpc.dart';
+import 'package:grpc/grpc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:protobuf/protobuf.dart' as $pb;
 
 class AddTrustPeopleScreen extends StatefulWidget {
   AddTrustPeopleScreen({Key key}) : super(key: key);
@@ -13,6 +17,8 @@ class AddTrustPeopleScreen extends StatefulWidget {
 class _AddTrustPeopleScreenState extends State<AddTrustPeopleScreen> {
   File _image;
   final picker = ImagePicker();
+
+  bool sendResult;
 
   String valuechoose;
   List listitem = ["limit access", "free access"];
@@ -83,7 +89,7 @@ class _AddTrustPeopleScreenState extends State<AddTrustPeopleScreen> {
                   "Add This Person",
                   style: TextStyle(color: Colors.black),
                 ),
-                onPressed: () {},
+                onPressed: () => {AddTrustPeople()},
               ),
 
               Center(
@@ -107,7 +113,20 @@ class _AddTrustPeopleScreenState extends State<AddTrustPeopleScreen> {
                         valuechoose = newValue;
                       });
                     }),
-              )
+              ),
+
+              SizedBox(
+                height: 50,
+              ),
+              FlatButton(
+                textColor: Colors.white,
+                color: Colors.blue,
+                child: Text(
+                  "Delete This Person",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () => {RemoveTrustedUser()},
+              ),
 
               //trustedPeoplePhoto(),
             ],
@@ -136,4 +155,73 @@ Widget trustedPeoplePhoto() {
       ],
     ),
   );
+}
+
+Future<bool> AddTrustPeople() async {
+  print("Add people");
+
+  final channel = ClientChannel('192.168.0.104',
+      port: 9000,
+      options:
+          const ChannelOptions(credentials: ChannelCredentials.insecure()));
+
+  final stub = RouteClient(channel,
+      options: CallOptions(timeout: Duration(seconds: 10)));
+
+  final imageDatalist = new List<int>.generate(100, (i) => i + 1);
+
+  final userName = "Brendon";
+  print(imageDatalist);
+  Stream<User> generateReqStream(int size, int chunksize) async* {
+    for (int i = 0; i < size / chunksize; i++) {
+      final photo = Photo()
+        ..image =
+            imageDatalist.sublist(i * chunksize, i * chunksize + chunksize);
+      print(photo.image);
+      final request = User()
+        ..name = userName
+        ..image = photo;
+      yield request;
+    }
+  }
+
+  try {
+    var response = await stub.addTrustedUser(generateReqStream(100, 20));
+    if (response.status == 1) {
+      print("The User was add successfully.");
+      await channel.shutdown();
+      return true;
+    }
+  } catch (e) {
+    print('Caught error: $e');
+  }
+
+  await channel.shutdown();
+  print("Add User failed.");
+  return false;
+}
+
+Future<bool> RemoveTrustedUser() async {
+  print("Remove User");
+  final channel = ClientChannel('192.168.0.104',
+      port: 9000,
+      options:
+          const ChannelOptions(credentials: ChannelCredentials.insecure()));
+
+  final stub = RouteClient(channel,
+      options: CallOptions(timeout: Duration(seconds: 10)));
+
+  final userName = "Brendon";
+  final deleteRequest = User()..name = userName;
+  try {
+    var response = await stub.removeTrustedUser(deleteRequest);
+    if (response.status == 1) {
+      await channel.shutdown();
+      return true;
+    }
+  } catch (e) {
+    print('Caught error: $e');
+  }
+  await channel.shutdown();
+  return false;
 }
