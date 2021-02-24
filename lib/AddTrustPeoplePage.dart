@@ -160,6 +160,10 @@ Widget trustedPeoplePhoto() {
 Future<bool> AddTrustPeople() async {
   print("Add people");
 
+  // file picture
+
+  // picdata = picture . tobytes()
+
   final channel = ClientChannel('192.168.0.104',
       port: 9000,
       options:
