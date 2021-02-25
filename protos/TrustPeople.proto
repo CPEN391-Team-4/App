@@ -1,0 +1,29 @@
+
+
+
+syntax = "proto3";
+
+option go_package = "github.com/CPEN391-Team-4/backend";
+
+package route;
+
+message User {
+  string name = 1;
+  bool restricted = 2;
+  Photo image = 3;
+}
+message Photo {
+  bytes image = 1;
+  string fileExtension = 2;
+}
+
+message Empty {
+
+}
+
+service Route {
+  rpc AddTrustedUser(stream User) returns (Empty) {}
+  rpc UpdateTrustedUser( User) returns (stream Photo) {}
+  rpc RemoveTrustedUser(User) returns (Empty) {}
+  //rpc GetUserPhoto(User) returns(stream Photo){}
+}

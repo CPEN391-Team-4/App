@@ -1,28 +1,65 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
-// import 'package:fixnum/fixnum.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:flutter_application_1/protobuf/TrustPeople.pbgrpc.dart';
-// import 'package:grpc/grpc.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:protobuf/protobuf.dart' as $pb;
+import 'package:grpc/grpc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:protobuf/protobuf.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:math';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'protobuf/TrustPeople.pb.dart';
+import 'protobuf/TrustPeople.pbgrpc.dart';
 
 class AddUserScreen extends StatefulWidget {
+  //it need to pass in two more arguments in, when the user is alrady there
+  // the in = 1, also when click a old user, it will pass in the username
   @override
   _AddUserScreenState createState() => new _AddUserScreenState();
 }
 
 class _AddUserScreenState extends State<AddUserScreen> {
+  final alreadyExist = true; // need to pass from the prepage
+  final userid = "1"; //need to pass from the prepage
+  Future<String> _getUserNameFromSharePref() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (alreadyExist) {
+      userName = prefs.getString(userid);
+    }
+  }
+
+  Future<Void> _putUserNameToSharePref(String username) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("1", username);
+  }
+
+  var channel;
+  var stub;
+  var userName;
+  final usernameText = new TextEditingController();
+
   File _image;
+
   final picker = ImagePicker();
+
+  Image showingimage;
 
   bool sendResult;
 
   String valuechoose;
   List listitem = ["limit access", "free access"];
-  Future getImage() async {
-    final image = await picker.getImage(source: ImageSource.gallery);
+  Future getImage(int source) async {
+    var image = PickedFile("");
+    if (source == 1) {
+      image = await picker.getImage(source: ImageSource.gallery);
+    } else if (source == 0) {
+      image = await picker.getImage(source: ImageSource.camera);
+    }
+
     //final image = await ImagePicker.
     setState(() {
       if (image != null) {
@@ -44,6 +81,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
           child: ListView(
             children: <Widget>[
               TextField(
+                controller: usernameText,
                 decoration: InputDecoration(
                     hintText: "Enter User's Name",
                     labelText: "Name",
@@ -55,11 +93,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 maxLength: 20,
               ),
 
-              Center(
-                child: _image == null
-                    ? Text("Can't load image.")
-                    : Image.file(_image),
-              ),
+              // Center(
+              //   child: _image == null
+              //       ? Text("Can't load image.")
+              //       : Image.file(_image),
+              // ),
 
               FlatButton(
                 textColor: Colors.white,
@@ -68,27 +106,34 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   "Add Photo",
                   style: TextStyle(color: Colors.black),
                 ),
-                onPressed: () {},
+                onPressed: () => getImage(1),
               ),
-              Positioned(
-                  // top: 100,
-                  // right: 50.0,
-                  child: FloatingActionButton(
-                onPressed: getImage,
-                child: Icon(Icons.camera_alt),
-              )),
+
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text("or"),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              IconButton(
+                icon: new Icon(Icons.camera_alt),
+                onPressed: () => getImage(0),
+              ),
 
               SizedBox(
                 height: 50,
               ),
-              FlatButton(
-                textColor: Colors.white,
-                color: Colors.blue,
-                child: Text(
-                  "Add This Person",
-                  style: TextStyle(color: Colors.black),
-                ),
-                onPressed: () => {AddTrustPeople()},
+
+              Center(
+                child: showingimage == null
+                    ? Text("Not Showing Picture.")
+                    : showingimage,
+              ),
+              SizedBox(
+                height: 50,
               ),
 
               Center(
@@ -114,20 +159,49 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     }),
               ),
 
-              SizedBox(
-                height: 50,
-              ),
               FlatButton(
                 textColor: Colors.white,
                 color: Colors.blue,
                 child: Text(
-                  "Delete This Person",
+                  "Add User",
                   style: TextStyle(color: Colors.black),
                 ),
-                onPressed: () => {RemoveTrustedUser()},
+                onPressed: (() {
+                  setState(() {
+                    userName = usernameText.text;
+                  });
+                  AddTrustPeople(_image, userName, showingimage);
+                }),
               ),
 
-              //trustedPeoplePhoto(),
+              FlatButton(
+                textColor: Colors.white,
+                color: Colors.blue,
+                child: Text(
+                  "Update User Image",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: (() {
+                  setState(() {
+                    userName = usernameText.text;
+                  });
+                  UpdateUserPhoto(userName, _image);
+                }),
+              ),
+
+              FlatButton(
+                textColor: Colors.white,
+                color: Colors.blue,
+                child: Text(
+                  "Delete User",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  RemoveTrustedUser("");
+                },
+              ),
+
+              // showingimage,
             ],
           ),
         ));
@@ -137,90 +211,150 @@ class _AddUserScreenState extends State<AddUserScreen> {
 
 // }
 
-}
+  void connectStart() {
+    channel = ClientChannel('192.168.0.104',
+        port: 9000,
+        options:
+            const ChannelOptions(credentials: ChannelCredentials.insecure()));
 
-Widget trustedPeoplePhoto() {
-  return Center(
-    child: Stack(
-      children: <Widget>[
-        Positioned(
-            top: 100,
-            right: 50.0,
-            child: Icon(
-              Icons.camera_alt,
-              color: Colors.black,
-              size: 28,
-            )),
-      ],
-    ),
-  );
-}
+    stub = RouteClient(channel,
+        options: CallOptions(timeout: Duration(seconds: 20)));
+  }
 
-Future<bool> AddTrustPeople() async {
-  // print("Add people");
+  Future<void> connectEnd() async {
+    await channel.shutdown();
+  }
 
-  // final channel = ClientChannel('192.168.0.104',
-      // port: 9000,
-      // options:
-          // const ChannelOptions(credentials: ChannelCredentials.insecure()));
+  Future<bool> AddTrustPeople(
+      File image, String username, Image showimage) async {
+    print("Add people");
+    print(userName);
+    connectStart();
 
-  // final stub = RouteClient(channel,
-      // options: CallOptions(timeout: Duration(seconds: 10)));
+    final imageBytes = await image.readAsBytes();
+    print(imageBytes.length);
 
-  // final imageDatalist = new List<int>.generate(100, (i) => i + 1);
+    try {
+      var response = await stub.addTrustedUser(
+          generateReqStream(imageBytes, imageBytes.length, 200, username));
 
-  // final userName = "Brendon";
-  // print(imageDatalist);
-  // Stream<User> generateReqStream(int size, int chunksize) async* {
-    // for (int i = 0; i < size / chunksize; i++) {
-      // final photo = Photo()
-        // ..image =
-            // imageDatalist.sublist(i * chunksize, i * chunksize + chunksize);
-      // print(photo.image);
-      // final request = User()
-        // ..name = userName
-        // ..image = photo;
-      // yield request;
-    // }
+      _putUserNameToSharePref(username);
+    } catch (e) {
+      print('Caught error: $e');
+      connectEnd();
+      //return Image.memory(imageBytes);
+      return false;
+    }
+
+    //await channel.shutdown();
+    connectEnd();
+    print("Add User success.");
+
+    // Future<File> returnfile;
+    // returnfile = await writeToFile(imageBytes);
+    Image returnimage = Image.memory(imageBytes);
+
+    setState(() {
+      if (returnimage != null) {
+        showingimage = returnimage;
+      } else {
+        print("Not update yet");
+      }
+    });
+
+    //return returnimage;
+    return true;
+  }
+
+  // Future<bool> getUserImage(String username) {
+  //   connectStart();
+  //   var imageBytes;
+
+  //   Image returnimage = Image.memory(imageBytes);
+
+  //   setState(() {
+  //     if (returnimage != null) {
+  //       showingimage = returnimage;
+  //     } else {
+  //       print("Not update yet");
+  //     }
+  //   });
+
+  //   connectEnd();
   // }
 
-  // try {
-    // var response = await stub.addTrustedUser(generateReqStream(100, 20));
-    // if (response.status == 1) {
-      // print("The User was add successfully.");
-      // await channel.shutdown();
-      // return true;
-    // }
-  // } catch (e) {
-    // print('Caught error: $e');
-  // }
+  Future<bool> RemoveTrustedUser(String username) async {
+    print("Remove User");
+    connectStart();
 
-  // await channel.shutdown();
-  // print("Add User failed.");
-  return false;
+    final deleteRequest = User()..name = username;
+    try {
+      var response = await stub.removeTrustedUser(deleteRequest);
+    } catch (e) {
+      print('Caught error: $e');
+      connectEnd();
+      return false;
+    }
+    //await channel.shutdown();
+    connectEnd();
+    return false;
+  }
+
+  Future<bool> UpdateUserPhoto(String username, File image) async {
+    print("Update user photo");
+    print(username);
+    connectStart();
+
+    final imageBytes = await image.readAsBytes();
+    print(imageBytes.length);
+    try {
+      var response = await stub.addTrustedUser(
+          generateReqStream(imageBytes, imageBytes.length, 200, username));
+    } catch (e) {
+      print('Caught error: $e');
+      connectEnd();
+      return false;
+    }
+
+    connectEnd();
+    return true;
+  }
+
+  Stream<User> generateReqStream(
+      List imageBytes, int size, int chunksize, String username) async* {
+    var cursize = 0;
+    while (cursize < size) {
+      var photo;
+      if (cursize + chunksize >= size) {
+        photo = Photo()..image = imageBytes.sublist(cursize, size);
+        cursize = size;
+      } else {
+        photo = Photo()
+          ..image = imageBytes.sublist(cursize, cursize + chunksize);
+        cursize += chunksize;
+      }
+      final request = User()
+        ..name = username
+        ..image = photo;
+      yield request;
+    }
+  }
 }
 
-Future<bool> RemoveTrustedUser() async {
-  // print("Remove User");
-  // final channel = ClientChannel('192.168.0.104',
-      // port: 9000,
-      // options:
-          // const ChannelOptions(credentials: ChannelCredentials.insecure()));
-
-  // final stub = RouteClient(channel,
-      // options: CallOptions(timeout: Duration(seconds: 10)));
-
-  // final userName = "Brendon";
-  // final deleteRequest = User()..name = userName;
-  // try {
-    // var response = await stub.removeTrustedUser(deleteRequest);
-    // if (response.status == 1) {
-      // await channel.shutdown();
-      // return true;
-    // }
-  // } catch (e) {
-    // print('Caught error: $e');
-  // }
-  // await channel.shutdown();
-  return false;
-}
+// Future<File> urlToFile(String imageUrl) async {
+// // generate random number.
+//   var rng = new Random();
+// // get temporary directory of device.
+//   Directory tempDir = await getTemporaryDirectory();
+// // get temporary path from temporary directory.
+//   String tempPath = tempDir.path;
+// // create a new file in temporary path with random file name.
+//   File file = new File('$tempPath' + (rng.nextInt(100)).toString() + '.jpg');
+// // call http.get method and pass imageUrl into it to get response.
+//   http.Response response = await http.get(imageUrl);
+// // write bodyBytes received in response to file.
+//   await file.writeAsBytes(response.bodyBytes);
+// // now return the file which is created with random name in
+// // temporary directory and image bytes from response is written to // that file.
+//   return file;
+// }
