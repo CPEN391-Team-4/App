@@ -24,15 +24,20 @@ class AddUserScreen extends StatefulWidget {
 
 class _AddUserScreenState extends State<AddUserScreen> {
   final alreadyExist = true; // need to pass from the prepage
-  final userid = "1"; //need to pass from the prepage
-  Future<String> _getUserNameFromSharePref() async {
+  final userId = "1"; //need to pass from the prepage
+  Future<String> _getUserNameFromSharePref(String userid) async {
     final prefs = await SharedPreferences.getInstance();
-    if (alreadyExist) {
-      userName = prefs.getString(userid);
+    userName = prefs.getString(userid);
+    if (userName == null) {
+      print("Not exists.");
+      return "";
+    } else {
+      print(userName);
     }
   }
 
   Future<Void> _putUserNameToSharePref(String username) async {
+    print("put into prefs");
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("1", username);
   }
@@ -200,6 +205,28 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   RemoveTrustedUser("");
                 },
               ),
+              FlatButton(
+                textColor: Colors.white,
+                color: Colors.blue,
+                child: Text(
+                  "testget",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  _getUserNameFromSharePref("1");
+                },
+              ),
+              FlatButton(
+                textColor: Colors.white,
+                color: Colors.blue,
+                child: Text(
+                  "testadd",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  _putUserNameToSharePref("Brendon");
+                },
+              ),
 
               // showingimage,
             ],
@@ -238,7 +265,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
       var response = await stub.addTrustedUser(
           generateReqStream(imageBytes, imageBytes.length, 200, username));
 
-      _putUserNameToSharePref(username);
+      //_putUserNameToSharePref(username);
     } catch (e) {
       print('Caught error: $e');
       connectEnd();
@@ -250,8 +277,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
     connectEnd();
     print("Add User success.");
 
-    // Future<File> returnfile;
-    // returnfile = await writeToFile(imageBytes);
     Image returnimage = Image.memory(imageBytes);
 
     setState(() {
