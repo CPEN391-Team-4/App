@@ -14,12 +14,12 @@ const User$json = const {
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'restricted', '3': 2, '4': 1, '5': 8, '10': 'restricted'},
-    const {'1': 'image', '3': 3, '4': 1, '5': 11, '6': '.route.Photo', '10': 'image'},
+    const {'1': 'photo', '3': 3, '4': 1, '5': 11, '6': '.route.Photo', '10': 'photo'},
   ],
 };
 
 /// Descriptor for `User`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List userDescriptor = $convert.base64Decode('CgRVc2VyEhIKBG5hbWUYASABKAlSBG5hbWUSHgoKcmVzdHJpY3RlZBgCIAEoCFIKcmVzdHJpY3RlZBIiCgVpbWFnZRgDIAEoCzIMLnJvdXRlLlBob3RvUgVpbWFnZQ==');
+final $typed_data.Uint8List userDescriptor = $convert.base64Decode('CgRVc2VyEhIKBG5hbWUYASABKAlSBG5hbWUSHgoKcmVzdHJpY3RlZBgCIAEoCFIKcmVzdHJpY3RlZBIiCgVwaG90bxgDIAEoCzIMLnJvdXRlLlBob3RvUgVwaG90bw==');
 @$core.Deprecated('Use photoDescriptor instead')
 const Photo$json = const {
   '1': 'Photo',

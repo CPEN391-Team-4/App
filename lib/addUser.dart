@@ -190,7 +190,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   setState(() {
                     userName = usernameText.text;
                   });
-                  UpdateUserPhoto(userName, _image);
+                  //UpdateUserPhoto(userName, _image);
                 }),
               ),
 
@@ -239,7 +239,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
 // }
 
   void connectStart() {
-    channel = ClientChannel('192.168.0.104',
+    channel = ClientChannel('192.168.0.100',
         port: 9000,
         options:
             const ChannelOptions(credentials: ChannelCredentials.insecure()));
@@ -259,11 +259,14 @@ class _AddUserScreenState extends State<AddUserScreen> {
     connectStart();
 
     final imageBytes = await image.readAsBytes();
-    print(imageBytes.length);
 
+    print(imageBytes.length);
+    print(channel);
+    print(stub);
     try {
-      var response = await stub.addTrustedUser(
-          generateReqStream(imageBytes, imageBytes.length, 200, username));
+      Stream<User> requestStream =
+          generateReqStream(imageBytes, imageBytes.length, 200, username);
+      var response = await stub.addTrustedUser(requestStream);
 
       //_putUserNameToSharePref(username);
     } catch (e) {
@@ -277,15 +280,15 @@ class _AddUserScreenState extends State<AddUserScreen> {
     connectEnd();
     print("Add User success.");
 
-    Image returnimage = Image.memory(imageBytes);
+    // Image returnimage = Image.memory(imageBytes);
 
-    setState(() {
-      if (returnimage != null) {
-        showingimage = returnimage;
-      } else {
-        print("Not update yet");
-      }
-    });
+    // setState(() {
+    //   if (returnimage != null) {
+    //     showingimage = returnimage;
+    //   } else {
+    //     print("Not update yet");
+    //   }
+    // });
 
     //return returnimage;
     return true;
@@ -312,7 +315,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
     print("Remove User");
     connectStart();
 
-    final deleteRequest = User()..name = username;
+    final deleteRequest = User()..name = "Hello";
     try {
       var response = await stub.removeTrustedUser(deleteRequest);
     } catch (e) {
@@ -325,28 +328,29 @@ class _AddUserScreenState extends State<AddUserScreen> {
     return false;
   }
 
-  Future<bool> UpdateUserPhoto(String username, File image) async {
-    print("Update user photo");
-    print(username);
-    connectStart();
+  // Future<bool> UpdateUserPhoto(String username, File image) async {
+  //   print("Update user photo");
+  //   print(username);
+  //   connectStart();
 
-    final imageBytes = await image.readAsBytes();
-    print(imageBytes.length);
-    try {
-      var response = await stub.addTrustedUser(
-          generateReqStream(imageBytes, imageBytes.length, 200, username));
-    } catch (e) {
-      print('Caught error: $e');
-      connectEnd();
-      return false;
-    }
+  //   final imageBytes = await image.readAsBytes();
+  //   print(imageBytes.length);
+  //   try {
+  //     var response = await stub.addTrustedUser(
+  //         generateReqStream(imageBytes, imageBytes.length, 200, username));
+  //   } catch (e) {
+  //     print('Caught error: $e');
+  //     connectEnd();
+  //     return false;
+  //   }
 
-    connectEnd();
-    return true;
-  }
+  //   connectEnd();
+  //   return true;
+  // }
 
   Stream<User> generateReqStream(
       List imageBytes, int size, int chunksize, String username) async* {
+    print("Generate Stream.");
     var cursize = 0;
     while (cursize < size) {
       var photo;
@@ -360,7 +364,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
       }
       final request = User()
         ..name = username
-        ..image = photo;
+        ..photo = photo;
       yield request;
     }
   }
