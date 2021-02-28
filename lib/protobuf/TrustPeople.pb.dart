@@ -13,7 +13,7 @@ class User extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'User', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'restricted')
-    ..aOM<Photo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'image', subBuilder: Photo.create)
+    ..aOM<Photo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'photo', subBuilder: Photo.create)
     ..hasRequiredFields = false
   ;
 
@@ -21,7 +21,7 @@ class User extends $pb.GeneratedMessage {
   factory User({
     $core.String name,
     $core.bool restricted,
-    Photo image,
+    Photo photo,
   }) {
     final _result = create();
     if (name != null) {
@@ -30,8 +30,8 @@ class User extends $pb.GeneratedMessage {
     if (restricted != null) {
       _result.restricted = restricted;
     }
-    if (image != null) {
-      _result.image = image;
+    if (photo != null) {
+      _result.photo = photo;
     }
     return _result;
   }
@@ -75,15 +75,15 @@ class User extends $pb.GeneratedMessage {
   void clearRestricted() => clearField(2);
 
   @$pb.TagNumber(3)
-  Photo get image => $_getN(2);
+  Photo get photo => $_getN(2);
   @$pb.TagNumber(3)
-  set image(Photo v) { setField(3, v); }
+  set photo(Photo v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasImage() => $_has(2);
+  $core.bool hasPhoto() => $_has(2);
   @$pb.TagNumber(3)
-  void clearImage() => clearField(3);
+  void clearPhoto() => clearField(3);
   @$pb.TagNumber(3)
-  Photo ensureImage() => $_ensure(2);
+  Photo ensurePhoto() => $_ensure(2);
 }
 
 class Photo extends $pb.GeneratedMessage {

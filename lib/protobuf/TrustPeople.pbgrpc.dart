@@ -26,10 +26,6 @@ class RouteClient extends $grpc.Client {
       '/route.Route/RemoveTrustedUser',
       ($0.User value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
-  static final _$getUserPhoto = $grpc.ClientMethod<$0.User, $0.Photo>(
-      '/route.Route/GetUserPhoto',
-      ($0.User value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Photo.fromBuffer(value));
 
   RouteClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -52,13 +48,6 @@ class RouteClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Empty> removeTrustedUser($0.User request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$removeTrustedUser, request, options: options);
-  }
-
-  $grpc.ResponseStream<$0.Photo> getUserPhoto($0.User request,
-      {$grpc.CallOptions options}) {
-    return $createStreamingCall(
-        _$getUserPhoto, $async.Stream.fromIterable([request]),
-        options: options);
   }
 }
 
@@ -87,23 +76,11 @@ abstract class RouteServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.User.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.User, $0.Photo>(
-        'GetUserPhoto',
-        getUserPhoto_Pre,
-        false,
-        true,
-        ($core.List<$core.int> value) => $0.User.fromBuffer(value),
-        ($0.Photo value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Empty> removeTrustedUser_Pre(
       $grpc.ServiceCall call, $async.Future<$0.User> request) async {
     return removeTrustedUser(call, await request);
-  }
-
-  $async.Stream<$0.Photo> getUserPhoto_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.User> request) async* {
-    yield* getUserPhoto(call, await request);
   }
 
   $async.Future<$0.Empty> addTrustedUser(
@@ -112,5 +89,4 @@ abstract class RouteServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $async.Stream<$0.User> request);
   $async.Future<$0.Empty> removeTrustedUser(
       $grpc.ServiceCall call, $0.User request);
-  $async.Stream<$0.Photo> getUserPhoto($grpc.ServiceCall call, $0.User request);
 }
