@@ -286,12 +286,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
       Stream<User> requestStream = generateReqStream(
           imageBytes, imageBytes.length, 400, username, restricted);
       var response = await stub.addTrustedUser(requestStream);
-
-      //_putUserNameToSharePref(username);
     } catch (e) {
       print('Caught error: $e');
       connectEnd();
-      //return Image.memory(imageBytes);
       return false;
     }
 
@@ -299,17 +296,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
     connectEnd();
     print("Add User success.");
 
-    // Image returnimage = Image.memory(imageBytes);
-
-    // setState(() {
-    //   if (returnimage != null) {
-    //     showingimage = returnimage;
-    //   } else {
-    //     print("Not update yet");
-    //   }
-    // });
-
-    //return returnimage;
     return true;
   }
 

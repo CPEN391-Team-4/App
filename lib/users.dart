@@ -7,10 +7,17 @@ import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 
-class Users extends StatelessWidget {
+class Users extends StatefulWidget {
+  //it need to pass in two more arguments in, when the user is alrady there
+  // the in = 1, also when click a old user, it will pass in the username
+  @override
+  _UsersState createState() => new _UsersState();
+}
+
+class _UsersState extends State<Users> {
   var channel;
   var stub;
-  final trustedUser = [];
+  var trustedUser = [];
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +26,10 @@ class Users extends StatelessWidget {
       appBar: AppBar(
         title: Text('Users'),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: _buildListView(context),
       ),
-
-      // body: Padding(
-      //     padding: const EdgeInsets.all(16.0),
-      //     child: ListView(children: [
-      //
-
-      //       _buildListView()
-      //     ]))
     );
   }
 
@@ -49,18 +47,24 @@ class Users extends StatelessWidget {
     await channel.shutdown();
   }
 
-  void _updateTrustPeopleList() async {
+  Future<void> _updateTrustPeopleList() async {
     print("updatelist");
     connectStart();
-    var allUserNames = UserName();
-    try {
-      allUserNames = await stub.GetAllUserNames();
-      print("pass get ");
-      print(allUserNames);
-    } catch (e) {}
 
-    final usernameString = allUserNames.usernames;
-    print(usernameString);
+    try {
+      var response = await stub.getAllUserNames(Empty());
+      String allUserNames = response.usernames;
+      List newUserList = allUserNames.split("|");
+      newUserList
+          .removeAt(newUserList.length - 1); //remove the lass empty element.
+      print(newUserList);
+      setState(() {
+        trustedUser = newUserList;
+      });
+    } catch (e) {
+      print("Can not get all the names.");
+    }
+    connectEnd();
   }
 
   Widget _buildListView(BuildContext context) {
