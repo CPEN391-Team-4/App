@@ -5,12 +5,11 @@ import 'dart:io';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/cupertino.dart';
 // import 'package:flutter_application_1/protobuf/TrustPeople.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
@@ -57,6 +56,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
 
   bool sendResult;
 
+  String _accessType;
+
   String valuechoose;
   List listitem = ["limit access", "free access"];
   Future getImage(int source) async {
@@ -82,29 +83,20 @@ class _AddUserScreenState extends State<AddUserScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Add a User"),
+          centerTitle: true,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: ListView(
             children: <Widget>[
-              TextField(
-                controller: usernameText,
-                decoration: InputDecoration(
-                    hintText: "Enter User's Name",
-                    labelText: "Name",
-                    labelStyle: TextStyle(fontSize: 24, color: Colors.black),
-                    border: OutlineInputBorder(),
-                    suffixIcon: Icon(Icons.accessibility)),
-                keyboardType: TextInputType.name,
-                obscureText: false,
-                maxLength: 20,
-              ),
+              setImage(_image),
+              SizedBox(height: 10),
 
-              Center(
-                child: _image == null
-                    ? Text("Please upload an Image.")
-                    : Image.file(_image),
-              ),
+              // Center(
+              //   child: _image == null
+              //       ? Text("Please upload an Image.")
+              //       : Image.file(_image),
+              // ),
 
               FlatButton(
                 textColor: Colors.white,
@@ -131,7 +123,22 @@ class _AddUserScreenState extends State<AddUserScreen> {
               ),
 
               SizedBox(
-                height: 50,
+                height: 30,
+              ),
+              TextField(
+                controller: usernameText,
+                decoration: InputDecoration(
+                    hintText: "Enter User's Name",
+                    labelText: "Name",
+                    labelStyle: TextStyle(fontSize: 24, color: Colors.black),
+                    border: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.accessibility)),
+                keyboardType: TextInputType.name,
+                obscureText: false,
+                maxLength: 20,
+              ),
+              SizedBox(
+                height: 20,
               ),
 
               // Center(
@@ -185,7 +192,13 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   setState(() {
                     userName = usernameText.text;
                   });
-                  AddTrustPeople(_image, userName, showingimage, Restricted);
+                  if (_image == null ||
+                      userName == null ||
+                      Restricted == null) {
+                    print("Lack of information");
+                  } else {
+                    AddTrustPeople(_image, userName, showingimage, Restricted);
+                  }
                 }),
               ),
 
@@ -321,7 +334,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
     print("Remove User");
     connectStart();
 
-    final deleteRequest = User()..name = "Hello";
+    final deleteRequest = User()..name = "mergetest";
     try {
       var response = await stub.removeTrustedUser(deleteRequest);
     } catch (e) {
@@ -362,8 +375,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
     while (cursize < size) {
       var photo;
       if (cursize + chunksize >= size) {
-        photo = Photo()..image = imageBytes.sublist(cursize, size);
-        //..fileExtension = ".jpg";
+        photo = Photo()
+          ..image = imageBytes.sublist(cursize, size)
+          ..fileExtension = ".jpg";
         cursize = size;
       } else {
         photo = Photo()
@@ -375,6 +389,40 @@ class _AddUserScreenState extends State<AddUserScreen> {
         ..restricted = restricted
         ..photo = photo;
       yield request;
+    }
+  }
+
+  Widget trustedPeoplePhoto() {
+    return Center(
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+              top: 100,
+              right: 50.0,
+              child: Icon(
+                Icons.camera_alt,
+                color: Colors.black,
+                size: 28,
+              )),
+        ],
+      ),
+    );
+  }
+
+  Widget setImage(File file) {
+    if (file == null) {
+      return new Container(
+          width: 250.0,
+          height: 250.0,
+          alignment: Alignment.center,
+          decoration: new BoxDecoration(
+              image: DecorationImage(image: AssetImage('assets/profile.png'))));
+    } else {
+      return new Container(
+          width: 250.0,
+          height: 250.0,
+          alignment: Alignment.center,
+          child: Image.file(file));
     }
   }
 }

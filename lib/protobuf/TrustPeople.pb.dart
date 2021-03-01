@@ -13,7 +13,7 @@ class User extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'User', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'restricted')
-    ..aOM<Photo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'photo', subBuilder: Photo.create)
+    ..aOM<Photo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Photo', protoName: 'Photo', subBuilder: Photo.create)
     ..hasRequiredFields = false
   ;
 
@@ -145,6 +145,53 @@ class Photo extends $pb.GeneratedMessage {
   $core.bool hasFileExtension() => $_has(1);
   @$pb.TagNumber(2)
   void clearFileExtension() => clearField(2);
+}
+
+class UserName extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserName', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'usernames')
+    ..hasRequiredFields = false
+  ;
+
+  UserName._() : super();
+  factory UserName({
+    $core.String usernames,
+  }) {
+    final _result = create();
+    if (usernames != null) {
+      _result.usernames = usernames;
+    }
+    return _result;
+  }
+  factory UserName.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserName.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserName clone() => UserName()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserName copyWith(void Function(UserName) updates) => super.copyWith((message) => updates(message as UserName)) as UserName; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UserName create() => UserName._();
+  UserName createEmptyInstance() => create();
+  static $pb.PbList<UserName> createRepeated() => $pb.PbList<UserName>();
+  @$core.pragma('dart2js:noInline')
+  static UserName getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserName>(create);
+  static UserName _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get usernames => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set usernames($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUsernames() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUsernames() => clearField(1);
 }
 
 class Empty extends $pb.GeneratedMessage {
