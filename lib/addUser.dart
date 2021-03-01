@@ -3,6 +3,7 @@ import 'dart:io';
 // import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/cupertino.dart';
 // import 'package:flutter_application_1/protobuf/TrustPeople.pbgrpc.dart';
 // import 'package:grpc/grpc.dart';
 // import 'package:image_picker/image_picker.dart';
@@ -18,9 +19,17 @@ class _AddUserScreenState extends State<AddUserScreen> {
   final picker = ImagePicker();
 
   bool sendResult;
+  String _name;
 
-  String valuechoose;
-  List listitem = ["limit access", "free access"];
+  String _accessType;
+  List listitem = ["Unrestricted", "Restricted"];
+
+  void _setName(String name) {
+      setState(() {
+          _name = name;
+      });
+  }
+
   Future getImage() async {
     final image = await picker.getImage(source: ImageSource.gallery);
     //final image = await ImagePicker.
@@ -37,107 +46,96 @@ class _AddUserScreenState extends State<AddUserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Add a User"),
+                title: Text("Add a User"),
+                centerTitle: true,
         ),
+
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(
             children: <Widget>[
-              TextField(
-                decoration: InputDecoration(
-                    hintText: "Enter User's Name",
-                    labelText: "Name",
-                    labelStyle: TextStyle(fontSize: 24, color: Colors.black),
-                    border: OutlineInputBorder(),
-                    suffixIcon: Icon(Icons.accessibility)),
-                keyboardType: TextInputType.name,
-                obscureText: false,
-                maxLength: 20,
-              ),
+                setImage(_image),
+                SizedBox(height:10),
+                Positioned(
+                        // top: 100,
+                        // right: 50.0,
+                        child: FloatingActionButton(
+                                onPressed: getImage,
+                                child: Icon(Icons.camera_alt),
+                        )),
 
-              Center(
-                child: _image == null
-                    ? Text("Can't load image.")
-                    : Image.file(_image),
-              ),
+                Padding(
+                        padding: const EdgeInsets.all(16.0),
 
-              FlatButton(
-                textColor: Colors.white,
-                color: Colors.blue,
-                child: Text(
-                  "Add Photo",
-                  style: TextStyle(color: Colors.black),
+                        child:  TextField(
+                                onChanged: (text) {
+                                    _setName(text);
+                                },
+                                decoration: InputDecoration(
+                                                    contentPadding: EdgeInsets.symmetric(vertical: 5),
+                                                    labelText: 'Name',
+                                            )
+                        ),
+
                 ),
-                onPressed: () {},
-              ),
-              Positioned(
-                  // top: 100,
-                  // right: 50.0,
-                  child: FloatingActionButton(
-                onPressed: getImage,
-                child: Icon(Icons.camera_alt),
-              )),
-
-              SizedBox(
-                height: 50,
-              ),
-              FlatButton(
-                textColor: Colors.white,
-                color: Colors.blue,
-                child: Text(
-                  "Add This Person",
-                  style: TextStyle(color: Colors.black),
-                ),
-                onPressed: () => {AddTrustPeople()},
-              ),
 
               Center(
                 child: DropdownButton(
-                    hint: Text("Select Items: "),
+                    hint: Text("User Access Type"),
                     focusColor: Colors.green,
                     dropdownColor: Colors.grey,
                     icon: Icon(Icons.arrow_drop_down),
                     iconSize: 30,
                     isExpanded: false,
-                    value: valuechoose,
-                    items: listitem.map((valueItem) {
+                    value: _accessType,
+                    items: listitem.map((item) {
                       return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text(valueItem),
+                        value: item,
+                        child: Text(item),
                       );
                     }).toList(),
-                    onChanged: (newValue) {
-                      // add new choice button
+                    onChanged: (newItem) {
                       setState(() {
-                        valuechoose = newValue;
+                          _accessType = newItem;
                       });
                     }),
               ),
 
-              SizedBox(
-                height: 50,
-              ),
-              FlatButton(
-                textColor: Colors.white,
-                color: Colors.blue,
-                child: Text(
-                  "Delete This Person",
-                  style: TextStyle(color: Colors.black),
-                ),
-                onPressed: () => {RemoveTrustedUser()},
-              ),
 
-              //trustedPeoplePhoto(),
             ],
           ),
         ));
+
   }
 
-//   void uploadpicture(ImageSource source)async {
 
-// }
+  Widget setImage(File file) {
+      if (file == null) {
+          return new Container(
+                  width: 250.0,
+                  height: 250.0,
+                  alignment: Alignment.center,
+                  decoration: new BoxDecoration(
+                          image: DecorationImage(
+                                  image: AssetImage('assets/profile.png')
+                          )
+                  )
+          );
+      }
+      else {
+          return new Container(
+                  width: 250.0,
+                  height: 250.0,
+                  alignment: Alignment.center,
+                  child: Image.file(file)
+          );
+
+      }
+  }
+
 
 }
+
 
 Widget trustedPeoplePhoto() {
   return Center(
