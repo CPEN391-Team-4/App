@@ -14,6 +14,7 @@ import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
+import 'users.dart';
 
 class AddUserScreen extends StatefulWidget {
   //it need to pass in two more arguments in, when the user is alrady there
@@ -39,12 +40,13 @@ class _AddUserScreenState extends State<AddUserScreen> {
   Future<Void> _putUserNameToSharePref(String username) async {
     print("put into prefs");
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("1", username);
+    await prefs.setString("4", username);
   }
 
   var channel;
   var stub;
   var userName;
+  var Restricted;
   final usernameText = new TextEditingController();
 
   File _image;
@@ -98,11 +100,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 maxLength: 20,
               ),
 
-              // Center(
-              //   child: _image == null
-              //       ? Text("Can't load image.")
-              //       : Image.file(_image),
-              // ),
+              Center(
+                child: _image == null
+                    ? Text("Please upload an Image.")
+                    : Image.file(_image),
+              ),
 
               FlatButton(
                 textColor: Colors.white,
@@ -132,14 +134,14 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 height: 50,
               ),
 
-              Center(
-                child: showingimage == null
-                    ? Text("Not Showing Picture.")
-                    : showingimage,
-              ),
-              SizedBox(
-                height: 50,
-              ),
+              // Center(
+              //   child: showingimage == null
+              //       ? Text("Not Showing Picture.")
+              //       : showingimage,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
 
               Center(
                 child: DropdownButton(
@@ -160,8 +162,16 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       // add new choice button
                       setState(() {
                         valuechoose = newValue;
+                        if (valuechoose == "limit access") {
+                          Restricted = true;
+                        } else {
+                          Restricted = false;
+                        }
                       });
                     }),
+              ),
+              SizedBox(
+                height: 20,
               ),
 
               FlatButton(
@@ -175,7 +185,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   setState(() {
                     userName = usernameText.text;
                   });
-                  AddTrustPeople(_image, userName, showingimage);
+                  AddTrustPeople(_image, userName, showingimage, Restricted);
                 }),
               ),
 
@@ -224,7 +234,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   style: TextStyle(color: Colors.black),
                 ),
                 onPressed: () {
-                  _putUserNameToSharePref("Brendon");
+                  _putUserNameToSharePref("testBrendon4");
                 },
               ),
 
@@ -233,10 +243,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
           ),
         ));
   }
-
-//   void uploadpicture(ImageSource source)async {
-
-// }
 
   void connectStart() {
     channel = ClientChannel('192.168.0.100',
@@ -253,7 +259,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   }
 
   Future<bool> AddTrustPeople(
-      File image, String username, Image showimage) async {
+      File image, String username, Image showimage, bool restricted) async {
     print("Add people");
     print(userName);
     connectStart();
@@ -264,8 +270,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
     print(channel);
     print(stub);
     try {
-      Stream<User> requestStream =
-          generateReqStream(imageBytes, imageBytes.length, 200, username);
+      Stream<User> requestStream = generateReqStream(
+          imageBytes, imageBytes.length, 400, username, restricted);
       var response = await stub.addTrustedUser(requestStream);
 
       //_putUserNameToSharePref(username);
@@ -328,34 +334,36 @@ class _AddUserScreenState extends State<AddUserScreen> {
     return false;
   }
 
-  // Future<bool> UpdateUserPhoto(String username, File image) async {
-  //   print("Update user photo");
-  //   print(username);
-  //   connectStart();
+  Future<bool> UpdateUserPhoto(
+      String username, File image, bool restricted) async {
+    print("Update user photo");
+    print(username);
+    connectStart();
 
-  //   final imageBytes = await image.readAsBytes();
-  //   print(imageBytes.length);
-  //   try {
-  //     var response = await stub.addTrustedUser(
-  //         generateReqStream(imageBytes, imageBytes.length, 200, username));
-  //   } catch (e) {
-  //     print('Caught error: $e');
-  //     connectEnd();
-  //     return false;
-  //   }
+    final imageBytes = await image.readAsBytes();
+    print(imageBytes.length);
+    try {
+      var response = await stub.addTrustedUser(generateReqStream(
+          imageBytes, imageBytes.length, 400, username, restricted));
+    } catch (e) {
+      print('Caught error: $e');
+      connectEnd();
+      return false;
+    }
 
-  //   connectEnd();
-  //   return true;
-  // }
+    connectEnd();
+    return true;
+  }
 
-  Stream<User> generateReqStream(
-      List imageBytes, int size, int chunksize, String username) async* {
+  Stream<User> generateReqStream(List imageBytes, int size, int chunksize,
+      String username, bool restricted) async* {
     print("Generate Stream.");
     var cursize = 0;
     while (cursize < size) {
       var photo;
       if (cursize + chunksize >= size) {
         photo = Photo()..image = imageBytes.sublist(cursize, size);
+        //..fileExtension = ".jpg";
         cursize = size;
       } else {
         photo = Photo()
@@ -364,6 +372,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
       }
       final request = User()
         ..name = username
+        ..restricted = restricted
         ..photo = photo;
       yield request;
     }
