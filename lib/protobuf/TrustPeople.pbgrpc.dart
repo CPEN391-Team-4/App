@@ -26,6 +26,10 @@ class RouteClient extends $grpc.Client {
       '/route.Route/RemoveTrustedUser',
       ($0.User value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$getAllUserNames = $grpc.ClientMethod<$0.Empty, $0.UserName>(
+      '/route.Route/GetAllUserNames',
+      ($0.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.UserName.fromBuffer(value));
 
   RouteClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -48,6 +52,11 @@ class RouteClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Empty> removeTrustedUser($0.User request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$removeTrustedUser, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.UserName> getAllUserNames($0.Empty request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$getAllUserNames, request, options: options);
   }
 }
 
@@ -76,11 +85,23 @@ abstract class RouteServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.User.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.UserName>(
+        'GetAllUserNames',
+        getAllUserNames_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($0.UserName value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Empty> removeTrustedUser_Pre(
       $grpc.ServiceCall call, $async.Future<$0.User> request) async {
     return removeTrustedUser(call, await request);
+  }
+
+  $async.Future<$0.UserName> getAllUserNames_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+    return getAllUserNames(call, await request);
   }
 
   $async.Future<$0.Empty> addTrustedUser(
@@ -89,4 +110,6 @@ abstract class RouteServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $async.Stream<$0.User> request);
   $async.Future<$0.Empty> removeTrustedUser(
       $grpc.ServiceCall call, $0.User request);
+  $async.Future<$0.UserName> getAllUserNames(
+      $grpc.ServiceCall call, $0.Empty request);
 }
