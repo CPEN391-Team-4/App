@@ -36,6 +36,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
     setState(() {
       if (image != null) {
         _image = File(image.path);
+        print(_image);
       } else {
         print("No Image Selected");
       }
