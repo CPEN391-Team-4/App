@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: TrustPeople.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -19,9 +19,9 @@ class User extends $pb.GeneratedMessage {
 
   User._() : super();
   factory User({
-    $core.String name,
-    $core.bool restricted,
-    Photo photo,
+    $core.String? name,
+    $core.bool? restricted,
+    Photo? photo,
   }) {
     final _result = create();
     if (name != null) {
@@ -54,7 +54,7 @@ class User extends $pb.GeneratedMessage {
   static $pb.PbList<User> createRepeated() => $pb.PbList<User>();
   @$core.pragma('dart2js:noInline')
   static User getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<User>(create);
-  static User _defaultInstance;
+  static User? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -95,8 +95,8 @@ class Photo extends $pb.GeneratedMessage {
 
   Photo._() : super();
   factory Photo({
-    $core.List<$core.int> image,
-    $core.String fileExtension,
+    $core.List<$core.int>? image,
+    $core.String? fileExtension,
   }) {
     final _result = create();
     if (image != null) {
@@ -126,7 +126,7 @@ class Photo extends $pb.GeneratedMessage {
   static $pb.PbList<Photo> createRepeated() => $pb.PbList<Photo>();
   @$core.pragma('dart2js:noInline')
   static Photo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Photo>(create);
-  static Photo _defaultInstance;
+  static Photo? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get image => $_getN(0);
@@ -147,51 +147,45 @@ class Photo extends $pb.GeneratedMessage {
   void clearFileExtension() => clearField(2);
 }
 
-class UserName extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserName', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'usernames')
+class UserNames extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserNames', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'usernames')
     ..hasRequiredFields = false
   ;
 
-  UserName._() : super();
-  factory UserName({
-    $core.String usernames,
+  UserNames._() : super();
+  factory UserNames({
+    $core.Iterable<$core.String>? usernames,
   }) {
     final _result = create();
     if (usernames != null) {
-      _result.usernames = usernames;
+      _result.usernames.addAll(usernames);
     }
     return _result;
   }
-  factory UserName.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory UserName.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory UserNames.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserNames.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  UserName clone() => UserName()..mergeFromMessage(this);
+  UserNames clone() => UserNames()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UserName copyWith(void Function(UserName) updates) => super.copyWith((message) => updates(message as UserName)) as UserName; // ignore: deprecated_member_use
+  UserNames copyWith(void Function(UserNames) updates) => super.copyWith((message) => updates(message as UserNames)) as UserNames; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static UserName create() => UserName._();
-  UserName createEmptyInstance() => create();
-  static $pb.PbList<UserName> createRepeated() => $pb.PbList<UserName>();
+  static UserNames create() => UserNames._();
+  UserNames createEmptyInstance() => create();
+  static $pb.PbList<UserNames> createRepeated() => $pb.PbList<UserNames>();
   @$core.pragma('dart2js:noInline')
-  static UserName getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserName>(create);
-  static UserName _defaultInstance;
+  static UserNames getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserNames>(create);
+  static UserNames? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get usernames => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set usernames($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasUsernames() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearUsernames() => clearField(1);
+  $core.List<$core.String> get usernames => $_getList(0);
 }
 
 class Empty extends $pb.GeneratedMessage {
@@ -220,6 +214,116 @@ class Empty extends $pb.GeneratedMessage {
   static $pb.PbList<Empty> createRepeated() => $pb.PbList<Empty>();
   @$core.pragma('dart2js:noInline')
   static Empty getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Empty>(create);
-  static Empty _defaultInstance;
+  static Empty? _defaultInstance;
+}
+
+class FaceVerificationReq extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaceVerificationReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
+    ..aOM<Photo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Photo', protoName: 'Photo', subBuilder: Photo.create)
+    ..hasRequiredFields = false
+  ;
+
+  FaceVerificationReq._() : super();
+  factory FaceVerificationReq({
+    Photo? photo,
+  }) {
+    final _result = create();
+    if (photo != null) {
+      _result.photo = photo;
+    }
+    return _result;
+  }
+  factory FaceVerificationReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FaceVerificationReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FaceVerificationReq clone() => FaceVerificationReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FaceVerificationReq copyWith(void Function(FaceVerificationReq) updates) => super.copyWith((message) => updates(message as FaceVerificationReq)) as FaceVerificationReq; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FaceVerificationReq create() => FaceVerificationReq._();
+  FaceVerificationReq createEmptyInstance() => create();
+  static $pb.PbList<FaceVerificationReq> createRepeated() => $pb.PbList<FaceVerificationReq>();
+  @$core.pragma('dart2js:noInline')
+  static FaceVerificationReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FaceVerificationReq>(create);
+  static FaceVerificationReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Photo get photo => $_getN(0);
+  @$pb.TagNumber(1)
+  set photo(Photo v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPhoto() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPhoto() => clearField(1);
+  @$pb.TagNumber(1)
+  Photo ensurePhoto() => $_ensure(0);
+}
+
+class FaceVerificationResp extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaceVerificationResp', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'confidence', $pb.PbFieldType.OF)
+    ..hasRequiredFields = false
+  ;
+
+  FaceVerificationResp._() : super();
+  factory FaceVerificationResp({
+    $core.String? user,
+    $core.double? confidence,
+  }) {
+    final _result = create();
+    if (user != null) {
+      _result.user = user;
+    }
+    if (confidence != null) {
+      _result.confidence = confidence;
+    }
+    return _result;
+  }
+  factory FaceVerificationResp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FaceVerificationResp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FaceVerificationResp clone() => FaceVerificationResp()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FaceVerificationResp copyWith(void Function(FaceVerificationResp) updates) => super.copyWith((message) => updates(message as FaceVerificationResp)) as FaceVerificationResp; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FaceVerificationResp create() => FaceVerificationResp._();
+  FaceVerificationResp createEmptyInstance() => create();
+  static $pb.PbList<FaceVerificationResp> createRepeated() => $pb.PbList<FaceVerificationResp>();
+  @$core.pragma('dart2js:noInline')
+  static FaceVerificationResp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FaceVerificationResp>(create);
+  static FaceVerificationResp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get user => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set user($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUser() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUser() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get confidence => $_getN(1);
+  @$pb.TagNumber(2)
+  set confidence($core.double v) { $_setFloat(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasConfidence() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearConfidence() => clearField(2);
 }
 
