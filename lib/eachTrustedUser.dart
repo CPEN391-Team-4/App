@@ -1,42 +1,34 @@
-import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:my_app/home_widget.dart';
+import 'package:my_app/protobuf/TrustPeople.pb.dart';
 import 'package:grpc/grpc.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
-import 'users.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/cupertino.dart';
 
-class AddUserScreen extends StatefulWidget {
+class EachUserScreen extends StatefulWidget {
   //it need to pass in two more arguments in, when the user is alrady there
   // the in = 1, also when click a old user, it will pass in the username
+
+  String userName;
+  EachUserScreen({Key key, @required this.userName}) : super(key: key);
   @override
-  _AddUserScreenState createState() => new _AddUserScreenState();
+  _EachUsersState createState() => new _EachUsersState(userName);
 }
 
-class _AddUserScreenState extends State<AddUserScreen> {
-  final alreadyExist = true; // need to pass from the prepage
-  final userId = "1"; //need to pass from the prepage
-
-  var channel;
+class _EachUsersState extends State<EachUserScreen> {
   var stub;
-  var userName;
-  var Restricted;
-  final usernameText = new TextEditingController();
-
+  var channel;
+  String userName;
   File _image;
-
   final picker = ImagePicker();
-
-  Image showingimage;
-
-  bool sendResult;
-
-  String _accessType;
-
+  bool Restricted;
   String valuechoose;
   List listitem = ["limit access", "free access"];
+
   Future getImage(int source) async {
     var image = PickedFile("");
     if (source == 1) {
@@ -49,31 +41,29 @@ class _AddUserScreenState extends State<AddUserScreen> {
     setState(() {
       if (image != null) {
         _image = File(image.path);
-        print(_image);
       } else {
         print("No Image Selected");
       }
     });
   }
 
+  _EachUsersState(this.userName);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Add a User"),
+          title: Text(userName),
           centerTitle: true,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView(
-            children: <Widget>[
+            padding: const EdgeInsets.all(16.0),
+            child: ListView(children: <Widget>[
               setImage(_image),
-              SizedBox(height: 10),
               TextButton(
                 // textColor: Colors.white,
                 // color: Colors.blue,
                 child: Text(
-                  "Add Photo",
+                  "Get from Phone.",
                   style: TextStyle(color: Colors.black),
                 ),
                 onPressed: () => getImage(1),
@@ -92,22 +82,10 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 onPressed: () => getImage(0),
               ),
               SizedBox(
-                height: 30,
-              ),
-              TextField(
-                controller: usernameText,
-                decoration: InputDecoration(
-                    hintText: "Enter User's Name",
-                    labelText: "Name",
-                    labelStyle: TextStyle(fontSize: 24, color: Colors.black),
-                    border: OutlineInputBorder(),
-                    suffixIcon: Icon(Icons.accessibility)),
-                keyboardType: TextInputType.name,
-                obscureText: false,
-                maxLength: 20,
+                height: 10,
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Center(
                 child: DropdownButton(
@@ -136,32 +114,40 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       });
                     }),
               ),
-              SizedBox(
-                height: 20,
+              TextButton(
+                // textColor: Colors.white,
+                // color: Colors.blue,
+                child: Text(
+                  "Update User",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: (() {
+                  UpdateUserPhoto(userName, _image, Restricted);
+                }),
               ),
               TextButton(
                 // textColor: Colors.white,
                 // color: Colors.blue,
                 child: Text(
-                  "Add User",
+                  "Get Image",
                   style: TextStyle(color: Colors.black),
                 ),
                 onPressed: (() {
-                  setState(() {
-                    userName = usernameText.text;
-                  });
-                  if (_image == null ||
-                      userName == null ||
-                      Restricted == null) {
-                    print("Lack of information");
-                  } else {
-                    AddTrustPeople(_image, userName, showingimage, Restricted);
-                  }
+                  getUserImage(userName);
                 }),
               ),
-            ],
-          ),
-        ));
+              TextButton(
+                // textColor: Colors.white,
+                // color: Colors.blue,
+                child: Text(
+                  "Delete User",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  RemoveTrustedUser(userName);
+                },
+              ),
+            ])));
   }
 
   void connectStart() {
@@ -178,33 +164,41 @@ class _AddUserScreenState extends State<AddUserScreen> {
     await channel.shutdown();
   }
 
-  Future<bool> AddTrustPeople(
-      File image, String username, Image showimage, bool restricted) async {
-    print("Add people");
-    print(userName);
+  Future<bool> RemoveTrustedUser(String username) async {
+    print("Remove User");
+    connectStart();
+
+    final deleteRequest = User()..name = username;
+    try {
+      var response = await stub.removeTrustedUser(deleteRequest);
+    } catch (e) {
+      print('Caught error: $e');
+      connectEnd();
+      return false;
+    }
+    //await channel.shutdown();
+    connectEnd();
+    return false;
+  }
+
+  Future<bool> UpdateUserPhoto(
+      String username, File image, bool restricted) async {
+    print("Update user photo");
+    print(username);
     connectStart();
 
     final imageBytes = await image.readAsBytes();
-
     print(imageBytes.length);
-    print(channel);
-    print(stub);
     try {
-      Stream<User> requestStream = generateReqStream(
-          imageBytes, imageBytes.length, 400, username, restricted);
-      var response = await stub.addTrustedUser(requestStream);
-      var users = Users();
-      // users._updateTrustPeopleList();
+      var response = await stub.updateTrustedUser(generateReqStream(
+          imageBytes, imageBytes.length, 400, username, restricted));
     } catch (e) {
       print('Caught error: $e');
       connectEnd();
       return false;
     }
 
-    //await channel.shutdown();
     connectEnd();
-    print("Add User success.");
-
     return true;
   }
 
@@ -222,7 +216,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
       } else {
         photo = Photo()
           ..image = imageBytes.sublist(cursize, cursize + chunksize)
-          ..fileExtension = 'jpg';
+          ..fileExtension = "jpg";
         cursize += chunksize;
       }
       final request = User()
@@ -233,21 +227,31 @@ class _AddUserScreenState extends State<AddUserScreen> {
     }
   }
 
-  Widget trustedPeoplePhoto() {
-    return Center(
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-              top: 100,
-              right: 50.0,
-              child: Icon(
-                Icons.camera_alt,
-                color: Colors.black,
-                size: 28,
-              )),
-        ],
-      ),
-    );
+  Future<File> getUserImage(String username) async {
+    connectStart();
+    print(username);
+    var imageBytes = [];
+
+    //setState(() async {
+    final user = User()..name = username;
+
+    try {
+      await for (var returnUser in stub.getUserPhoto(user)) {
+        //print(returnUser);
+        imageBytes += returnUser.image;
+      }
+      print(imageBytes.runtimeType);
+      print(imageBytes.length);
+      List<int> imagelist = imageBytes.map((s) => s as int).toList();
+      print(imagelist);
+    } catch (e) {
+      // connectEnd();
+      print(e);
+    }
+    //}
+    //);
+
+    connectEnd();
   }
 
   Widget setImage(File file) {
@@ -267,3 +271,31 @@ class _AddUserScreenState extends State<AddUserScreen> {
     }
   }
 }
+
+// class Storage {
+//   Future<String> get localPath async {
+//     final dir = await getApplicationDocumentsDirectory();
+//     return dir.path;
+//   }
+
+//   Future<File> get localFile async {
+//     final path = await localPath;
+//     return File('$path/tester.jpg');
+//   }
+
+//   Future<List<int>> readData() async {
+//     try {
+//       final file = await localFile;
+//       var body = await file.readAsBytes();
+
+//       return body;
+//     } catch (e) {
+//       return e;
+//     }
+//   }
+
+//   Future<File> writeData(List<int> data) async {
+//     final file = await localFile;
+//     return file.writeAsBytes(data);
+//   }
+// }
