@@ -13,23 +13,19 @@ message Photo {
   bytes image = 1;
   string fileExtension = 2;
 }
-message UserNames{
-  repeated string usernames = 1;
+
+message UserName{
+  string usernames = 1;
 }
-message Empty {}
-message FaceVerificationReq {
-  Photo Photo = 1;
-}
-message FaceVerificationResp {
-  string user = 1;
-  float confidence = 2;
+
+message Empty {
+
 }
 
 service Route {
   rpc AddTrustedUser(stream User) returns (Empty) {}
   rpc UpdateTrustedUser(stream User) returns (Empty) {}
-  rpc VerifyUserFace(stream FaceVerificationReq) returns (FaceVerificationResp) {}
   rpc RemoveTrustedUser(User) returns (Empty) {}
-  rpc GetUserPhoto(User) returns(stream Photo) {}
-  rpc GetAllUserNames(Empty) returns (UserNames) {}
+  //rpc GetUserPhoto(User) returns(stream Photo){}
+  rpc GetAllUserNames(Empty) returns (UserName){}
 }
