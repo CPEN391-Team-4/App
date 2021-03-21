@@ -147,7 +147,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   "Add User",
                   style: TextStyle(color: Colors.black),
                 ),
-                onPressed: (() {
+                onPressed: (() async {
                   setState(() {
                     userName = usernameText.text;
                   });
@@ -156,7 +156,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       Restricted == null) {
                     print("Lack of information");
                   } else {
-                    AddTrustPeople(_image, userName, showingimage, Restricted);
+                    await AddTrustPeople(_image, userName, showingimage, Restricted);
+                    Navigator.pushReplacement(context, 
+                            MaterialPageRoute(builder: (context) => Users()));
                   }
                 }),
               ),
