@@ -8,6 +8,7 @@ import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 import 'eachTrustedUser.dart';
+import 'connect.dart';
 
 class Users extends StatefulWidget {
   //it need to pass in two more arguments in, when the user is alrady there
@@ -35,15 +36,6 @@ class _UsersState extends State<Users> {
     );
   }
 
-  void connectStart() {
-    channel = ClientChannel('192.168.0.101',
-        port: 9000,
-        options:
-            const ChannelOptions(credentials: ChannelCredentials.insecure()));
-
-    stub = RouteClient(channel,
-        options: CallOptions(timeout: Duration(seconds: 20)));
-  }
 
   Future<void> connectEnd() async {
     await channel.shutdown();
@@ -51,7 +43,9 @@ class _UsersState extends State<Users> {
 
   Future<void> _updateTrustPeopleList() async {
     //print("updatelist");
-    connectStart();
+    final ret = await connectStart();
+    stub = ret[0];
+    channel = ret[1];
 
     try {
       var response = await stub.getAllUserNames(Empty());

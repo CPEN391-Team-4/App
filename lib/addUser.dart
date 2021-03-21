@@ -7,6 +7,7 @@ import 'package:grpc/grpc.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 import 'users.dart';
+import 'connect.dart';
 
 class AddUserScreen extends StatefulWidget {
   //it need to pass in two more arguments in, when the user is alrady there
@@ -164,16 +165,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
         ));
   }
 
-  void connectStart() {
-    channel = ClientChannel('192.168.0.101',
-        port: 9000,
-        options:
-            const ChannelOptions(credentials: ChannelCredentials.insecure()));
-
-    stub = RouteClient(channel,
-        options: CallOptions(timeout: Duration(seconds: 20)));
-  }
-
   Future<void> connectEnd() async {
     await channel.shutdown();
   }
@@ -182,7 +173,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
       File image, String username, Image showimage, bool restricted) async {
     print("Add people");
     print(userName);
-    connectStart();
+    final ret = connectStart();
+    stub = ret[0];
+    channel = ret[1];
 
     final imageBytes = await image.readAsBytes();
 

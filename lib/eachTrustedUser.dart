@@ -8,6 +8,8 @@ import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:path_provider/path_provider.dart';
+import 'connect.dart';
 
 class EachUserScreen extends StatefulWidget {
   //it need to pass in two more arguments in, when the user is alrady there
@@ -150,15 +152,6 @@ class _EachUsersState extends State<EachUserScreen> {
             ])));
   }
 
-  void connectStart() {
-    channel = ClientChannel('192.168.0.101',
-        port: 9000,
-        options:
-            const ChannelOptions(credentials: ChannelCredentials.insecure()));
-
-    stub = RouteClient(channel,
-        options: CallOptions(timeout: Duration(seconds: 20)));
-  }
 
   Future<void> connectEnd() async {
     await channel.shutdown();
@@ -166,7 +159,9 @@ class _EachUsersState extends State<EachUserScreen> {
 
   Future<bool> RemoveTrustedUser(String username) async {
     print("Remove User");
-    connectStart();
+    final ret = await connectStart();
+    stub = ret[0];
+    channel = ret[1];
 
     final deleteRequest = User()..name = username;
     try {
@@ -185,7 +180,9 @@ class _EachUsersState extends State<EachUserScreen> {
       String username, File image, bool restricted) async {
     print("Update user photo");
     print(username);
-    connectStart();
+    final ret = await connectStart();
+    stub = ret[0];
+    channel = ret[1];
 
     final imageBytes = await image.readAsBytes();
     print(imageBytes.length);
@@ -228,11 +225,12 @@ class _EachUsersState extends State<EachUserScreen> {
   }
 
   Future<File> getUserImage(String username) async {
-    connectStart();
+    final ret = await connectStart();
+    stub = ret[0];
+    channel = ret[1];
     print(username);
     var imageBytes = [];
 
-    //setState(() async {
     final user = User()..name = username;
 
     try {
@@ -240,16 +238,18 @@ class _EachUsersState extends State<EachUserScreen> {
         //print(returnUser);
         imageBytes += returnUser.image;
       }
-      print(imageBytes.runtimeType);
-      print(imageBytes.length);
       List<int> imagelist = imageBytes.map((s) => s as int).toList();
+      final dir = await getApplicationDocumentsDirectory();
+      var file = new File(dir.path+"/test.jpg");
       print(imagelist);
+      await file.writeAsBytes(imagelist);
+      setState(() {
+          _image = file;
+      });
     } catch (e) {
       // connectEnd();
       print(e);
     }
-    //}
-    //);
 
     connectEnd();
   }
