@@ -23,8 +23,12 @@ class _UsersState extends State<Users> {
   var trustedUser = [];
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     _updateTrustPeopleList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Users'),
