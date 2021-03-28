@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'greet.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'notification.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    final notification = FirebaseNotification();
+    notification.init();
+    
+    runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
