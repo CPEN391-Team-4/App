@@ -5,14 +5,29 @@ import 'users.dart';
 import 'profile.dart';
 
 class Home extends StatefulWidget {
+    bool notif;
+    Home(this.notif);
     @override 
     State<StatefulWidget> createState() {
-        return _HomeState();
+        return _HomeState(notif);
     }
 }
 
 class _HomeState extends State<Home> {
     int _selected = 0;
+    bool notif;
+    _HomeState(this.notif);
+    @override
+    void initState() {
+        if (notif == true) {
+            getNotificationImage();
+        }
+    }
+
+    void getNotificationImage() {
+
+    }
+
     final List<Widget> _render = [
         Live(),
         Users(),

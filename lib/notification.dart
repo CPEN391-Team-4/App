@@ -1,6 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'home_widget.dart';
 
 class FirebaseNotification {
 
@@ -38,6 +40,8 @@ class FirebaseNotification {
                         String title, String body, String payload){});
         final settings = InitializationSettings(android: androidSettings, iOS: iosSettings);
         local_not.initialize(settings, onSelectNotification: (String payload) {
+            print("Clicked*******");
+            Get.to(Home(true));
         });
         final spec = NotificationDetails(android: androidSpec, iOS: iosSpec);
 
@@ -56,6 +60,5 @@ class FirebaseNotification {
             print('Got a message whilst in the foreground!');
             await local_not.show(1, message.notification.title, message.notification.body, spec, payload: "payload");
         });
-
     }
 }
