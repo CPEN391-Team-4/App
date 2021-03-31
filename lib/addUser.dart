@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:grpc/grpc.dart';
+import 'package:my_app/protobuf/route.pb.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 import 'users.dart';
@@ -156,9 +157,10 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       Restricted == null) {
                     print("Lack of information");
                   } else {
-                    await AddTrustPeople(_image, userName, showingimage, Restricted);
-                    Navigator.pushReplacement(context, 
-                            MaterialPageRoute(builder: (context) => Users()));
+                    await AddTrustPeople(
+                        _image, userName, showingimage, Restricted);
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Users()));
                   }
                 }),
               ),

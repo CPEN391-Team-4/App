@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: TrustPeople.proto
+//  source: route.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
@@ -10,8 +10,8 @@ import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
-import 'TrustPeople.pb.dart' as $0;
-export 'TrustPeople.pb.dart';
+import 'route.pb.dart' as $0;
+export 'route.pb.dart';
 
 class RouteClient extends $grpc.Client {
   static final _$addTrustedUser = $grpc.ClientMethod<$0.User, $0.Empty>(
@@ -40,6 +40,19 @@ class RouteClient extends $grpc.Client {
       '/route.Route/GetAllUserNames',
       ($0.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.UserNames.fromBuffer(value));
+  static final _$getHistoryReocorded =
+      $grpc.ClientMethod<$0.Timestamp, $0.HistoryRecord>(
+          '/route.Route/GetHistoryReocorded',
+          ($0.Timestamp value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.HistoryRecord.fromBuffer(value));
+  static final _$givePermission = $grpc.ClientMethod<$0.Permission, $0.Empty>(
+      '/route.Route/GivePermission',
+      ($0.Permission value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$getLastestImage = $grpc.ClientMethod<$0.Empty, $0.Photo>(
+      '/route.Route/GetLastestImage',
+      ($0.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Photo.fromBuffer(value));
 
   RouteClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -81,6 +94,26 @@ class RouteClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.UserNames> getAllUserNames($0.Empty request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAllUserNames, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.HistoryRecord> getHistoryReocorded(
+      $0.Timestamp request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$getHistoryReocorded, $async.Stream.fromIterable([request]),
+        options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> givePermission($0.Permission request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$givePermission, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.Photo> getLastestImage($0.Empty request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$getLastestImage, $async.Stream.fromIterable([request]),
+        options: options);
   }
 }
 
@@ -132,6 +165,27 @@ abstract class RouteServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
         ($0.UserNames value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Timestamp, $0.HistoryRecord>(
+        'GetHistoryReocorded',
+        getHistoryReocorded_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $0.Timestamp.fromBuffer(value),
+        ($0.HistoryRecord value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Permission, $0.Empty>(
+        'GivePermission',
+        givePermission_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Permission.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.Photo>(
+        'GetLastestImage',
+        getLastestImage_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($0.Photo value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Empty> removeTrustedUser_Pre(
@@ -149,6 +203,21 @@ abstract class RouteServiceBase extends $grpc.Service {
     return getAllUserNames(call, await request);
   }
 
+  $async.Stream<$0.HistoryRecord> getHistoryReocorded_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Timestamp> request) async* {
+    yield* getHistoryReocorded(call, await request);
+  }
+
+  $async.Future<$0.Empty> givePermission_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Permission> request) async {
+    return givePermission(call, await request);
+  }
+
+  $async.Stream<$0.Photo> getLastestImage_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Empty> request) async* {
+    yield* getLastestImage(call, await request);
+  }
+
   $async.Future<$0.Empty> addTrustedUser(
       $grpc.ServiceCall call, $async.Stream<$0.User> request);
   $async.Future<$0.Empty> updateTrustedUser(
@@ -159,5 +228,11 @@ abstract class RouteServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.User request);
   $async.Stream<$0.Photo> getUserPhoto($grpc.ServiceCall call, $0.User request);
   $async.Future<$0.UserNames> getAllUserNames(
+      $grpc.ServiceCall call, $0.Empty request);
+  $async.Stream<$0.HistoryRecord> getHistoryReocorded(
+      $grpc.ServiceCall call, $0.Timestamp request);
+  $async.Future<$0.Empty> givePermission(
+      $grpc.ServiceCall call, $0.Permission request);
+  $async.Stream<$0.Photo> getLastestImage(
       $grpc.ServiceCall call, $0.Empty request);
 }
