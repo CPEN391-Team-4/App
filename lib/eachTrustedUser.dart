@@ -225,6 +225,9 @@ class _EachUsersState extends State<EachUserScreen> {
   }
 
   Future<File> getUserImage(String username) async {
+      setState(() {
+          _image = null;
+      });
     final ret = await connectStart();
     stub = ret[0];
     channel = ret[1];
@@ -241,16 +244,18 @@ class _EachUsersState extends State<EachUserScreen> {
       List<int> imagelist = imageBytes.map((s) => s as int).toList();
       final dir = await getApplicationDocumentsDirectory();
       var file = new File(dir.path+"/test.jpg");
-      print(imagelist);
-      await file.writeAsBytes(imagelist);
+      await file.delete(recursive: true);
+      file = new File(dir.path+"/test.jpg");
+      await file.writeAsBytes(imagelist,
+              mode: FileMode.write, flush:true);
+
       setState(() {
           _image = file;
       });
+
     } catch (e) {
-      // connectEnd();
       print(e);
     }
-
     connectEnd();
   }
 
