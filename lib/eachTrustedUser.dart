@@ -152,7 +152,6 @@ class _EachUsersState extends State<EachUserScreen> {
             ])));
   }
 
-
   Future<void> connectEnd() async {
     await channel.shutdown();
   }
@@ -239,12 +238,14 @@ class _EachUsersState extends State<EachUserScreen> {
         imageBytes += returnUser.image;
       }
       List<int> imagelist = imageBytes.map((s) => s as int).toList();
+      print(imagelist.length);
       final dir = await getApplicationDocumentsDirectory();
-      var file = new File(dir.path+"/test.jpg");
+      File image_file = new File(dir.path + "/test.jpg");
+
       print(imagelist);
-      await file.writeAsBytes(imagelist);
+      await image_file.writeAsBytes(imagelist);
       setState(() {
-          _image = file;
+        _image = image_file;
       });
     } catch (e) {
       // connectEnd();

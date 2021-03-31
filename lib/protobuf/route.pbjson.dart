@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: TrustPeople.proto
+//  source: route.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
@@ -69,3 +69,39 @@ const FaceVerificationResp$json = const {
 
 /// Descriptor for `FaceVerificationResp`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List faceVerificationRespDescriptor = $convert.base64Decode('ChRGYWNlVmVyaWZpY2F0aW9uUmVzcBISCgR1c2VyGAEgASgJUgR1c2VyEh4KCmNvbmZpZGVuY2UYAiABKAJSCmNvbmZpZGVuY2U=');
+@$core.Deprecated('Use historyRecordDescriptor instead')
+const HistoryRecord$json = const {
+  '1': 'HistoryRecord',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'status', '3': 2, '4': 1, '5': 9, '10': 'status'},
+    const {'1': 'Photo', '3': 3, '4': 1, '5': 11, '6': '.route.Photo', '10': 'Photo'},
+    const {'1': 'time', '3': 4, '4': 1, '5': 9, '10': 'time'},
+  ],
+};
+
+/// Descriptor for `HistoryRecord`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List historyRecordDescriptor = $convert.base64Decode('Cg1IaXN0b3J5UmVjb3JkEhIKBG5hbWUYASABKAlSBG5hbWUSFgoGc3RhdHVzGAIgASgJUgZzdGF0dXMSIgoFUGhvdG8YAyABKAsyDC5yb3V0ZS5QaG90b1IFUGhvdG8SEgoEdGltZRgEIAEoCVIEdGltZQ==');
+@$core.Deprecated('Use timestampDescriptor instead')
+const Timestamp$json = const {
+  '1': 'Timestamp',
+  '2': const [
+    const {'1': 'starttime', '3': 1, '4': 1, '5': 9, '10': 'starttime'},
+    const {'1': 'endtime', '3': 2, '4': 1, '5': 9, '10': 'endtime'},
+  ],
+};
+
+/// Descriptor for `Timestamp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List timestampDescriptor = $convert.base64Decode('CglUaW1lc3RhbXASHAoJc3RhcnR0aW1lGAEgASgJUglzdGFydHRpbWUSGAoHZW5kdGltZRgCIAEoCVIHZW5kdGltZQ==');
+@$core.Deprecated('Use permissionDescriptor instead')
+const Permission$json = const {
+  '1': 'Permission',
+  '2': const [
+    const {'1': 'usernames', '3': 1, '4': 1, '5': 9, '10': 'usernames'},
+    const {'1': 'userid', '3': 2, '4': 1, '5': 3, '10': 'userid'},
+    const {'1': 'permit', '3': 3, '4': 1, '5': 8, '10': 'permit'},
+  ],
+};
+
+/// Descriptor for `Permission`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List permissionDescriptor = $convert.base64Decode('CgpQZXJtaXNzaW9uEhwKCXVzZXJuYW1lcxgBIAEoCVIJdXNlcm5hbWVzEhYKBnVzZXJpZBgCIAEoA1IGdXNlcmlkEhYKBnBlcm1pdBgDIAEoCFIGcGVybWl0');
