@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:local_auth/local_auth.dart';
+import 'package:my_app/protobuf/TrustPeople.pb.dart';
+import 'protobuf/TrustPeople.pb.dart';
+import 'protobuf/TrustPeople.pbgrpc.dart';
+import 'package:grpc/grpc.dart';
+import 'connect.dart';
 
 class Live extends StatefulWidget {
     @override
@@ -13,6 +18,8 @@ class _LiveState extends State<Live> {
     bool _inCall = false;
     bool _lockInCall = false;
     bool _unlockInCall = false;
+    var stub;
+    var channel;
 
     Future getImage() async {
         setInCall(true);
@@ -64,17 +71,33 @@ class _LiveState extends State<Live> {
                 },
                 );
     }
+
+    Future<void> connectEnd() async {
+        await channel.shutdown();
+    }
+
     void _unlockDoor(context) async {
         setState(() {
             _unlockInCall = true;
         });
-        await Future.delayed(Duration(seconds: 2), () {
-            setState(() {
-                _unlockInCall = false;
-            });
-            return _alert(context, "Door has been unlocked", "");
-        });
+        final ret = await connectStart();
+        stub = ret[0];
+        channel = ret[1];
+        // await Future.delayed(Duration(seconds: 2), () {
+            // setState(() {
+                // _unlockInCall = false;
+            // });
+            // return _alert(context, "Door has been unlocked", "");
+        // });
+        final permissionRequest = Permission()..permit=true;
+        try {
+            var response = await stub.givePermission(permissionRequest);
+        } catch (e) {
+            print(e);
+        }
+        connectEnd();
     }
+
     void _lockDoor(context) async {
         setState(() {
             _lockInCall = true;

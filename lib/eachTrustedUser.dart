@@ -224,6 +224,9 @@ class _EachUsersState extends State<EachUserScreen> {
   }
 
   Future<File> getUserImage(String username) async {
+      setState(() {
+          _image = null;
+      });
     final ret = await connectStart();
     stub = ret[0];
     channel = ret[1];
@@ -247,11 +250,10 @@ class _EachUsersState extends State<EachUserScreen> {
       setState(() {
         _image = image_file;
       });
+
     } catch (e) {
-      // connectEnd();
       print(e);
     }
-
     connectEnd();
   }
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:grpc/grpc.dart';
-import 'package:my_app/protobuf/route.pb.dart';
+import 'package:my_app/protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 import 'users.dart';
