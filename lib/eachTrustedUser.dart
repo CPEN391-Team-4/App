@@ -243,12 +243,19 @@ class _EachUsersState extends State<EachUserScreen> {
       List<int> imagelist = imageBytes.map((s) => s as int).toList();
       print(imagelist.length);
       final dir = await getApplicationDocumentsDirectory();
-      File image_file = new File(dir.path + "/test.jpg");
+      final imgDir = Directory(dir.path + "/userImages/");
+      if (await imgDir.exists()) {
+          await dir.delete(recursive: true);
+          print("Deleted");
+      }
+      final saveDir = await imgDir.create(recursive: true);
+      File image_file = new File(imgDir.path + "user.jpg");
 
       print(imagelist);
       await image_file.writeAsBytes(imagelist);
+      final newFile = File(imgDir.path + "user.jpg");
       setState(() {
-        _image = image_file;
+        _image = newFile;
       });
 
     } catch (e) {
