@@ -156,9 +156,10 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       Restricted == null) {
                     print("Lack of information");
                   } else {
-                    await AddTrustPeople(_image, userName, showingimage, Restricted);
-                    Navigator.pushReplacement(context, 
-                            MaterialPageRoute(builder: (context) => Users()));
+                    await AddTrustPeople(
+                        _image, userName, showingimage, Restricted);
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Users()));
                   }
                 }),
               ),
