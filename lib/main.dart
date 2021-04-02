@@ -30,12 +30,37 @@ class _MyAppState extends State<MyApp> {
         setCheck();
     }
 
+    Future<void> _alert(string1, string2) async {
+        return showDialog<void>(
+                context: context,
+                barrierDismissible: false, // user must tap button!
+                builder: (BuildContext context) {
+                    return AlertDialog(
+                            content: SingleChildScrollView(
+                                    child: ListBody(
+                                            children: <Widget>[
+                                                Text(string1),
+                                                Text(string2),
+                                            ],
+                                    ),
+                            ),
+                            actions: <Widget>[
+                                TextButton(
+                                        child: Text('Ok'),
+                                        onPressed: () {
+                                            
+                                        },
+                                ),
+                            ],
+                    );
+                },
+                );
+    }
+
     Future<bool> setCheck() async {
         FirebaseMessaging.onMessageOpenedApp.listen((message) async {
             WidgetsFlutterBinding.ensureInitialized();
         });
-        await Future.delayed(Duration(seconds: 6));
-        Get.off(Home(false,0));
     }
   // This widget is the root of your application.
   @override

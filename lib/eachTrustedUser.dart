@@ -1,5 +1,6 @@
+import 'dart:io' as io;
 import 'dart:io';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:my_app/home_widget.dart';
 import 'package:my_app/protobuf/TrustPeople.pb.dart';
@@ -230,32 +231,40 @@ class _EachUsersState extends State<EachUserScreen> {
     final ret = await connectStart();
     stub = ret[0];
     channel = ret[1];
-    print(username);
-    var imageBytes = [];
+
+    var imageBytes = BytesBuilder();
 
     final user = User()..name = username;
+
+    final dir = await getApplicationDocumentsDirectory();
+    final imgDir = Directory(dir.path + "/userImages/");
+
+    if (!await imgDir.exists()) {
+        await imgDir.create(recursive: true);
+        print("Made");
+    }
+
+    // File image_file = new File(imgDir.path + "user.jpg");
+    String imgPath = imgDir.path + "user.jpg";
+    if (await File(imgPath).exists()) {
+        print("Deleted");
+        await File(imgPath).delete();
+    }
 
     try {
       await for (var returnUser in stub.getUserPhoto(user)) {
         //print(returnUser);
-        imageBytes += returnUser.image;
+        imageBytes.add(returnUser.image);
       }
-      List<int> imagelist = imageBytes.map((s) => s as int).toList();
-      print(imagelist.length);
-      final dir = await getApplicationDocumentsDirectory();
-      final imgDir = Directory(dir.path + "/userImages/");
-      if (await imgDir.exists()) {
-          await dir.delete(recursive: true);
-          print("Deleted");
-      }
-      final saveDir = await imgDir.create(recursive: true);
-      File image_file = new File(imgDir.path + "user.jpg");
+      print("Created");
+      await File(imgPath).create();
 
-      print(imagelist);
-      await image_file.writeAsBytes(imagelist);
-      final newFile = File(imgDir.path + "user.jpg");
+      File imgFile = File(imgPath);
+
+      imgFile.writeAsBytesSync(imageBytes.toBytes());
+      imageCache.clear();
       setState(() {
-        _image = newFile;
+        _image = imgFile;
       });
 
     } catch (e) {
