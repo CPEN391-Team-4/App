@@ -9,8 +9,8 @@ import 'package:grpc/grpc.dart';
 import 'connect.dart';
 
 class Live extends StatefulWidget {
-    @override
-    _LiveState createState() => new _LiveState();
+  @override
+  _LiveState createState() => new _LiveState();
 }
 
 class _LiveState extends State<Live> {
@@ -109,147 +109,133 @@ class _LiveState extends State<Live> {
         });
         permission(false);
     }
-    void _door(context, unlock) async{
-        var local_auth = LocalAuthentication();
-        bool didAuthenticate = 
-                await local_auth.authenticate(
-                        localizedReason: 'Please authenticate to unlock door',
-                );
-        if (didAuthenticate == false) {
-                return _alert(context, "Authentication Failed", "Please try again");
-        }
-        if (unlock == true) {
-            _unlockDoor(context);
-        }
-        else {
-            _lockDoor(context);
-        }
+
+  void _door(context, unlock) async {
+    var local_auth = LocalAuthentication();
+    bool didAuthenticate = await local_auth.authenticate(
+      localizedReason: 'Please authenticate to unlock door',
+    );
+    if (didAuthenticate == false) {
+      return _alert(context, "Authentication Failed", "Please try again");
     }
-    Widget _lockButton(context) {
-        if (_lockInCall == false) {
-            return RaisedButton(
-                    onPressed: () {
-                        _door(context, false);
-                    }, 
-                    child: Text("Lock Door"),
-            );
-        }
-        else {
-
-            return RaisedButton(
-                    onPressed: () {
-                    },
-                    child: Padding(
-                                   padding: EdgeInsets.all(2.7),
-                                   child:
-                                   Center(child:CircularProgressIndicator(),),),
-            );
-        }
+    if (unlock == true) {
+      _unlockDoor(context);
+    } else {
+      _lockDoor(context);
     }
-    Widget _unLockButton(context) {
-        if (_unlockInCall == false) {
-            return RaisedButton(
-                    onPressed: () {
-                        _door(context, true);
-                    }, 
-                    child: Text("Unlock Door"),
-            );
-        }
-        else {
+  }
 
-            return RaisedButton(
-                    onPressed: () {
-                    },
-                    child: Padding(
-                                   padding: EdgeInsets.all(2.7),
-                                   child:
-                                   Center(child:CircularProgressIndicator(),),),
-            );
-        }
-    }
-
-    @override
-    Widget build(BuildContext context) {
-        var _width = MediaQuery.of(context).size.width;
-    return Scaffold(
-        appBar: AppBar(
-                title: Text("Live View"),
-                centerTitle: true,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-                children: <Widget>[
-                        // top: 100,
-                        // right: 50.0,
-                        // showInCall(),
-                Padding(
-                        padding: EdgeInsets.symmetric(horizontal: _width*0.25),
-                        child:
-                        Container(
-                        width: 10.0,
-                        child: RaisedButton(
-                                onPressed: getImage,
-                                child: Text("Request Live Image"),
-                        ),
-                ),),
-
-
-                SizedBox(height:10),
-
-                setImage(_imgFile),
-                SizedBox(height: 30),
-
-                Padding(
-                        padding: EdgeInsets.symmetric(horizontal: _width*0.1),
-                        child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget> [
-                                    _unLockButton(context),
-                                    SizedBox(width: 20),
-                                    _lockButton(context),
-
-                                ],
-                        ),
-                )
-
-                ],
+  Widget _lockButton(context) {
+    if (_lockInCall == false) {
+      return RaisedButton(
+        onPressed: () {
+          _door(context, false);
+        },
+        child: Text("Lock Door"),
+      );
+    } else {
+      return RaisedButton(
+        onPressed: () {},
+        child: Padding(
+          padding: EdgeInsets.all(2.7),
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
         ),
+      );
+    }
+  }
+
+  Widget _unLockButton(context) {
+    if (_unlockInCall == false) {
+      return RaisedButton(
+        onPressed: () {
+          _door(context, true);
+        },
+        child: Text("Unlock Door"),
+      );
+    } else {
+      return RaisedButton(
+        onPressed: () {},
+        child: Padding(
+          padding: EdgeInsets.all(2.7),
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var _width = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Live View"),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          children: <Widget>[
+            // top: 100,
+            // right: 50.0,
+            // showInCall(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: _width * 0.25),
+              child: Container(
+                width: 10.0,
+                child: RaisedButton(
+                  onPressed: getImage,
+                  child: Text("Request Live Image"),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 10),
+
+            setImage(_imgFile),
+            SizedBox(height: 30),
+
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: _width * 0.1),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _unLockButton(context),
+                  SizedBox(width: 20),
+                  _lockButton(context),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
+  }
+
+  Widget setImage(File file) {
+    if (_inCall == true) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      if (file.path == '') {
+        return new Container(
+            width: 250.0,
+            height: 250.0,
+            alignment: Alignment.center,
+            decoration: new BoxDecoration(
+                image:
+                    DecorationImage(image: AssetImage('assets/profile.png'))));
+      } else {
+        return new Container(
+            width: 250.0,
+            height: 250.0,
+            alignment: Alignment.center,
+            child: Image.file(file));
+      }
     }
-
-
-    Widget setImage(File file) {
-        if (_inCall == true) {
-            return Center(
-                    child: CircularProgressIndicator(),
-            );
-        }
-        else {
-            if (file.path == '') {
-                return new Container(
-                        width: 250.0,
-                        height: 250.0,
-                        alignment: Alignment.center,
-                        decoration: new BoxDecoration(
-                                image: DecorationImage(
-                                        image: AssetImage('assets/profile.png')
-                                )
-                        )
-                );
-            }
-            else {
-                return new Container(
-                        width: 250.0,
-                        height: 250.0,
-                        alignment: Alignment.center,
-                        child: Image.file(file)
-                );
-
-            }
-
-        }
-    }
+  }
 }
-
