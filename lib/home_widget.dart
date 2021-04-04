@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 import 'live.dart';
 import 'history.dart';
 import 'users.dart';
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
     bool notif;
     _HomeState(this.notif, this.selected);
 
+
     void init() async {
         final notification = FirebaseNotification();
         FlutterLocalNotificationsPlugin local_not = await notification.init();
@@ -44,6 +46,7 @@ class _HomeState extends State<Home> {
     }
 
     void onNotification() {
+        Get.off(Home(false, 0));
         setState(() {
             selected = 0;
         });

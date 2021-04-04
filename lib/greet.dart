@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'signup.dart';
+import 'package:get/get.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'home_widget.dart';
 
 
 class Greet extends StatefulWidget {
@@ -11,6 +14,16 @@ class Greet extends StatefulWidget {
 }
 
 class _GreetState extends State<Greet> {
+    @override
+    void initState() {
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {
+            WidgetsFlutterBinding.ensureInitialized();
+            print("hello*****");
+            Future.delayed(Duration(seconds:2), () {
+
+            });
+        });
+    }
     @override
     Widget build(BuildContext context) {
         var _width = MediaQuery.of(context).size.width;
