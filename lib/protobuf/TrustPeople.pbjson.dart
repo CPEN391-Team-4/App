@@ -64,24 +64,45 @@ const FaceVerificationResp$json = const {
   '2': const [
     const {'1': 'user', '3': 1, '4': 1, '5': 9, '10': 'user'},
     const {'1': 'confidence', '3': 2, '4': 1, '5': 2, '10': 'confidence'},
+    const {'1': 'accept', '3': 3, '4': 1, '5': 8, '10': 'accept'},
   ],
 };
 
 /// Descriptor for `FaceVerificationResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List faceVerificationRespDescriptor = $convert.base64Decode('ChRGYWNlVmVyaWZpY2F0aW9uUmVzcBISCgR1c2VyGAEgASgJUgR1c2VyEh4KCmNvbmZpZGVuY2UYAiABKAJSCmNvbmZpZGVuY2U=');
+final $typed_data.Uint8List faceVerificationRespDescriptor = $convert.base64Decode('ChRGYWNlVmVyaWZpY2F0aW9uUmVzcBISCgR1c2VyGAEgASgJUgR1c2VyEh4KCmNvbmZpZGVuY2UYAiABKAJSCmNvbmZpZGVuY2USFgoGYWNjZXB0GAMgASgIUgZhY2NlcHQ=');
 @$core.Deprecated('Use historyRecordDescriptor instead')
 const HistoryRecord$json = const {
   '1': 'HistoryRecord',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'status', '3': 2, '4': 1, '5': 9, '10': 'status'},
-    const {'1': 'Photo', '3': 3, '4': 1, '5': 11, '6': '.route.Photo', '10': 'Photo'},
+    const {'1': 'imageLocation', '3': 3, '4': 1, '5': 9, '10': 'imageLocation'},
     const {'1': 'time', '3': 4, '4': 1, '5': 9, '10': 'time'},
   ],
 };
 
 /// Descriptor for `HistoryRecord`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List historyRecordDescriptor = $convert.base64Decode('Cg1IaXN0b3J5UmVjb3JkEhIKBG5hbWUYASABKAlSBG5hbWUSFgoGc3RhdHVzGAIgASgJUgZzdGF0dXMSIgoFUGhvdG8YAyABKAsyDC5yb3V0ZS5QaG90b1IFUGhvdG8SEgoEdGltZRgEIAEoCVIEdGltZQ==');
+final $typed_data.Uint8List historyRecordDescriptor = $convert.base64Decode('Cg1IaXN0b3J5UmVjb3JkEhIKBG5hbWUYASABKAlSBG5hbWUSFgoGc3RhdHVzGAIgASgJUgZzdGF0dXMSJAoNaW1hZ2VMb2NhdGlvbhgDIAEoCVINaW1hZ2VMb2NhdGlvbhISCgR0aW1lGAQgASgJUgR0aW1l');
+@$core.Deprecated('Use historyRecordsDescriptor instead')
+const HistoryRecords$json = const {
+  '1': 'HistoryRecords',
+  '2': const [
+    const {'1': 'record', '3': 1, '4': 3, '5': 11, '6': '.route.HistoryRecord', '10': 'record'},
+  ],
+};
+
+/// Descriptor for `HistoryRecords`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List historyRecordsDescriptor = $convert.base64Decode('Cg5IaXN0b3J5UmVjb3JkcxIsCgZyZWNvcmQYASADKAsyFC5yb3V0ZS5IaXN0b3J5UmVjb3JkUgZyZWNvcmQ=');
+@$core.Deprecated('Use imageLocationDescriptor instead')
+const ImageLocation$json = const {
+  '1': 'ImageLocation',
+  '2': const [
+    const {'1': 'address', '3': 1, '4': 1, '5': 9, '10': 'address'},
+  ],
+};
+
+/// Descriptor for `ImageLocation`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List imageLocationDescriptor = $convert.base64Decode('Cg1JbWFnZUxvY2F0aW9uEhgKB2FkZHJlc3MYASABKAlSB2FkZHJlc3M=');
 @$core.Deprecated('Use timestampDescriptor instead')
 const Timestamp$json = const {
   '1': 'Timestamp',
