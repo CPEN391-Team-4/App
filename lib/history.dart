@@ -9,17 +9,24 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-    void writeToDisk() async {
-    }
     @override
     Widget build(BuildContext context) {
         return Scaffold(
                 appBar: AppBar(
                         title: Text('History'),
                 ),
-                body: RaisedButton(
-                        child: Text("File IO"),
-                        onPressed: writeToDisk,
+                body: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: ListView(
+                                children: <Widget>[
+                                    Row(
+                                            children: <Widget>[
+                                                Text("Hello"),
+                                                Text("This"),
+                                            ],
+                                    ),
+                                ],
+                        ),
                 ),
         );
     }
