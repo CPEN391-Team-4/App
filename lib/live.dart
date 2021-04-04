@@ -80,6 +80,10 @@ class _LiveState extends State<Live> {
         setState(() {
             _unlockInCall = true;
         });
+        permission(true);
+    }
+
+    void permission(permit) async {
         final ret = await connectStart();
         stub = ret[0];
         channel = ret[1];
@@ -89,25 +93,21 @@ class _LiveState extends State<Live> {
             // });
             // return _alert(context, "Door has been unlocked", "");
         // });
-        final permissionRequest = Permission()..permit=true;
+        final permissionRequest = Permission()..permit=permit;
         try {
             var response = await stub.givePermission(permissionRequest);
         } catch (e) {
             print(e);
         }
         connectEnd();
+
     }
 
     void _lockDoor(context) async {
         setState(() {
             _lockInCall = true;
         });
-        await Future.delayed(Duration(seconds: 2), () {
-            setState(() {
-                _lockInCall = false;
-            });
-            return _alert(context, "Door has been locked", "");
-        });
+        permission(false);
     }
     void _door(context, unlock) async{
         var local_auth = LocalAuthentication();

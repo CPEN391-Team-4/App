@@ -31,6 +31,7 @@ class _EachUsersState extends State<EachUserScreen> {
   bool Restricted;
   String valuechoose;
   List listitem = ["limit access", "free access"];
+  var imgAsBytes = null;
 
   Future getImage(int source) async {
     var image = PickedFile("");
@@ -44,6 +45,7 @@ class _EachUsersState extends State<EachUserScreen> {
     setState(() {
       if (image != null) {
         _image = File(image.path);
+        imgAsBytes = null;
       } else {
         print("No Image Selected");
       }
@@ -236,35 +238,34 @@ class _EachUsersState extends State<EachUserScreen> {
 
     final user = User()..name = username;
 
-    final dir = await getApplicationDocumentsDirectory();
-    final imgDir = Directory(dir.path + "/userImages/");
-
-    if (!await imgDir.exists()) {
-        await imgDir.create(recursive: true);
-        print("Made");
-    }
-
+    // final dir = await getApplicationDocumentsDirectory();
+    // final imgDir = Directory(dir.path + "/userImages/");
+    // if (!await imgDir.exists()) {
+        // await imgDir.create(recursive: true);
+        // print("Made");
+    // }
     // File image_file = new File(imgDir.path + "user.jpg");
-    String imgPath = imgDir.path + "user.jpg";
-    if (await File(imgPath).exists()) {
-        print("Deleted");
-        await File(imgPath).delete();
-    }
+    // String imgPath = imgDir.path + "user.jpg";
+    // if (await File(imgPath).exists()) {
+        // print("Deleted");
+        // await File(imgPath).delete();
+    // }
 
     try {
       await for (var returnUser in stub.getUserPhoto(user)) {
-        //print(returnUser);
         imageBytes.add(returnUser.image);
       }
       print("Created");
-      await File(imgPath).create();
 
-      File imgFile = File(imgPath);
+      // await File(imgPath).create();
+      // File imgFile = File(imgPath);
+      // imgFile.writeAsBytesSync(imageBytes.toBytes());
 
-      imgFile.writeAsBytesSync(imageBytes.toBytes());
       imageCache.clear();
+
       setState(() {
-        _image = imgFile;
+        // _image = imgFile;
+        imgAsBytes = imageBytes.toBytes();
       });
 
     } catch (e) {
@@ -274,20 +275,30 @@ class _EachUsersState extends State<EachUserScreen> {
   }
 
   Widget setImage(File file) {
-    if (file == null) {
-      return new Container(
-          width: 250.0,
-          height: 250.0,
-          alignment: Alignment.center,
-          decoration: new BoxDecoration(
-              image: DecorationImage(image: AssetImage('assets/profile.png'))));
-    } else {
-      return new Container(
-          width: 250.0,
-          height: 250.0,
-          alignment: Alignment.center,
-          child: Image.file(file));
-    }
+      if (imgAsBytes != null) {
+          return new Container(
+                  width: 250.0,
+                  height: 250.0,
+                  alignment: Alignment.center,
+                  decoration: new BoxDecoration(
+                          image: DecorationImage(image:MemoryImage(imgAsBytes)))
+                  );
+      }
+
+      if (file == null) {
+          return new Container(
+                  width: 250.0,
+                  height: 250.0,
+                  alignment: Alignment.center,
+                  decoration: new BoxDecoration(
+                          image: DecorationImage(image: AssetImage('assets/profile.png'))));
+      } else {
+          return new Container(
+                  width: 250.0,
+                  height: 250.0,
+                  alignment: Alignment.center,
+                  child: Image.file(file));
+      }
   }
 }
 
