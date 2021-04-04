@@ -62,6 +62,11 @@ class RouteClient extends $grpc.Client {
       '/route.Route/GetLatestImage',
       ($0.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Photo.fromBuffer(value));
+  static final _$updateDeviceToken =
+      $grpc.ClientMethod<$0.DeviceVerify, $0.Empty>(
+          '/route.Route/UpdateDeviceToken',
+          ($0.DeviceVerify value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
 
   RouteClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -133,6 +138,11 @@ class RouteClient extends $grpc.Client {
     return $createStreamingCall(
         _$getLatestImage, $async.Stream.fromIterable([request]),
         options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> updateDeviceToken($0.DeviceVerify request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$updateDeviceToken, request, options: options);
   }
 }
 
@@ -219,6 +229,13 @@ abstract class RouteServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
         ($0.Photo value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.DeviceVerify, $0.Empty>(
+        'UpdateDeviceToken',
+        updateDeviceToken_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.DeviceVerify.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Empty> removeTrustedUser_Pre(
@@ -261,6 +278,11 @@ abstract class RouteServiceBase extends $grpc.Service {
     yield* getLatestImage(call, await request);
   }
 
+  $async.Future<$0.Empty> updateDeviceToken_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.DeviceVerify> request) async {
+    return updateDeviceToken(call, await request);
+  }
+
   $async.Future<$0.Empty> addTrustedUser(
       $grpc.ServiceCall call, $async.Stream<$0.User> request);
   $async.Future<$0.Empty> updateTrustedUser(
@@ -282,4 +304,6 @@ abstract class RouteServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.Permission request);
   $async.Stream<$0.Photo> getLatestImage(
       $grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.Empty> updateDeviceToken(
+      $grpc.ServiceCall call, $0.DeviceVerify request);
 }

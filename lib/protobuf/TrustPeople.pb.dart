@@ -655,3 +655,64 @@ class Permission extends $pb.GeneratedMessage {
   void clearPermit() => clearField(3);
 }
 
+class DeviceVerify extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeviceVerify', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceid')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'token')
+    ..hasRequiredFields = false
+  ;
+
+  DeviceVerify._() : super();
+  factory DeviceVerify({
+    $core.String? deviceid,
+    $core.String? token,
+  }) {
+    final _result = create();
+    if (deviceid != null) {
+      _result.deviceid = deviceid;
+    }
+    if (token != null) {
+      _result.token = token;
+    }
+    return _result;
+  }
+  factory DeviceVerify.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DeviceVerify.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DeviceVerify clone() => DeviceVerify()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DeviceVerify copyWith(void Function(DeviceVerify) updates) => super.copyWith((message) => updates(message as DeviceVerify)) as DeviceVerify; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DeviceVerify create() => DeviceVerify._();
+  DeviceVerify createEmptyInstance() => create();
+  static $pb.PbList<DeviceVerify> createRepeated() => $pb.PbList<DeviceVerify>();
+  @$core.pragma('dart2js:noInline')
+  static DeviceVerify getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeviceVerify>(create);
+  static DeviceVerify? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get deviceid => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set deviceid($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDeviceid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDeviceid() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get token => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set token($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearToken() => clearField(2);
+}
+

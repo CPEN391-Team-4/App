@@ -126,3 +126,14 @@ const Permission$json = const {
 
 /// Descriptor for `Permission`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List permissionDescriptor = $convert.base64Decode('CgpQZXJtaXNzaW9uEhwKCXVzZXJuYW1lcxgBIAEoCVIJdXNlcm5hbWVzEhYKBnVzZXJpZBgCIAEoA1IGdXNlcmlkEhYKBnBlcm1pdBgDIAEoCFIGcGVybWl0');
+@$core.Deprecated('Use deviceVerifyDescriptor instead')
+const DeviceVerify$json = const {
+  '1': 'DeviceVerify',
+  '2': const [
+    const {'1': 'deviceid', '3': 1, '4': 1, '5': 9, '10': 'deviceid'},
+    const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+  ],
+};
+
+/// Descriptor for `DeviceVerify`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List deviceVerifyDescriptor = $convert.base64Decode('CgxEZXZpY2VWZXJpZnkSGgoIZGV2aWNlaWQYASABKAlSCGRldmljZWlkEhQKBXRva2VuGAIgASgJUgV0b2tlbg==');
