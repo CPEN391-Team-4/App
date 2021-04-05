@@ -14,101 +14,105 @@ class Live extends StatefulWidget {
 }
 
 class _LiveState extends State<Live> {
-    File _imgFile = new File('');
-    bool _inCall = false;
-    bool _lockInCall = false;
-    bool _unlockInCall = false;
-    var stub;
-    var channel;
+  File _imgFile = new File('');
+  bool _inCall = false;
+  bool _lockInCall = false;
+  bool _unlockInCall = false;
+  var stub;
+  var channel;
 
-    Future getImage() async {
-        setInCall(true);
-        await Future.delayed(Duration(seconds: 2), () {
-            setInCall(false);
-        });
-        setState(() {
-            _imgFile = File("/data/user/0/com.example.my_app/cache/image_picker224874259728420569.jpg");
-        });
-    }
-    Future setInCall(bool val) async {
-        setState(() {
-            _inCall = val;
-        });
-    }
-    Widget showInCall() {
-        if (_inCall == true) {
-            return Center(
-                    child: CircularProgressIndicator(),
-            );
-        }
-        else {
-            return Container();
-        }
-    }
-    Future<void> _alert(context, string1, string2) async {
-        return showDialog<void>(
-                context: context,
-                barrierDismissible: false, // user must tap button!
-                builder: (BuildContext context) {
-                    return AlertDialog(
-                            content: SingleChildScrollView(
-                                    child: ListBody(
-                                            children: <Widget>[
-                                                Text(string1),
-                                                Text(string2),
-                                            ],
-                                    ),
-                            ),
-                            actions: <Widget>[
-                                TextButton(
-                                        child: Text('Ok'),
-                                        onPressed: () {
-                                            Navigator.pop(context);
-                                        },
-                                ),
-                            ],
-                    );
-                },
-                );
-    }
+  var imgAsBytes = null;
 
-    Future<void> connectEnd() async {
-        await channel.shutdown();
-    }
+  Future getImage() async {
+    setInCall(true);
+    await Future.delayed(Duration(seconds: 2), () {
+      setInCall(false);
+    });
+    setState(() {
+      _imgFile = File(
+          "/data/user/0/com.example.my_app/cache/image_picker224874259728420569.jpg");
+    });
+  }
 
-    void _unlockDoor(context) async {
-        setState(() {
-            _unlockInCall = true;
-        });
-        permission(true);
-    }
+  Future setInCall(bool val) async {
+    setState(() {
+      _inCall = val;
+    });
+  }
 
-    void permission(permit) async {
-        final ret = await connectStart();
-        stub = ret[0];
-        channel = ret[1];
-        // await Future.delayed(Duration(seconds: 2), () {
-            // setState(() {
-                // _unlockInCall = false;
-            // });
-            // return _alert(context, "Door has been unlocked", "");
-        // });
-        final permissionRequest = Permission()..permit=permit;
-        try {
-            var response = await stub.givePermission(permissionRequest);
-        } catch (e) {
-            print(e);
-        }
-        connectEnd();
-
+  Widget showInCall() {
+    if (_inCall == true) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      return Container();
     }
+  }
 
-    void _lockDoor(context) async {
-        setState(() {
-            _lockInCall = true;
-        });
-        permission(false);
+  Future<void> _alert(context, string1, string2) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(string1),
+                Text(string2),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> connectEnd() async {
+    await channel.shutdown();
+  }
+
+  void _unlockDoor(context) async {
+    setState(() {
+      _unlockInCall = true;
+    });
+    permission(true);
+  }
+
+  void permission(permit) async {
+    final ret = await connectStart();
+    stub = ret[0];
+    channel = ret[1];
+    // await Future.delayed(Duration(seconds: 2), () {
+    // setState(() {
+    // _unlockInCall = false;
+    // });
+    // return _alert(context, "Door has been unlocked", "");
+    // });
+    final permissionRequest = Permission()..permit = permit;
+    try {
+      var response = await stub.givePermission(permissionRequest);
+    } catch (e) {
+      print(e);
     }
+    connectEnd();
+  }
+
+  void _lockDoor(context) async {
+    setState(() {
+      _lockInCall = true;
+    });
+    permission(false);
+  }
 
   void _door(context, unlock) async {
     var local_auth = LocalAuthentication();
@@ -216,26 +220,28 @@ class _LiveState extends State<Live> {
   }
 
   Widget setImage(File file) {
-    if (_inCall == true) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
+    if (imgAsBytes != null) {
+      return new Container(
+          width: 250.0,
+          height: 250.0,
+          alignment: Alignment.center,
+          decoration: new BoxDecoration(
+              image: DecorationImage(image: MemoryImage(imgAsBytes))));
+    }
+
+    if (file == null) {
+      return new Container(
+          width: 250.0,
+          height: 250.0,
+          alignment: Alignment.center,
+          decoration: new BoxDecoration(
+              image: DecorationImage(image: AssetImage('assets/profile.png'))));
     } else {
-      if (file.path == '') {
-        return new Container(
-            width: 250.0,
-            height: 250.0,
-            alignment: Alignment.center,
-            decoration: new BoxDecoration(
-                image:
-                    DecorationImage(image: AssetImage('assets/profile.png'))));
-      } else {
-        return new Container(
-            width: 250.0,
-            height: 250.0,
-            alignment: Alignment.center,
-            child: Image.file(file));
-      }
+      return new Container(
+          width: 250.0,
+          height: 250.0,
+          alignment: Alignment.center,
+          child: Image.file(file));
     }
   }
 }

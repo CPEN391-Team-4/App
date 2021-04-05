@@ -40,6 +40,7 @@ class _EachRecordState extends State<EachrecordScreen> {
   String accesstime;
   String image_address;
   File _image;
+  var imgAsBytes = null;
   final picker = ImagePicker();
   bool Restricted;
   String valuechoose;
@@ -133,25 +134,21 @@ class _EachRecordState extends State<EachrecordScreen> {
     final ret = await connectStart();
     stub = ret[0];
     channel = ret[1];
-    print(image_address);
-    var imageBytes = [];
+
+    var imageBytes = BytesBuilder();
 
     final imagelocation = ImageLocation()..address = image_address;
 
     try {
-      await for (var returnImage in stub.getHistoryImage(imagelocation)) {
-        //print(returnUser);
-        imageBytes += returnImage.image;
+      await for (var returnUser in stub.getHistoryImage(imagelocation)) {
+        imageBytes.add(returnUser.image);
       }
-      List<int> imagelist = imageBytes.map((s) => s as int).toList();
-      final dir = await getApplicationDocumentsDirectory();
-      var file = new File(dir.path + "/test1.jpg");
-      await file.delete(recursive: true);
-      file = new File(dir.path + "/test1.jpg");
-      await file.writeAsBytes(imagelist, mode: FileMode.write, flush: true);
+      print("Created");
+
+      imageCache.clear();
 
       setState(() {
-        _image = file;
+        imgAsBytes = imageBytes.toBytes();
       });
     } catch (e) {
       print(e);
@@ -160,6 +157,15 @@ class _EachRecordState extends State<EachrecordScreen> {
   }
 
   Widget setImage(File file) {
+    if (imgAsBytes != null) {
+      return new Container(
+          width: 250.0,
+          height: 250.0,
+          alignment: Alignment.center,
+          decoration: new BoxDecoration(
+              image: DecorationImage(image: MemoryImage(imgAsBytes))));
+    }
+
     if (file == null) {
       return new Container(
           width: 250.0,
