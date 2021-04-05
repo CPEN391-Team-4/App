@@ -227,9 +227,9 @@ class _EachUsersState extends State<EachUserScreen> {
   }
 
   Future<File> getUserImage(String username) async {
-      setState(() {
-          _image = null;
-      });
+    setState(() {
+      _image = null;
+    });
     final ret = await connectStart();
     stub = ret[0];
     channel = ret[1];
@@ -241,14 +241,14 @@ class _EachUsersState extends State<EachUserScreen> {
     // final dir = await getApplicationDocumentsDirectory();
     // final imgDir = Directory(dir.path + "/userImages/");
     // if (!await imgDir.exists()) {
-        // await imgDir.create(recursive: true);
-        // print("Made");
+    // await imgDir.create(recursive: true);
+    // print("Made");
     // }
     // File image_file = new File(imgDir.path + "user.jpg");
     // String imgPath = imgDir.path + "user.jpg";
     // if (await File(imgPath).exists()) {
-        // print("Deleted");
-        // await File(imgPath).delete();
+    // print("Deleted");
+    // await File(imgPath).delete();
     // }
 
     try {
@@ -267,7 +267,6 @@ class _EachUsersState extends State<EachUserScreen> {
         // _image = imgFile;
         imgAsBytes = imageBytes.toBytes();
       });
-
     } catch (e) {
       print(e);
     }
@@ -275,57 +274,28 @@ class _EachUsersState extends State<EachUserScreen> {
   }
 
   Widget setImage(File file) {
-      if (imgAsBytes != null) {
-          return new Container(
-                  width: 250.0,
-                  height: 250.0,
-                  alignment: Alignment.center,
-                  decoration: new BoxDecoration(
-                          image: DecorationImage(image:MemoryImage(imgAsBytes)))
-                  );
-      }
+    if (imgAsBytes != null) {
+      return new Container(
+          width: 250.0,
+          height: 250.0,
+          alignment: Alignment.center,
+          decoration: new BoxDecoration(
+              image: DecorationImage(image: MemoryImage(imgAsBytes))));
+    }
 
-      if (file == null) {
-          return new Container(
-                  width: 250.0,
-                  height: 250.0,
-                  alignment: Alignment.center,
-                  decoration: new BoxDecoration(
-                          image: DecorationImage(image: AssetImage('assets/profile.png'))));
-      } else {
-          return new Container(
-                  width: 250.0,
-                  height: 250.0,
-                  alignment: Alignment.center,
-                  child: Image.file(file));
-      }
+    if (file == null) {
+      return new Container(
+          width: 250.0,
+          height: 250.0,
+          alignment: Alignment.center,
+          decoration: new BoxDecoration(
+              image: DecorationImage(image: AssetImage('assets/profile.png'))));
+    } else {
+      return new Container(
+          width: 250.0,
+          height: 250.0,
+          alignment: Alignment.center,
+          child: Image.file(file));
+    }
   }
 }
-
-// class Storage {
-//   Future<String> get localPath async {
-//     final dir = await getApplicationDocumentsDirectory();
-//     return dir.path;
-//   }
-
-//   Future<File> get localFile async {
-//     final path = await localPath;
-//     return File('$path/tester.jpg');
-//   }
-
-//   Future<List<int>> readData() async {
-//     try {
-//       final file = await localFile;
-//       var body = await file.readAsBytes();
-
-//       return body;
-//     } catch (e) {
-//       return e;
-//     }
-//   }
-
-//   Future<File> writeData(List<int> data) async {
-//     final file = await localFile;
-//     return file.writeAsBytes(data);
-//   }
-// }
