@@ -5,7 +5,7 @@ import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 
 connectStart() {
-  final channel = ClientChannel('192.168.0.100',
+  final channel = ClientChannel('192.168.0.101',
       port: 9000,
       options:
           const ChannelOptions(credentials: ChannelCredentials.insecure()));
