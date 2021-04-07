@@ -5,6 +5,9 @@ import 'package:local_auth/local_auth.dart';
 import 'package:my_app/protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
+import 'package:my_app/protobuf/video.pb.dart';
+import 'protobuf/video.pb.dart';
+import 'protobuf/video.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 import 'connect.dart';
 
@@ -89,6 +92,7 @@ class _LiveState extends State<Live> {
   }
 
   void permission(permit) async {
+    print("enter give permission call");
     final ret = await connectStart();
     stub = ret[0];
     channel = ret[1];
@@ -191,7 +195,9 @@ class _LiveState extends State<Live> {
               child: Container(
                 width: 10.0,
                 child: RaisedButton(
-                  onPressed: getImage,
+                  onPressed: (() {
+                    getLiveStream();
+                  }),
                   child: Text("Request Live Image"),
                 ),
               ),
@@ -217,6 +223,40 @@ class _LiveState extends State<Live> {
         ),
       ),
     );
+  }
+
+  Future<File> getLiveStream() async {
+    setState(() {
+      _imgFile = null;
+    });
+    final ret = await connectStart();
+    stub = ret[0];
+    channel = ret[1];
+
+    final streamRequest = PullVideoStreamReq();
+
+    try {
+      await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
+        if (streamResponse.closed == true) {
+          connectEnd();
+        }
+        var imageBytes = BytesBuilder();
+        imageBytes.add(streamResponse.video.frame.chunk);
+        setState(() {
+          imgAsBytes = imageBytes.toBytes();
+        });
+        imageCache.clear();
+      }
+
+      // imageCache.clear();
+
+      // setState(() {
+      //   imgAsBytes = imageBytes.toBytes();
+      // });
+    } catch (e) {
+      print(e);
+    }
+    connectEnd();
   }
 
   Widget setImage(File file) {
