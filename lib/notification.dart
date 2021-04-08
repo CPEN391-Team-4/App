@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:device_info/device_info.dart';
+import 'package:device_info/device_info.dart'; 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -52,12 +52,13 @@ class FirebaseNotification {
     messaging.getToken().then((token) async {
       print(token);
       String deviceid = await _getId();
+      print(deviceid);
       updateDeviceInfo(token, deviceid);
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("Message received******************");
-      await local_not.show(1, "Title", "Body", spec, payload: "payload");
+      await local_not.show(1, message.notification.title, message.notification.body, spec, payload: "payload");
     });
 
     // FirebaseMessaging.onMessageOpenedApp.listen((message) {
@@ -88,12 +89,17 @@ class FirebaseNotification {
   }
 
   Future<String> _getId() async {
-    print("111111111111");
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    print("22222222222");
-    AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-    print(androidDeviceInfo);
-    print("deviceinfo");
-    return androidDeviceInfo.androidId; // unique ID on Android
+      var deviceId = "";
+      final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+        var build = await deviceInfoPlugin.androidInfo;
+        deviceId = build.androidId;
+    }
+    if (Platform.isIOS) {
+        var build = await deviceInfoPlugin.iosInfo;
+        deviceId = build.identifierForVendor;
+
+    }
+    return deviceId;
   }
 }
