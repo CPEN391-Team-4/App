@@ -72,8 +72,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
               setImage(_image),
               SizedBox(height: 10),
               TextButton(
-                // textColor: Colors.white,
-                // color: Colors.blue,
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
                   "Add Photo",
                   style: TextStyle(color: Colors.black),
@@ -142,8 +142,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 height: 20,
               ),
               TextButton(
-                // textColor: Colors.white,
-                // color: Colors.blue,
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
                   "Add User",
                   style: TextStyle(color: Colors.black),

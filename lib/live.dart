@@ -142,6 +142,8 @@ class _LiveState extends State<Live> {
   Widget _lockButton(context) {
     if (_lockInCall == false) {
       return TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
         onPressed: () {
           _door(context, false);
         },
@@ -149,11 +151,13 @@ class _LiveState extends State<Live> {
       );
     } else {
       return TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
         onPressed: () {},
         child: Padding(
           padding: EdgeInsets.all(2.7),
           child: Center(
-            child: CircularProgressIndicator(),
+            child: Text("Lock Door"),
           ),
         ),
       );
@@ -163,6 +167,8 @@ class _LiveState extends State<Live> {
   Widget _unLockButton(context) {
     if (_unlockInCall == false) {
       return TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
         onPressed: () {
           _door(context, true);
         },
@@ -170,11 +176,13 @@ class _LiveState extends State<Live> {
       );
     } else {
       return TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
         onPressed: () {},
         child: Padding(
           padding: EdgeInsets.all(2.7),
           child: Center(
-            child: CircularProgressIndicator(),
+            child: Text("Unlock Door"),
           ),
         ),
       );
@@ -200,7 +208,10 @@ class _LiveState extends State<Live> {
               padding: EdgeInsets.symmetric(horizontal: _width * 0.25),
               child: Container(
                 width: 10.0,
-                child: RaisedButton(
+                child: TextButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.lightGreen)),
                   onPressed: (() {
                     LiveStream();
                   }),
