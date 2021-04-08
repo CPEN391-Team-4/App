@@ -39,91 +39,90 @@ class _HistoryState extends State<History> {
   }
 
   void _selectFromDate() async {
-      final DateTime pickedDate = await showDatePicker(
-              context: context,
-              initialDate: fromTime,
-              firstDate: DateTime(2015),
-              lastDate: DateTime(2150));
-      if (pickedDate != null)
-          setState(() {
-              fromTime = pickedDate;
-          });
+    final DateTime pickedDate = await showDatePicker(
+        context: context,
+        initialDate: fromTime,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2150));
+    if (pickedDate != null)
+      setState(() {
+        fromTime = pickedDate;
+      });
   }
 
   void _selectToDate() async {
-      final DateTime pickedDate = await showDatePicker(
-              context: context,
-              initialDate: toTime,
-              firstDate: DateTime(2015),
-              lastDate: DateTime(2150));
-      if (pickedDate != null)
-          setState(() {
-              toTime = pickedDate;
-          });
+    final DateTime pickedDate = await showDatePicker(
+        context: context,
+        initialDate: toTime,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2150));
+    if (pickedDate != null)
+      setState(() {
+        toTime = pickedDate;
+      });
   }
+
   Widget _buildListView(BuildContext context, _width) {
     return Column(
       children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: _width * 0.00),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                    Container(
-                            child: Column(
-                                    children: [
-                                        Center(child:Text("From:"),),
-                                        Row(
-                                                children: [
-                                                    RaisedButton(
-                                                            onPressed: _selectFromDate,
-                                                            child: Row(
-                                                                    children: [
-                                                                        Text(DateFormat.yMMMd().format(fromTime)),
-                                                                        SizedBox(width:3),
-                                                                        Icon(
-                                                                                Icons.calendar_today
-                                                                        ),
-                                                                    ],
-                                                            ),
-                                                    ),
-                                                ],
-
-                                        ),
-
-                                    ],
-                            ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: _width * 0.00),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: Column(
+                  children: [
+                    Center(
+                      child: Text("From:"),
                     ),
-                  SizedBox(width: 20),
-                    Container(
-                            child: Column(
-                                    children: [
-                                        Center(child:Text("To:"),),
-                                        Row(
-                                                children: [
-                                                    RaisedButton(
-                                                            onPressed: _selectToDate,
-                                                            child: Row(
-                                                                    children: [
-                                                                        Text(DateFormat.yMMMd().format(toTime)),
-                                                                        SizedBox(width:3),
-                                                                        Icon(
-                                                                                Icons.calendar_today
-                                                                        ),
-                                                                    ],
-                                                            ),
-                                                    ),
-                                                ],
-
-                                        ),
-
-                                    ],
-                            ),
+                    Row(
+                      children: [
+                        TextButton(
+                          onPressed: _selectFromDate,
+                          child: Row(
+                            children: [
+                              Text(DateFormat.yMMMd().format(fromTime)),
+                              SizedBox(width: 3),
+                              Icon(Icons.calendar_today),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                ],
+                  ],
+                ),
               ),
-            ),
+              SizedBox(width: 20),
+              Container(
+                child: Column(
+                  children: [
+                    Center(
+                      child: Text("To:"),
+                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                          onPressed: _selectToDate,
+                          child: Row(
+                            children: [
+                              Text(DateFormat.yMMMd().format(toTime)),
+                              SizedBox(width: 3),
+                              Icon(Icons.calendar_today),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
         TextButton(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
           child: Text(
             "Get Records",
             style: TextStyle(color: Colors.black),
@@ -166,7 +165,7 @@ class _HistoryState extends State<History> {
   }
 
   Future<Void> getHistoryRecord(String timestart, String timeend) async {
-    final ret = await connectStart();
+    final ret = await connectStart(15);
     stub = ret[0];
     channel = ret[1];
     var to = DateFormat('yyyy-MM-dd').format(toTime.add(Duration(hours: 24)));

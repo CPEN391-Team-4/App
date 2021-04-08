@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:device_info/device_info.dart'; 
+import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -58,7 +58,9 @@ class FirebaseNotification {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("Message received******************");
-      await local_not.show(1, message.notification.title, message.notification.body, spec, payload: "payload");
+      await local_not.show(
+          1, message.notification.title, message.notification.body, spec,
+          payload: "payload");
     });
 
     // FirebaseMessaging.onMessageOpenedApp.listen((message) {
@@ -72,7 +74,7 @@ class FirebaseNotification {
 
   Future<void> updateDeviceInfo(String tokenstr, String deviceid) async {
     print("333333");
-    final ret = await connectStart();
+    final ret = await connectStart(10);
     var stub = ret[0];
     var channel = ret[1];
     var deviceinfo = DeviceVerify()
@@ -80,7 +82,7 @@ class FirebaseNotification {
       ..token = tokenstr;
     print(deviceinfo);
     try {
-      var res = await stub.UpdateDeviceToken(deviceinfo);
+      var res = await stub.updateDeviceToken(deviceinfo);
     } catch (e) {
       await channel.shutdown();
       return;
@@ -89,16 +91,15 @@ class FirebaseNotification {
   }
 
   Future<String> _getId() async {
-      var deviceId = "";
-      final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    var deviceId = "";
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     if (Platform.isAndroid) {
-        var build = await deviceInfoPlugin.androidInfo;
-        deviceId = build.androidId;
+      var build = await deviceInfoPlugin.androidInfo;
+      deviceId = build.androidId;
     }
     if (Platform.isIOS) {
-        var build = await deviceInfoPlugin.iosInfo;
-        deviceId = build.identifierForVendor;
-
+      var build = await deviceInfoPlugin.iosInfo;
+      deviceId = build.identifierForVendor;
     }
     return deviceId;
   }

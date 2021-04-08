@@ -65,8 +65,8 @@ class _EachUsersState extends State<EachUserScreen> {
             child: ListView(children: <Widget>[
               setImage(_image),
               TextButton(
-                // textColor: Colors.white,
-                // color: Colors.blue,
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
                   "Get from Phone.",
                   style: TextStyle(color: Colors.black),
@@ -120,8 +120,8 @@ class _EachUsersState extends State<EachUserScreen> {
                     }),
               ),
               TextButton(
-                // textColor: Colors.white,
-                // color: Colors.blue,
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
                   "Update User",
                   style: TextStyle(color: Colors.black),
@@ -131,8 +131,8 @@ class _EachUsersState extends State<EachUserScreen> {
                 }),
               ),
               TextButton(
-                // textColor: Colors.white,
-                // color: Colors.blue,
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
                   "Get Image",
                   style: TextStyle(color: Colors.black),
@@ -142,8 +142,8 @@ class _EachUsersState extends State<EachUserScreen> {
                 }),
               ),
               TextButton(
-                // textColor: Colors.white,
-                // color: Colors.blue,
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
                   "Delete User",
                   style: TextStyle(color: Colors.black),
@@ -161,7 +161,7 @@ class _EachUsersState extends State<EachUserScreen> {
 
   Future<bool> RemoveTrustedUser(String username) async {
     print("Remove User");
-    final ret = await connectStart();
+    final ret = await connectStart(10);
     stub = ret[0];
     channel = ret[1];
 
@@ -182,7 +182,7 @@ class _EachUsersState extends State<EachUserScreen> {
       String username, File image, bool restricted) async {
     print("Update user photo");
     print(username);
-    final ret = await connectStart();
+    final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
 
@@ -230,26 +230,13 @@ class _EachUsersState extends State<EachUserScreen> {
     setState(() {
       _image = null;
     });
-    final ret = await connectStart();
+    final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
 
     var imageBytes = BytesBuilder();
 
     final user = User()..name = username;
-
-    // final dir = await getApplicationDocumentsDirectory();
-    // final imgDir = Directory(dir.path + "/userImages/");
-    // if (!await imgDir.exists()) {
-    // await imgDir.create(recursive: true);
-    // print("Made");
-    // }
-    // File image_file = new File(imgDir.path + "user.jpg");
-    // String imgPath = imgDir.path + "user.jpg";
-    // if (await File(imgPath).exists()) {
-    // print("Deleted");
-    // await File(imgPath).delete();
-    // }
 
     try {
       await for (var returnUser in stub.getUserPhoto(user)) {

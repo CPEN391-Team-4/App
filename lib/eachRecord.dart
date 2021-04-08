@@ -64,8 +64,8 @@ class _EachRecordState extends State<EachrecordScreen> {
                 height: 20,
               ),
               TextButton(
-                // textColor: Colors.white,
-                // color: Colors.blue,
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
                   "Get Image",
                   style: TextStyle(color: Colors.black),
@@ -96,6 +96,8 @@ class _EachRecordState extends State<EachrecordScreen> {
                 height: 10,
               ),
               TextButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
                   "Delete Record",
                   style: TextStyle(color: Colors.black),
@@ -112,7 +114,7 @@ class _EachRecordState extends State<EachrecordScreen> {
   }
 
   Future<Void> deleterecord(image_address) async {
-    final ret = await connectStart();
+    final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
     print(image_address);
@@ -131,7 +133,7 @@ class _EachRecordState extends State<EachrecordScreen> {
     setState(() {
       _image = null;
     });
-    final ret = await connectStart();
+    final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
 
