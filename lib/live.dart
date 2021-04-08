@@ -229,23 +229,31 @@ class _LiveState extends State<Live> {
     setState(() {
       _imgFile = null;
     });
-    final ret = await connectStart();
+    final ret = await connectStartvideo();
     stub = ret[0];
     channel = ret[1];
 
-    final streamRequest = PullVideoStreamReq();
-
+    final streamRequest = PullVideoStreamReq()..id = "default";
+    var framenumber = 0;
     try {
       await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
+        print(streamResponse.closed);
         if (streamResponse.closed == true) {
+          print("closingggggggggggggggggggggggggggggggggggg");
+
           connectEnd();
         }
         var imageBytes = BytesBuilder();
         imageBytes.add(streamResponse.video.frame.chunk);
-        setState(() {
-          imgAsBytes = imageBytes.toBytes();
-        });
-        imageCache.clear();
+        print(streamResponse.video.frame.number);
+        // print(imageBytes.toBytes());
+
+        // imageCache.clear();
+        // setState(() {
+        //   imgAsBytes = imageBytes.toBytes();
+        // });
+        //
+        framenumber += 1;
       }
 
       // imageCache.clear();
@@ -254,8 +262,11 @@ class _LiveState extends State<Live> {
       //   imgAsBytes = imageBytes.toBytes();
       // });
     } catch (e) {
+      connectEnd();
       print(e);
     }
+
+    print(framenumber);
     connectEnd();
   }
 
