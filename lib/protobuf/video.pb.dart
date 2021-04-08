@@ -300,3 +300,144 @@ class PullVideoStreamResp extends $pb.GeneratedMessage {
   void clearClosed() => clearField(2);
 }
 
+class EndPullVideoStreamReq extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EndPullVideoStreamReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'video'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..hasRequiredFields = false
+  ;
+
+  EndPullVideoStreamReq._() : super();
+  factory EndPullVideoStreamReq({
+    $core.String? id,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    return _result;
+  }
+  factory EndPullVideoStreamReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EndPullVideoStreamReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  EndPullVideoStreamReq clone() => EndPullVideoStreamReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EndPullVideoStreamReq copyWith(void Function(EndPullVideoStreamReq) updates) => super.copyWith((message) => updates(message as EndPullVideoStreamReq)) as EndPullVideoStreamReq; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static EndPullVideoStreamReq create() => EndPullVideoStreamReq._();
+  EndPullVideoStreamReq createEmptyInstance() => create();
+  static $pb.PbList<EndPullVideoStreamReq> createRepeated() => $pb.PbList<EndPullVideoStreamReq>();
+  @$core.pragma('dart2js:noInline')
+  static EndPullVideoStreamReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EndPullVideoStreamReq>(create);
+  static EndPullVideoStreamReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+}
+
+class Streamrequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Streamrequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'video'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'request')
+    ..hasRequiredFields = false
+  ;
+
+  Streamrequest._() : super();
+  factory Streamrequest({
+    $core.bool? request,
+  }) {
+    final _result = create();
+    if (request != null) {
+      _result.request = request;
+    }
+    return _result;
+  }
+  factory Streamrequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Streamrequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Streamrequest clone() => Streamrequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Streamrequest copyWith(void Function(Streamrequest) updates) => super.copyWith((message) => updates(message as Streamrequest)) as Streamrequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Streamrequest create() => Streamrequest._();
+  Streamrequest createEmptyInstance() => create();
+  static $pb.PbList<Streamrequest> createRepeated() => $pb.PbList<Streamrequest>();
+  @$core.pragma('dart2js:noInline')
+  static Streamrequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Streamrequest>(create);
+  static Streamrequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get request => $_getBF(0);
+  @$pb.TagNumber(1)
+  set request($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => clearField(1);
+}
+
+class InitialConnection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'InitialConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'video'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setup')
+    ..hasRequiredFields = false
+  ;
+
+  InitialConnection._() : super();
+  factory InitialConnection({
+    $core.bool? setup,
+  }) {
+    final _result = create();
+    if (setup != null) {
+      _result.setup = setup;
+    }
+    return _result;
+  }
+  factory InitialConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory InitialConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  InitialConnection clone() => InitialConnection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  InitialConnection copyWith(void Function(InitialConnection) updates) => super.copyWith((message) => updates(message as InitialConnection)) as InitialConnection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static InitialConnection create() => InitialConnection._();
+  InitialConnection createEmptyInstance() => create();
+  static $pb.PbList<InitialConnection> createRepeated() => $pb.PbList<InitialConnection>();
+  @$core.pragma('dart2js:noInline')
+  static InitialConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InitialConnection>(create);
+  static InitialConnection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get setup => $_getBF(0);
+  @$pb.TagNumber(1)
+  set setup($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSetup() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSetup() => clearField(1);
+}
+
