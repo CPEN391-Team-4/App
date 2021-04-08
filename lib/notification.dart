@@ -65,7 +65,7 @@ class FirebaseNotification {
     // print("Please work*********");
     // });
 
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     return local_not;
   }
