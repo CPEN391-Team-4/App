@@ -177,7 +177,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
       File image, String username, Image showimage, bool restricted) async {
     print("Add people");
     print(userName);
-    final ret = connectStart();
+    final ret = connectStart(20);
     stub = ret[0];
     channel = ret[1];
 

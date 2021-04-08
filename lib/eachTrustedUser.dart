@@ -161,7 +161,7 @@ class _EachUsersState extends State<EachUserScreen> {
 
   Future<bool> RemoveTrustedUser(String username) async {
     print("Remove User");
-    final ret = await connectStart();
+    final ret = await connectStart(10);
     stub = ret[0];
     channel = ret[1];
 
@@ -182,7 +182,7 @@ class _EachUsersState extends State<EachUserScreen> {
       String username, File image, bool restricted) async {
     print("Update user photo");
     print(username);
-    final ret = await connectStart();
+    final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
 
@@ -230,7 +230,7 @@ class _EachUsersState extends State<EachUserScreen> {
     setState(() {
       _image = null;
     });
-    final ret = await connectStart();
+    final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
 
