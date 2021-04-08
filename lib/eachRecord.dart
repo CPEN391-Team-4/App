@@ -112,7 +112,7 @@ class _EachRecordState extends State<EachrecordScreen> {
   }
 
   Future<Void> deleterecord(image_address) async {
-    final ret = await connectStart();
+    final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
     print(image_address);
@@ -131,7 +131,7 @@ class _EachRecordState extends State<EachrecordScreen> {
     setState(() {
       _image = null;
     });
-    final ret = await connectStart();
+    final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
 

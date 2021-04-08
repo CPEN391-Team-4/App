@@ -5,7 +5,7 @@ import 'package:my_app/protobuf/video.pbgrpc.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 
-connectStart() {
+connectStart(int timeout) {
   final channel = ClientChannel('192.168.0.101',
       port: 9000,
       options:
@@ -13,7 +13,7 @@ connectStart() {
 
   print("Connect");
   final stub = RouteClient(channel,
-      options: CallOptions(timeout: Duration(seconds: 20)));
+      options: CallOptions(timeout: Duration(seconds: timeout)));
   return [stub, channel];
 }
 

@@ -40,14 +40,13 @@ class _UsersState extends State<Users> {
     );
   }
 
-
   Future<void> connectEnd() async {
     await channel.shutdown();
   }
 
   Future<void> _updateTrustPeopleList() async {
     //print("updatelist");
-    final ret = await connectStart();
+    final ret = await connectStart(15);
     stub = ret[0];
     channel = ret[1];
 
