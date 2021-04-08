@@ -78,7 +78,7 @@ class _HistoryState extends State<History> {
                     ),
                     Row(
                       children: [
-                        RaisedButton(
+                        TextButton(
                           onPressed: _selectFromDate,
                           child: Row(
                             children: [
@@ -102,7 +102,7 @@ class _HistoryState extends State<History> {
                     ),
                     Row(
                       children: [
-                        RaisedButton(
+                        TextButton(
                           onPressed: _selectToDate,
                           child: Row(
                             children: [
@@ -121,6 +121,8 @@ class _HistoryState extends State<History> {
           ),
         ),
         TextButton(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
           child: Text(
             "Get Records",
             style: TextStyle(color: Colors.black),
