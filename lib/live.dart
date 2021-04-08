@@ -23,6 +23,7 @@ class _LiveState extends State<Live> {
   bool _unlockInCall = false;
   var stub;
   var channel;
+  bool livestate = false;
 
   var imgAsBytes = null;
 
@@ -93,7 +94,7 @@ class _LiveState extends State<Live> {
 
   void permission(permit) async {
     print("enter give permission call");
-    final ret = await connectStart();
+    final ret = await connectStart(5);
     stub = ret[0];
     channel = ret[1];
     // await Future.delayed(Duration(seconds: 2), () {
@@ -104,11 +105,15 @@ class _LiveState extends State<Live> {
     // });
     final permissionRequest = Permission()..permit = permit;
     try {
-      var response = await stub.givePermission(permissionRequest);
+      var res = await stub.givePermission(permissionRequest);
+      print("hello");
     } catch (e) {
       print(e);
+      connectEnd();
+      return;
     }
     connectEnd();
+    return;
   }
 
   void _lockDoor(context) async {
@@ -119,35 +124,40 @@ class _LiveState extends State<Live> {
   }
 
   void _door(context, unlock) async {
-    var local_auth = LocalAuthentication();
-    bool didAuthenticate = await local_auth.authenticate(
-      localizedReason: 'Please authenticate',
-    );
-    if (didAuthenticate == false) {
-      return _alert(context, "Authentication Failed", "Please try again");
-    }
+    // var local_auth = LocalAuthentication();
+    // bool didAuthenticate = await local_auth.authenticate(
+    //   localizedReason: 'Please authenticate',
+    // );
+    // if (didAuthenticate == false) {
+    //   return _alert(context, "Authentication Failed", "Please try again");
+    // }
     if (unlock == true) {
       _unlockDoor(context);
     } else {
       _lockDoor(context);
     }
+    return;
   }
 
   Widget _lockButton(context) {
     if (_lockInCall == false) {
-      return RaisedButton(
+      return TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
         onPressed: () {
           _door(context, false);
         },
         child: Text("Lock Door"),
       );
     } else {
-      return RaisedButton(
+      return TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
         onPressed: () {},
         child: Padding(
           padding: EdgeInsets.all(2.7),
           child: Center(
-            child: CircularProgressIndicator(),
+            child: Text("Lock Door"),
           ),
         ),
       );
@@ -156,19 +166,23 @@ class _LiveState extends State<Live> {
 
   Widget _unLockButton(context) {
     if (_unlockInCall == false) {
-      return RaisedButton(
+      return TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
         onPressed: () {
           _door(context, true);
         },
         child: Text("Unlock Door"),
       );
     } else {
-      return RaisedButton(
+      return TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
         onPressed: () {},
         child: Padding(
           padding: EdgeInsets.all(2.7),
           child: Center(
-            child: CircularProgressIndicator(),
+            child: Text("Unlock Door"),
           ),
         ),
       );
@@ -194,11 +208,16 @@ class _LiveState extends State<Live> {
               padding: EdgeInsets.symmetric(horizontal: _width * 0.25),
               child: Container(
                 width: 10.0,
-                child: RaisedButton(
+                child: TextButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.lightGreen)),
                   onPressed: (() {
-                    getLiveStream();
+                    LiveStream();
                   }),
-                  child: Text("Request Live Image"),
+                  child: livestate
+                      ? Text("Stop Live Stream")
+                      : Text("Live Stream"),
                 ),
               ),
             ),
@@ -225,38 +244,69 @@ class _LiveState extends State<Live> {
     );
   }
 
-  Future<File> getLiveStream() async {
-    setState(() {
-      _imgFile = null;
-    });
-    final ret = await connectStart();
-    stub = ret[0];
-    channel = ret[1];
-
-    final streamRequest = PullVideoStreamReq();
-
-    try {
-      await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
-        if (streamResponse.closed == true) {
-          connectEnd();
-        }
-        var imageBytes = BytesBuilder();
-        imageBytes.add(streamResponse.video.frame.chunk);
-        setState(() {
-          imgAsBytes = imageBytes.toBytes();
-        });
-        imageCache.clear();
-      }
-
-      // imageCache.clear();
-
-      // setState(() {
-      //   imgAsBytes = imageBytes.toBytes();
-      // });
-    } catch (e) {
-      print(e);
+  void LiveStream() {
+    setState(() => livestate = !livestate);
+    if (livestate) {
+      getLiveStream();
+    } else {
+      endLiveStream();
     }
-    connectEnd();
+  }
+
+  Future<void> endLiveStream() async {
+    print("end stream");
+    // final ret = await connectStartvideo();
+    // stub = ret[0];
+    // channel = ret[1];
+    // final endrequest = EndPullVideoStreamReq()..id = "";
+    // final res = await stub.EndPullVideoStream();
+    // connectEnd();
+  }
+
+  Future<void> getLiveStream() async {
+    print("start stream");
+    // setState(() {
+    //   _imgFile = null;
+    // });
+    // final ret = await connectStartvideo();
+    // stub = ret[0];
+    // channel = ret[1];
+
+    // final streamRequest = PullVideoStreamReq()..id = "default";
+    // var framenumber = 0;
+    // try {
+    //   await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
+    //     print(streamResponse.closed);
+    //     if (streamResponse.closed == true) {
+    //       print("closingggggggggggggggggggggggggggggggggggg");
+    //       connectEnd();
+    //       break;
+    //     }
+    //     var imageBytes = BytesBuilder();
+    //     imageBytes.add(streamResponse.video.frame.chunk);
+    //     print(streamResponse.video.frame.number);
+    //     // print(imageBytes.toBytes());
+
+    //     // imageCache.clear();
+    //     // setState(() {
+    //     //   imgAsBytes = imageBytes.toBytes();
+    //     // });
+    //     //
+    //     framenumber += 1;
+    //   }
+
+    //   // imageCache.clear();
+
+    //   // setState(() {
+    //   //   imgAsBytes = imageBytes.toBytes();
+    //   // });
+    // } catch (e) {
+    //   connectEnd();
+    //   print(e);
+    // }
+
+    // print(framenumber);
+    // connectEnd();
   }
 
   Widget setImage(File file) {

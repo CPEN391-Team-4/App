@@ -78,7 +78,7 @@ class _LoginState extends State<Login> {
       setState(() {
         _inCall = false;
       });
-      if (!(_username == 'admin' && _pass == 'admin')) {
+      if (!(_username == '' && _pass == '')) {
         setState(() {
           _loginStatus = 1;
         });
