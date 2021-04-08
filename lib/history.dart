@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'package:intl/intl.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -20,23 +20,118 @@ class History extends StatefulWidget {
 class _HistoryState extends State<History> {
   var channel;
   var stub;
+  DateTime fromTime = DateTime.now();
+  DateTime toTime = DateTime.now();
+
   List<HistoryRecord> historyrecords = [];
   @override
   Widget build(BuildContext context) {
+    var _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text('History Records'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: _buildListView(context),
+        child: _buildListView(context, _width),
       ),
     );
   }
 
-  Widget _buildListView(BuildContext context) {
+  void _selectFromDate() async {
+      final DateTime pickedDate = await showDatePicker(
+              context: context,
+              initialDate: fromTime,
+              firstDate: DateTime(2015),
+              lastDate: DateTime(2150));
+      if (pickedDate != null)
+          print(pickedDate);
+          setState(() {
+              fromTime = pickedDate;
+          });
+  }
+
+  void _selectToDate() async {
+      final DateTime pickedDate = await showDatePicker(
+              context: context,
+              initialDate: toTime,
+              firstDate: DateTime(2015),
+              lastDate: DateTime(2150));
+      if (pickedDate != null)
+          setState(() {
+              toTime = pickedDate;
+          });
+  }
+  Widget _buildListView(BuildContext context, _width) {
     return Column(
       children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: _width * 0.00),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                    Container(
+                            child: Column(
+                                    children: [
+                                        Center(child:Text("From:"),),
+                                        Row(
+                                                children: [
+                                                    RaisedButton(
+                                                            onPressed: _selectFromDate,
+                                                            child: Row(
+                                                                    children: [
+                                                                        Text(DateFormat.yMMMd().format(fromTime)),
+                                                                        SizedBox(width:3),
+                                                                        Icon(
+                                                                                Icons.calendar_today
+                                                                        ),
+                                                                    ],
+                                                            ),
+                                                    ),
+                                                ],
+
+                                        ),
+
+                                    ],
+                            ),
+                    ),
+                  SizedBox(width: 20),
+                    Container(
+                            child: Column(
+                                    children: [
+                                        Center(child:Text("To:"),),
+                                        Row(
+                                                children: [
+                                                    RaisedButton(
+                                                            onPressed: _selectToDate,
+                                                            child: Row(
+                                                                    children: [
+                                                                        Text(DateFormat.yMMMd().format(toTime)),
+                                                                        SizedBox(width:3),
+                                                                        Icon(
+                                                                                Icons.calendar_today
+                                                                        ),
+                                                                    ],
+                                                            ),
+                                                    ),
+                                                ],
+
+                                        ),
+
+                                    ],
+                            ),
+                    ),
+                ],
+              ),
+            ),
+        TextButton(
+          child: Text(
+            "Get Records",
+            style: TextStyle(color: Colors.black),
+          ),
+          onPressed: () =>
+              getHistoryRecord("2021-01-02 03:04:05", "2021-04-02 03:04:05"),
+        ),
         Expanded(
             child: ListView.separated(
                 itemCount: historyrecords.length,
@@ -67,14 +162,6 @@ class _HistoryState extends State<History> {
                 separatorBuilder: (_, index) {
                   return Divider();
                 })),
-        TextButton(
-          child: Text(
-            "Get Records",
-            style: TextStyle(color: Colors.black),
-          ),
-          onPressed: () =>
-              getHistoryRecord("2021-01-02 03:04:05", "2021-04-02 03:04:05"),
-        ),
       ],
     );
   }
@@ -83,11 +170,15 @@ class _HistoryState extends State<History> {
     final ret = await connectStart();
     stub = ret[0];
     channel = ret[1];
+    var to = DateFormat('yyyy-MM-dd').format(toTime.add(Duration(hours: 24)));
+    var from = DateFormat('yyyy-MM-dd').format(fromTime);
+    to = to + " 00:00:00";
+    from = from + " 00:00:00";
 
     try {
       var timestamp = Timestamp()
-        ..starttime = timestart
-        ..endtime = timeend;
+        ..starttime = from
+        ..endtime = to;
       var records = await stub.getHistoryRecorded(timestamp);
       //print(records);
 
