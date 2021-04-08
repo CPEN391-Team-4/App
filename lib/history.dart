@@ -45,7 +45,6 @@ class _HistoryState extends State<History> {
               firstDate: DateTime(2015),
               lastDate: DateTime(2150));
       if (pickedDate != null)
-          print(pickedDate);
           setState(() {
               fromTime = pickedDate;
           });
