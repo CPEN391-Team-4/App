@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
-import 'package:flutter_ble_lib/flutter_ble_lib.dart';
+//import 'package:flutter_ble_lib/flutter_ble_lib.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 
 class Profile extends StatefulWidget {
     @override
@@ -46,19 +47,23 @@ class _ProfileState extends State<Profile> {
 
     }
     Future<void> connectToBluetooth() async {
-        BleManager bleManager = BleManager();
-        await bleManager.createClient();
-        bleManager.startPeripheralScan(
-                uuids: [
-                    "F000AA00-0451-4000-B000-000000000000",
-                ],
-        ).listen((scanResult) {
-            //Scan one peripheral and stop scanning
-            print("Scanned Peripheral ${scanResult.peripheral.name}, RSSI ${scanResult.rssi}");
-  bleManager.stopPeripheralScan();
-});
-        bleManager.destroyClient();
+        FlutterBlue flutterBlue = FlutterBlue.instance;
+        // Start scanning
+        flutterBlue.startScan(timeout: Duration(seconds: 4));
+
+        // Listen to scan results
+        var subscription = flutterBlue.scanResults.listen((results) {
+                // do something with scan results
+                for (ScanResult r in results) {
+                print('${r.device.name} found! rssi: ${r.rssi}');
+                }
+                });
+
+        // Stop scanning
+        flutterBlue.stopScan();
+
     }
+
     @override
     Widget build(BuildContext context) {
         var _width = MediaQuery.of(context).size.width;
