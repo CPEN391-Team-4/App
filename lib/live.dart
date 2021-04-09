@@ -85,30 +85,23 @@ class _LiveState extends State<Live> {
     await channel.shutdown();
   }
 
-  void _unlockDoor(context) async {
-    setState(() {
-      _unlockInCall = true;
-    });
-    permission(true);
-  }
 
-  void permission(permit) async {
+  Future<void> permission(context, permit) async {
     print("enter give permission call");
     final ret = await connectStart(5);
     stub = ret[0];
     channel = ret[1];
-    // await Future.delayed(Duration(seconds: 2), () {
-    // setState(() {
-    // _unlockInCall = false;
-    // });
-    // return _alert(context, "Door has been unlocked", "");
-    // });
     final permissionRequest = Permission()..permit = permit;
     try {
       var res = await stub.givePermission(permissionRequest);
-      print("hello");
+      if (permit == true) {
+        _alert(context, "Door has been unlocked", "Please try again");
+      }
+      else {
+        _alert(context, "Door has been locked", "Please try again");
+      }
     } catch (e) {
-      print(e);
+        _alert(context, "An error occured", "Please try again");
       connectEnd();
       return;
     }
@@ -116,11 +109,24 @@ class _LiveState extends State<Live> {
     return;
   }
 
+  void _unlockDoor(context) async {
+    setState(() {
+      _unlockInCall = true;
+    });
+    await permission(context, true);
+    setState(() {
+      _unlockInCall = false;
+    });
+  }
+
   void _lockDoor(context) async {
     setState(() {
       _lockInCall = true;
     });
-    permission(false);
+    await permission(context, false);
+    setState(() {
+      _lockInCall = false;
+    });
   }
 
   void _door(context, unlock) async {

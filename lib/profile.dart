@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 
 class Profile extends StatefulWidget {
     @override
@@ -44,6 +45,20 @@ class _ProfileState extends State<Profile> {
                 );
 
     }
+    Future<void> connectToBluetooth() async {
+        BleManager bleManager = BleManager();
+        await bleManager.createClient();
+        bleManager.startPeripheralScan(
+                uuids: [
+                    "F000AA00-0451-4000-B000-000000000000",
+                ],
+        ).listen((scanResult) {
+            //Scan one peripheral and stop scanning
+            print("Scanned Peripheral ${scanResult.peripheral.name}, RSSI ${scanResult.rssi}");
+  bleManager.stopPeripheralScan();
+});
+        bleManager.destroyClient();
+    }
     @override
     Widget build(BuildContext context) {
         var _width = MediaQuery.of(context).size.width;
@@ -71,8 +86,8 @@ class _ProfileState extends State<Profile> {
                                             child:
                                             RaisedButton(
                                                     child: Text("Add A Security Device"),
-                                                    onPressed: () {
-
+                                                    onPressed: () async {
+                                                        await connectToBluetooth();
                                                     }
                                             ),
                                     ),
