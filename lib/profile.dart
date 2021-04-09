@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 //import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'findDevices.dart';
+import 'package:get/get.dart';
 
 class Profile extends StatefulWidget {
     @override
@@ -49,18 +51,19 @@ class _ProfileState extends State<Profile> {
     Future<void> connectToBluetooth() async {
         FlutterBlue flutterBlue = FlutterBlue.instance;
         // Start scanning
-        flutterBlue.startScan(timeout: Duration(seconds: 4));
+        // flutterBlue.startScan(timeout: Duration(seconds: 4));
 
-        // Listen to scan results
-        var subscription = flutterBlue.scanResults.listen((results) {
-                // do something with scan results
-                for (ScanResult r in results) {
-                print('${r.device.name} found! rssi: ${r.rssi}');
-                }
-                });
+        // // Listen to scan results
+        // var subscription = flutterBlue.scanResults.listen((results) {
+                // // do something with scan results
+                // for (ScanResult r in results) {
+                // print('${r.device.name} found! rssi: ${r.rssi}');
+                // }
+                // });
 
-        // Stop scanning
-        flutterBlue.stopScan();
+        // // Stop scanning
+        // flutterBlue.stopScan();
+        Get.to(FindDevicesScreen);
 
     }
 
