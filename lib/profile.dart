@@ -49,7 +49,7 @@ class _ProfileState extends State<Profile> {
 
     }
     Future<void> connectToBluetooth() async {
-        FlutterBlue flutterBlue = FlutterBlue.instance;
+        // FlutterBlue flutterBlue = FlutterBlue.instance;
         // Start scanning
         // flutterBlue.startScan(timeout: Duration(seconds: 4));
 
@@ -63,7 +63,7 @@ class _ProfileState extends State<Profile> {
 
         // // Stop scanning
         // flutterBlue.stopScan();
-        Get.to(FindDevicesScreen);
+        Get.to(FindDevices);
 
     }
 
