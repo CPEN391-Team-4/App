@@ -63,7 +63,7 @@ class _ProfileState extends State<Profile> {
 
         // // Stop scanning
         // flutterBlue.stopScan();
-        Get.to(FindDevices);
+        Get.to(FindDevices());
 
     }
 

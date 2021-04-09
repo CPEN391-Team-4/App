@@ -29,9 +29,10 @@ class _FindDevicesState extends State<FindDevices> {
     }
 
     void _addDeviceTolist(final BluetoothDevice device) {
-        if (devicesList.contains(device)) {
+        if (device.name != "" && !devicesList.contains(device)) {
             setState(() {
                 devicesList.add(device);
+                print("Here");
             });
         }
     }
@@ -39,9 +40,10 @@ class _FindDevicesState extends State<FindDevices> {
     ListView _buildListViewOfDevices() {
         List<Container> containers = new List<Container>();
         for (BluetoothDevice device in devicesList) {
+            print("Adding");
             containers.add(
                     Container(
-                            height: 50,
+                            height: 70,
                             child: Row(
                                     children: <Widget>[
                                         Expanded(
