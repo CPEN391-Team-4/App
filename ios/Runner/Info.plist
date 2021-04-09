@@ -46,5 +46,10 @@
 
     <key>NSCameraUsageDescription</key>
     <string>To capture profile photo please grant camera access</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+    </dict>
 </dict>
 </plist>
