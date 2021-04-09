@@ -55,6 +55,7 @@ class _EachUsersState extends State<EachUserScreen> {
   _EachUsersState(this.userName);
   @override
   Widget build(BuildContext context) {
+    // getUserImage(userName);
     return Scaffold(
         appBar: AppBar(
           title: Text(userName),
@@ -239,22 +240,22 @@ class _EachUsersState extends State<EachUserScreen> {
     final user = User()..name = username;
 
     try {
+      //for (var i = 0; i <= 500; i++) {
+      //print(i);
       await for (var returnUser in stub.getUserPhoto(user)) {
         imageBytes.add(returnUser.image);
       }
       print("Created");
 
-      // await File(imgPath).create();
-      // File imgFile = File(imgPath);
-      // imgFile.writeAsBytesSync(imageBytes.toBytes());
-
-      imageCache.clear();
+      //imageCache.clear();
 
       setState(() {
-        // _image = imgFile;
         imgAsBytes = imageBytes.toBytes();
       });
+      await Future.delayed(Duration(milliseconds: 200));
+      // }
     } catch (e) {
+      connectEnd();
       print(e);
     }
     connectEnd();
@@ -268,7 +269,7 @@ class _EachUsersState extends State<EachUserScreen> {
           alignment: Alignment.center,
           decoration: new BoxDecoration(
               image: DecorationImage(image: MemoryImage(imgAsBytes))));
-    }
+    } else {}
 
     if (file == null) {
       return new Container(

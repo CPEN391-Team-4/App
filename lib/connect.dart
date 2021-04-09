@@ -6,7 +6,7 @@ import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 
 connectStart(int timeout) {
-  final channel = ClientChannel('192.168.0.101',
+  final channel = ClientChannel('cpen391.johnramsden.ca',
       port: 9000,
       options:
           const ChannelOptions(credentials: ChannelCredentials.insecure()));
@@ -18,7 +18,7 @@ connectStart(int timeout) {
 }
 
 connectStartvideo() {
-  final channel = ClientChannel('192.168.0.101',
+  final channel = ClientChannel('cpen391.johnramsden.ca',
       port: 9000,
       options:
           const ChannelOptions(credentials: ChannelCredentials.insecure()));

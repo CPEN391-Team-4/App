@@ -265,48 +265,53 @@ class _LiveState extends State<Live> {
 
   Future<void> getLiveStream() async {
     print("start stream");
-    // setState(() {
-    //   _imgFile = null;
-    // });
-    // final ret = await connectStartvideo();
-    // stub = ret[0];
-    // channel = ret[1];
+    setState(() {
+      _imgFile = null;
+    });
+    final ret = await connectStartvideo();
+    stub = ret[0];
+    channel = ret[1];
 
-    // final streamRequest = PullVideoStreamReq()..id = "default";
-    // var framenumber = 0;
-    // try {
-    //   await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
-    //     print(streamResponse.closed);
-    //     if (streamResponse.closed == true) {
-    //       print("closingggggggggggggggggggggggggggggggggggg");
-    //       connectEnd();
-    //       break;
-    //     }
-    //     var imageBytes = BytesBuilder();
-    //     imageBytes.add(streamResponse.video.frame.chunk);
-    //     print(streamResponse.video.frame.number);
-    //     // print(imageBytes.toBytes());
+    final streamRequest = PullVideoStreamReq()..id = "default";
+    var framenumber = 0;
+    print("start geting video frames");
+    try {
+      await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
+        // print(streamResponse.video.frame);
+        // print(streamResponse.closed);
 
-    //     // imageCache.clear();
-    //     // setState(() {
-    //     //   imgAsBytes = imageBytes.toBytes();
-    //     // });
-    //     //
-    //     framenumber += 1;
-    //   }
+        // if (streamResponse.closed == true) {
+        //   print("closingggggggggggggggggggggggggggggggggggg");
+        //   connectEnd();
+        //   break;
+        // }
+        // var imageBytes = BytesBuilder();
+        // imageBytes.add(streamResponse.video.frame.chunk);
 
-    //   // imageCache.clear();
+        // print(imageBytes.toBytes());
 
-    //   // setState(() {
-    //   //   imgAsBytes = imageBytes.toBytes();
-    //   // });
-    // } catch (e) {
-    //   connectEnd();
-    //   print(e);
-    // }
+        // imageCache.clear();
+        // setState(() {
+        //   imgAsBytes = imageBytes.toBytes();
+        // });
+        //
+        framenumber += 1;
+        print(framenumber);
+      }
+      print("stop receiving");
 
-    // print(framenumber);
-    // connectEnd();
+      // imageCache.clear();
+
+      // setState(() {
+      //   imgAsBytes = imageBytes.toBytes();
+      // });
+    } catch (e) {
+      connectEnd();
+      print(e);
+    }
+
+    print(framenumber);
+    connectEnd();
   }
 
   Widget setImage(File file) {
