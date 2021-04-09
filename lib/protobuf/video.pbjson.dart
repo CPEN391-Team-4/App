@@ -60,33 +60,3 @@ const PullVideoStreamResp$json = const {
 
 /// Descriptor for `PullVideoStreamResp`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List pullVideoStreamRespDescriptor = $convert.base64Decode('ChNQdWxsVmlkZW9TdHJlYW1SZXNwEiIKBXZpZGVvGAEgASgLMgwudmlkZW8uVmlkZW9SBXZpZGVvEhYKBmNsb3NlZBgCIAEoCFIGY2xvc2Vk');
-@$core.Deprecated('Use endPullVideoStreamReqDescriptor instead')
-const EndPullVideoStreamReq$json = const {
-  '1': 'EndPullVideoStreamReq',
-  '2': const [
-    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-  ],
-};
-
-/// Descriptor for `EndPullVideoStreamReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List endPullVideoStreamReqDescriptor = $convert.base64Decode('ChVFbmRQdWxsVmlkZW9TdHJlYW1SZXESDgoCaWQYASABKAlSAmlk');
-@$core.Deprecated('Use streamrequestDescriptor instead')
-const Streamrequest$json = const {
-  '1': 'Streamrequest',
-  '2': const [
-    const {'1': 'request', '3': 1, '4': 1, '5': 8, '10': 'request'},
-  ],
-};
-
-/// Descriptor for `Streamrequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List streamrequestDescriptor = $convert.base64Decode('Cg1TdHJlYW1yZXF1ZXN0EhgKB3JlcXVlc3QYASABKAhSB3JlcXVlc3Q=');
-@$core.Deprecated('Use initialConnectionDescriptor instead')
-const InitialConnection$json = const {
-  '1': 'InitialConnection',
-  '2': const [
-    const {'1': 'setup', '3': 1, '4': 1, '5': 8, '10': 'setup'},
-  ],
-};
-
-/// Descriptor for `InitialConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List initialConnectionDescriptor = $convert.base64Decode('ChFJbml0aWFsQ29ubmVjdGlvbhIUCgVzZXR1cBgBIAEoCFIFc2V0dXA=');
