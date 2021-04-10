@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:convert';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'profile.dart';
 
 
 class FindDevices extends StatefulWidget {
@@ -42,6 +45,33 @@ class _FindDevicesState extends State<FindDevices> {
         super.dispose();
     }
 
+    Future<void> _alert(context, string1, string2) async {
+        return showDialog<void>(
+                context: context,
+                barrierDismissible: false, // user must tap button!
+                builder: (BuildContext context) {
+                    return AlertDialog(
+                            content: SingleChildScrollView(
+                                    child: ListBody(
+                                            children: <Widget>[
+                                                Text(string1),
+                                                Text(string2),
+                                            ],
+                                    ),
+                            ),
+                            actions: <Widget>[
+                                TextButton(
+                                        child: Text('Ok'),
+                                        onPressed: () {
+                                            Navigator.pop(context);
+                                        },
+                                ),
+                            ],
+                    );
+                },
+                );
+    }
+
     ListView _buildListViewOfDevices() {
         List<Container> containers = new List<Container>();
         for (BluetoothDiscoveryResult device in devicesList) {
@@ -68,11 +98,23 @@ class _FindDevicesState extends State<FindDevices> {
                                                     BluetoothConnection connection = await BluetoothConnection.toAddress(device.device.address);
                                                     print("Connected to "+device.device.name);
                                                     var send = utf8.encode("devid\r\n"); //Convert string to bytes
-                                                    connection.output.add(send); 
-                                                    connection.input.listen((data) {
-                                                        print(data);
+                                                    var deviceID = BytesBuilder();
+                                                    connection.input.listen((data) async {
+                                                        deviceID.add(data);
+                                                        if (deviceID.toBytes()[deviceID.length-1].toString() == "\n") {
+                                                            print(deviceID.toString());
+                                                            await connection.close();
+                                                            await connection.finish();
+                                                            connection.dispose();
+                                                            deviceSubscription.cancel();
+                                                            _alert(context, "Successfully connected device", "");
+                                                            refresh();
+                                                            Get.off(Profile());
+                                                        }
                                                     }).onDone(() {
                                                     });
+
+                                                    connection.output.add(send); 
                                                 }
             ),
             ],
@@ -83,11 +125,11 @@ class _FindDevicesState extends State<FindDevices> {
 
         return ListView(
                 padding: const EdgeInsets.all(8),
-     children: <Widget>[
-       ...containers,
-     ],
-   );
- }
+                children: <Widget>[
+                    ...containers,
+                ],
+        );
+    }
 
 
     @override 
