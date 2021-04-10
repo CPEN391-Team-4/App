@@ -8,11 +8,14 @@ class FindDevices extends StatefulWidget {
 
 class _FindDevicesState extends State<FindDevices> {
     final List<BluetoothDevice> devicesList = new List<BluetoothDevice>();
+    var flutterBlue;
+    var _connectedDevice;
+    var _services;
 
     @override
     void initState() {
         super.initState();
-        FlutterBlue flutterBlue = FlutterBlue.instance;
+        flutterBlue = FlutterBlue.instance;
         flutterBlue.connectedDevices
                 .asStream()
                 .listen((List<BluetoothDevice> devices) {
@@ -60,16 +63,39 @@ class _FindDevicesState extends State<FindDevices> {
                                                         'Connect',
                                                         style: TextStyle(color: Colors.white),
                                                 ),
-                                                onPressed: () {},
-                                        ),
-                                    ],
-                            ),
-                            ),
-                            );
+                                                onPressed: () {
+
+                                                    setState(() async {
+                                                        flutterBlue.stopScan();
+                                                        try {
+                                                            await device.connect();
+                                                        } catch (e) {
+                                                            if (e.code != 'already_connected') {
+                                                                throw e;
+                                                            }
+                                                        } finally {
+                                                            List<BluetoothService> services = await device.discoverServices();
+                                                            services.forEach((service) async {
+                                                                var characteristics = service.characteristics;
+                                                                for(BluetoothCharacteristic c in characteristics) {
+                                                                    List<int> value = await c.read();
+                                                                    print(value);
+                                                                }
+                                                            });
+
+                                                            await device.disconnect();
+                                                        }
+                                                    });
+                                                },
+                                                ),
+                                                ],
+                                                ),
+                                                ),
+                                                );
         }
- 
-   return ListView(
-     padding: const EdgeInsets.all(8),
+
+        return ListView(
+                padding: const EdgeInsets.all(8),
      children: <Widget>[
        ...containers,
      ],

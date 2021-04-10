@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 //import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'findDevices.dart';
+// import 'findDevices.dart';
+import 'newBluetooth.dart';
 import 'package:get/get.dart';
 
 class Profile extends StatefulWidget {
