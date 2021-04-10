@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter/material.dart';
 
@@ -10,22 +12,28 @@ class FindDevices extends StatefulWidget {
 
 class _FindDevicesState extends State<FindDevices> {
     List<BluetoothDiscoveryResult> devicesList = List<BluetoothDiscoveryResult>();
+    StreamSubscription<BluetoothDiscoveryResult> deviceSubscription;
 
     @override
     void initState() {
-        FlutterBluetoothSerial.instance.startDiscovery().listen((r) {
-            print(r.device.name);
-            setState(() {
-                devicesList.add(r);
-            });
+        deviceSubscription = FlutterBluetoothSerial.instance.startDiscovery().listen((r) {
+            if (r.device.name == "FaceLock" && devicesList.every((element) => element.device.address != r.device.address)) {
+                setState(() {
+                   devicesList.add(r);
+                });
+            }
         });
     }
 
+    @override
+    void dispose() {
+        deviceSubscription.cancel();
+        super.dispose();
+    }
 
     ListView _buildListViewOfDevices() {
         List<Container> containers = new List<Container>();
         for (BluetoothDiscoveryResult device in devicesList) {
-            print("Adding");
             containers.add(
                     Container(
                             height: 70,
@@ -34,7 +42,7 @@ class _FindDevicesState extends State<FindDevices> {
                                         Expanded(
                                                 child: Column(
                                                         children: <Widget>[
-                                                            Text(device.device.name == '' ? '(unknown device)' : device.device.name),
+                                                            Text(device.device.name == null ? '(unknown device)' : device.device.name),
                                                             Text(device.device.address.toString()),
                                                         ],
                                                 ),
