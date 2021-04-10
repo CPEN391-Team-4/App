@@ -6,7 +6,7 @@ import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 
 connectStart(int timeout) {
-  final channel = ClientChannel('192.168.0.101',
+  final channel = ClientChannel('192.53.126.159',
       port: 9000,
       options:
           const ChannelOptions(credentials: ChannelCredentials.insecure()));
