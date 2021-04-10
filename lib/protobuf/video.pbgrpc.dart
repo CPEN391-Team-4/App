@@ -65,11 +65,9 @@ class VideoRouteClient extends $grpc.Client {
   }
 
   $grpc.ResponseStream<$0.Streamrequest> requestToStream(
-      $0.InitialConnection request,
+      $async.Stream<$0.InitialConnection> request,
       {$grpc.CallOptions? options}) {
-    return $createStreamingCall(
-        _$requestToStream, $async.Stream.fromIterable([request]),
-        options: options);
+    return $createStreamingCall(_$requestToStream, request, options: options);
   }
 }
 
@@ -104,8 +102,8 @@ abstract class VideoRouteServiceBase extends $grpc.Service {
             ($0.EmptyVideoResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.InitialConnection, $0.Streamrequest>(
         'RequestToStream',
-        requestToStream_Pre,
-        false,
+        requestToStream,
+        true,
         true,
         ($core.List<$core.int> value) => $0.InitialConnection.fromBuffer(value),
         ($0.Streamrequest value) => value.writeToBuffer()));
@@ -123,11 +121,6 @@ abstract class VideoRouteServiceBase extends $grpc.Service {
     return endPullVideoStream(call, await request);
   }
 
-  $async.Stream<$0.Streamrequest> requestToStream_Pre($grpc.ServiceCall call,
-      $async.Future<$0.InitialConnection> request) async* {
-    yield* requestToStream(call, await request);
-  }
-
   $async.Future<$0.EmptyVideoResponse> streamVideo(
       $grpc.ServiceCall call, $async.Stream<$0.Video> request);
   $async.Stream<$0.PullVideoStreamResp> pullVideoStream(
@@ -135,5 +128,5 @@ abstract class VideoRouteServiceBase extends $grpc.Service {
   $async.Future<$0.EmptyVideoResponse> endPullVideoStream(
       $grpc.ServiceCall call, $0.EndPullVideoStreamReq request);
   $async.Stream<$0.Streamrequest> requestToStream(
-      $grpc.ServiceCall call, $0.InitialConnection request);
+      $grpc.ServiceCall call, $async.Stream<$0.InitialConnection> request);
 }
