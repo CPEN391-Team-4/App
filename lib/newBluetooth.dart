@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:convert';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +16,10 @@ class _FindDevicesState extends State<FindDevices> {
 
     @override
     void initState() {
+        startBluetooth();
+    }
+
+    void startBluetooth() {
         deviceSubscription = FlutterBluetoothSerial.instance.startDiscovery().listen((r) {
             if (r.device.name == "FaceLock" && devicesList.every((element) => element.device.address != r.device.address)) {
                 setState(() {
@@ -23,6 +27,13 @@ class _FindDevicesState extends State<FindDevices> {
                 });
             }
         });
+    }
+
+    void refresh() {
+        setState(() {
+            devicesList.clear();
+        });
+        startBluetooth();
     }
 
     @override
@@ -53,12 +64,21 @@ class _FindDevicesState extends State<FindDevices> {
                                                         'Connect',
                                                         style: TextStyle(color: Colors.white),
                                                 ),
-                                                onPressed: () {}
-                                                ),
-                                    ],
-                            ),
-                            ),
-                            );
+                                                onPressed: () async {
+                                                    BluetoothConnection connection = await BluetoothConnection.toAddress(device.device.address);
+                                                    print("Connected to "+device.device.name);
+                                                    var send = utf8.encode("devid\r\n"); //Convert string to bytes
+                                                    connection.output.add(send); 
+                                                    connection.input.listen((data) {
+                                                        print(data);
+                                                    }).onDone(() {
+                                                    });
+                                                }
+            ),
+            ],
+            ),
+            ),
+            );
         }
 
         return ListView(
