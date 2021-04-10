@@ -103,6 +103,7 @@ class _FindDevicesState extends State<FindDevices> {
                                                         deviceID.add(data);
                                                         if (deviceID.toBytes()[deviceID.length-1] == 10) {
                                                             print(deviceID.toBytes().toString());
+                                                            _sendIDtoBackend(deviceID.toBytes().toString());
                                                             await connection.close();
                                                             await connection.finish();
                                                             connection.dispose();
@@ -129,6 +130,11 @@ class _FindDevicesState extends State<FindDevices> {
                     ...containers,
                 ],
         );
+    }
+
+    void _sendIDtoBackend(id) {
+        // Make GRPC call
+
     }
 
 
