@@ -32,10 +32,11 @@ class _FindDevicesState extends State<FindDevices> {
     }
 
     void _addDeviceTolist(final BluetoothDevice device) {
+        print(device.id);
         if (device.name != "" && !devicesList.contains(device)) {
+            print(device.name);
             setState(() {
                 devicesList.add(device);
-                print("Here");
             });
         }
     }
