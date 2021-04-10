@@ -33,6 +33,11 @@ class _EachUsersState extends State<EachUserScreen> {
   List listitem = ["limit access", "free access"];
   var imgAsBytes = null;
 
+  @override
+  void initState() {
+    getUserImage(userName);
+  }
+
   Future getImage(int source) async {
     var image = PickedFile("");
     if (source == 1) {
@@ -68,7 +73,7 @@ class _EachUsersState extends State<EachUserScreen> {
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
-                  "Get from Phone.",
+                  "Devive Storage.",
                   style: TextStyle(color: Colors.black),
                 ),
                 onPressed: () => getImage(1),
@@ -92,33 +97,33 @@ class _EachUsersState extends State<EachUserScreen> {
               SizedBox(
                 height: 10,
               ),
-              Center(
-                child: DropdownButton(
-                    hint: Text("Select Items: "),
-                    focusColor: Colors.green,
-                    dropdownColor: Colors.grey,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 30,
-                    isExpanded: false,
-                    value: valuechoose,
-                    items: listitem.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text(valueItem),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      // add new choice button
-                      setState(() {
-                        valuechoose = newValue;
-                        if (valuechoose == "limit access") {
-                          Restricted = true;
-                        } else {
-                          Restricted = false;
-                        }
-                      });
-                    }),
-              ),
+              // Center(
+              //   child: DropdownButton(
+              //       hint: Text("Select Items: "),
+              //       focusColor: Colors.green,
+              //       dropdownColor: Colors.grey,
+              //       icon: Icon(Icons.arrow_drop_down),
+              //       iconSize: 30,
+              //       isExpanded: false,
+              //       value: valuechoose,
+              //       items: listitem.map((valueItem) {
+              //         return DropdownMenuItem(
+              //           value: valueItem,
+              //           child: Text(valueItem),
+              //         );
+              //       }).toList(),
+              //       onChanged: (newValue) {
+              //         // add new choice button
+              //         setState(() {
+              //           valuechoose = newValue;
+              //           if (valuechoose == "limit access") {
+              //             Restricted = true;
+              //           } else {
+              //             Restricted = false;
+              //           }
+              //         });
+              //       }),
+              // ),
               TextButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.grey)),
@@ -127,23 +132,13 @@ class _EachUsersState extends State<EachUserScreen> {
                   style: TextStyle(color: Colors.black),
                 ),
                 onPressed: (() {
-                  UpdateUserPhoto(userName, _image, Restricted);
+                  UpdateUserPhoto(userName, _image);
                 }),
               ),
+
               TextButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
-                child: Text(
-                  "Get Image",
-                  style: TextStyle(color: Colors.black),
-                ),
-                onPressed: (() {
-                  getUserImage(userName);
-                }),
-              ),
-              TextButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
+                    backgroundColor: MaterialStateProperty.all(Colors.purple)),
                 child: Text(
                   "Delete User",
                   style: TextStyle(color: Colors.black),
@@ -178,8 +173,7 @@ class _EachUsersState extends State<EachUserScreen> {
     return false;
   }
 
-  Future<bool> UpdateUserPhoto(
-      String username, File image, bool restricted) async {
+  Future<bool> UpdateUserPhoto(String username, File image) async {
     print("Update user photo");
     print(username);
     final ret = await connectStart(20);
@@ -190,7 +184,7 @@ class _EachUsersState extends State<EachUserScreen> {
     print(imageBytes.length);
     try {
       var response = await stub.updateTrustedUser(generateReqStream(
-          imageBytes, imageBytes.length, 400, username, restricted));
+          imageBytes, imageBytes.length, 400, username, true));
     } catch (e) {
       print('Caught error: $e');
       connectEnd();
@@ -220,7 +214,7 @@ class _EachUsersState extends State<EachUserScreen> {
       }
       final request = User()
         ..name = username
-        ..restricted = restricted
+        ..restricted = true
         ..photo = photo;
       yield request;
     }

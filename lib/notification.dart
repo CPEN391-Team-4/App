@@ -63,10 +63,6 @@ class FirebaseNotification {
           payload: "payload");
     });
 
-    // FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    // print("Please work*********");
-    // });
-
     // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     return local_not;

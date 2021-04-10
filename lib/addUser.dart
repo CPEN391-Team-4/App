@@ -24,7 +24,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   var channel;
   var stub;
   var userName;
-  var Restricted;
+  // var Restricted;
   final usernameText = new TextEditingController();
 
   File _image;
@@ -38,7 +38,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   String _accessType;
 
   String valuechoose;
-  List listitem = ["limit access", "free access"];
+  // List listitem = ["limit access", "free access"];
   Future getImage(int source) async {
     var image = PickedFile("");
     if (source == 1) {
@@ -111,39 +111,40 @@ class _AddUserScreenState extends State<AddUserScreen> {
               SizedBox(
                 height: 20,
               ),
-              Center(
-                child: DropdownButton(
-                    hint: Text("Select Items: "),
-                    focusColor: Colors.green,
-                    dropdownColor: Colors.grey,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 30,
-                    isExpanded: false,
-                    value: valuechoose,
-                    items: listitem.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text(valueItem),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      // add new choice button
-                      setState(() {
-                        valuechoose = newValue;
-                        if (valuechoose == "limit access") {
-                          Restricted = true;
-                        } else {
-                          Restricted = false;
-                        }
-                      });
-                    }),
-              ),
+              // Center(
+              //   child: DropdownButton(
+              //       hint: Text("Select Items: "),
+              //       focusColor: Colors.green,
+              //       dropdownColor: Colors.grey,
+              //       icon: Icon(Icons.arrow_drop_down),
+              //       iconSize: 30,
+              //       isExpanded: false,
+              //       value: valuechoose,
+              //       items: listitem.map((valueItem) {
+              //         return DropdownMenuItem(
+              //           value: valueItem,
+              //           child: Text(valueItem),
+              //         );
+              //       }).toList(),
+              //       onChanged: (newValue) {
+              //         // add new choice button
+              //         setState(() {
+              //           valuechoose = newValue;
+              //           if (valuechoose == "limit access") {
+              //             Restricted = true;
+              //           } else {
+              //             Restricted = false;
+              //           }
+              //         });
+              //       }),
+              // ),
               SizedBox(
                 height: 20,
               ),
               TextButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.lightGreen)),
                 child: Text(
                   "Add User",
                   style: TextStyle(color: Colors.black),
@@ -152,13 +153,10 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   setState(() {
                     userName = usernameText.text;
                   });
-                  if (_image == null ||
-                      userName == null ||
-                      Restricted == null) {
+                  if (_image == null || userName == null) {
                     print("Lack of information");
                   } else {
-                    await AddTrustPeople(
-                        _image, userName, showingimage, Restricted);
+                    await AddTrustPeople(_image, userName, showingimage);
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => Users()));
                   }
@@ -174,7 +172,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   }
 
   Future<bool> AddTrustPeople(
-      File image, String username, Image showimage, bool restricted) async {
+      File image, String username, Image showimage) async {
     print("Add people");
     print(userName);
     final ret = connectStart(20);
@@ -187,18 +185,16 @@ class _AddUserScreenState extends State<AddUserScreen> {
     print(channel);
     print(stub);
     try {
-      Stream<User> requestStream = generateReqStream(
-          imageBytes, imageBytes.length, 400, username, restricted);
+      Stream<User> requestStream =
+          generateReqStream(imageBytes, imageBytes.length, 400, username, true);
       var response = await stub.addTrustedUser(requestStream);
       var users = Users();
-      // users._updateTrustPeopleList();
     } catch (e) {
       print('Caught error: $e');
       connectEnd();
       return false;
     }
 
-    //await channel.shutdown();
     connectEnd();
     print("Add User success.");
 
@@ -224,7 +220,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
       }
       final request = User()
         ..name = username
-        ..restricted = restricted
+        ..restricted = true
         ..photo = photo;
       yield request;
     }

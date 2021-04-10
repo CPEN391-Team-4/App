@@ -30,6 +30,7 @@ class _HistoryState extends State<History> {
     return Scaffold(
       appBar: AppBar(
         title: Text('History Records'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

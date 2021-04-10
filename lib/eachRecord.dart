@@ -41,13 +41,14 @@ class _EachRecordState extends State<EachrecordScreen> {
   String image_address;
   File _image;
   var imgAsBytes = null;
-  final picker = ImagePicker();
-  bool Restricted;
-  String valuechoose;
-  List listitem = ["limit access", "free access"];
 
   _EachRecordState(
       this.userName, this.statu, this.accesstime, this.image_address);
+
+  @override
+  void initState() {
+    getRecordImage(image_address);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,17 +64,17 @@ class _EachRecordState extends State<EachrecordScreen> {
               SizedBox(
                 height: 20,
               ),
-              TextButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.grey)),
-                child: Text(
-                  "Get Image",
-                  style: TextStyle(color: Colors.black),
-                ),
-                onPressed: (() {
-                  getRecordImage(image_address);
-                }),
-              ),
+              // TextButton(
+              //   style: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all(Colors.grey)),
+              //   child: Text(
+              //     "Get Image",
+              //     style: TextStyle(color: Colors.black),
+              //   ),
+              //   onPressed: (() {
+              //     getRecordImage(image_address);
+              //   }),
+              // ),
               SizedBox(
                 height: 10,
               ),
@@ -129,7 +130,7 @@ class _EachRecordState extends State<EachrecordScreen> {
     connectEnd();
   }
 
-  Future<File> getRecordImage(String image_address) async {
+  Future<void> getRecordImage(String image_address) async {
     setState(() {
       _image = null;
     });

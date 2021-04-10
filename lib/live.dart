@@ -201,9 +201,6 @@ class _LiveState extends State<Live> {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: <Widget>[
-            // top: 100,
-            // right: 50.0,
-            // showInCall(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: _width * 0.25),
               child: Container(
@@ -221,12 +218,9 @@ class _LiveState extends State<Live> {
                 ),
               ),
             ),
-
             SizedBox(height: 10),
-
             setImage(_imgFile),
             SizedBox(height: 30),
-
             Padding(
               padding: EdgeInsets.symmetric(horizontal: _width * 0.1),
               child: Row(

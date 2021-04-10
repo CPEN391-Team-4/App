@@ -32,6 +32,7 @@ class _UsersState extends State<Users> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Users'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
