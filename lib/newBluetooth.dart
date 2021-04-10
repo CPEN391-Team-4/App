@@ -14,6 +14,7 @@ class _FindDevicesState extends State<FindDevices> {
     @override
     void initState() {
         FlutterBluetoothSerial.instance.startDiscovery().listen((r) {
+            print(r.device.name);
             setState(() {
                 devicesList.add(r);
             });
