@@ -101,8 +101,8 @@ class _FindDevicesState extends State<FindDevices> {
                                                     var deviceID = BytesBuilder();
                                                     connection.input.listen((data) async {
                                                         deviceID.add(data);
-                                                        if (deviceID.toBytes()[deviceID.length-1].toString() == "\n") {
-                                                            print(deviceID.toString());
+                                                        if (deviceID.toBytes()[deviceID.length-1] == 10) {
+                                                            print(deviceID.toBytes().toString());
                                                             await connection.close();
                                                             await connection.finish();
                                                             connection.dispose();
