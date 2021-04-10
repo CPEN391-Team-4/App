@@ -214,12 +214,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
       if (cursize + chunksize >= size) {
         photo = Photo()
           ..image = imageBytes.sublist(cursize, size)
-          ..fileExtension = "jpg";
+          ..fileExtension = "jpeg";
         cursize = size;
       } else {
         photo = Photo()
           ..image = imageBytes.sublist(cursize, cursize + chunksize)
-          ..fileExtension = 'jpg';
+          ..fileExtension = 'jpeg';
         cursize += chunksize;
       }
       final request = User()

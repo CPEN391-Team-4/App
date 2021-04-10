@@ -124,13 +124,13 @@ class _LiveState extends State<Live> {
   }
 
   void _door(context, unlock) async {
-     var local_auth = LocalAuthentication();
-     bool didAuthenticate = await local_auth.authenticate(
-       localizedReason: 'Please authenticate',
-     );
-     if (didAuthenticate == false) {
-       return _alert(context, "Authentication Failed", "Please try again");
-     }
+    var local_auth = LocalAuthentication();
+    bool didAuthenticate = await local_auth.authenticate(
+      localizedReason: 'Please authenticate',
+    );
+    if (didAuthenticate == false) {
+      return _alert(context, "Authentication Failed", "Please try again");
+    }
     if (unlock == true) {
       _unlockDoor(context);
     } else {
@@ -255,58 +255,64 @@ class _LiveState extends State<Live> {
 
   Future<void> endLiveStream() async {
     print("end stream");
-    // final ret = await connectStartvideo();
-    // stub = ret[0];
-    // channel = ret[1];
-    // final endrequest = EndPullVideoStreamReq()..id = "";
-    // final res = await stub.EndPullVideoStream();
-    // connectEnd();
+    final ret = await connectStartvideo();
+    var stub;
+    var channel;
+    stub = ret[0];
+    channel = ret[1];
+    final endrequest = EndPullVideoStreamReq()..id = "default";
+    try {
+      final res = await stub.endPullVideoStream(endrequest);
+    } catch (e) {
+      print(e);
+    }
+    //connectEnd();
+    await channel.shutdown();
   }
 
   Future<void> getLiveStream() async {
     print("start stream");
-    // setState(() {
-    //   _imgFile = null;
-    // });
-    // final ret = await connectStartvideo();
-    // stub = ret[0];
-    // channel = ret[1];
+    setState(() {
+      _imgFile = null;
+    });
+    var stub;
+    var channel;
+    final ret = await connectStartvideo();
+    stub = ret[0];
+    channel = ret[1];
 
-    // final streamRequest = PullVideoStreamReq()..id = "default";
-    // var framenumber = 0;
-    // try {
-    //   await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
-    //     print(streamResponse.closed);
-    //     if (streamResponse.closed == true) {
-    //       print("closingggggggggggggggggggggggggggggggggggg");
-    //       connectEnd();
-    //       break;
-    //     }
-    //     var imageBytes = BytesBuilder();
-    //     imageBytes.add(streamResponse.video.frame.chunk);
-    //     print(streamResponse.video.frame.number);
-    //     // print(imageBytes.toBytes());
+    final streamRequest = PullVideoStreamReq()..id = "default";
+    var framenumber = 0;
+    try {
+      await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
+        print(streamResponse.closed);
+        if (streamResponse.closed == true) {
+          print("closingggggggggggggggggggggggggggggggggggg");
+          connectEnd();
+          break;
+        }
+        var imageBytes = BytesBuilder();
+        imageBytes.add(streamResponse.video.frame.chunk);
+        print(streamResponse.video.frame.number);
+        // print(imageBytes.toBytes());
 
-    //     // imageCache.clear();
-    //     // setState(() {
-    //     //   imgAsBytes = imageBytes.toBytes();
-    //     // });
-    //     //
-    //     framenumber += 1;
-    //   }
+        imageCache.clear();
+        setState(() {
+          imgAsBytes = imageBytes.toBytes();
+        });
 
-    //   // imageCache.clear();
+        framenumber += 1;
+        await Future.delayed(Duration(milliseconds: 100));
+      }
+    } catch (e) {
+      //connectEnd();
+      await channel.shutdown();
+      print(e);
+    }
 
-    //   // setState(() {
-    //   //   imgAsBytes = imageBytes.toBytes();
-    //   // });
-    // } catch (e) {
-    //   connectEnd();
-    //   print(e);
-    // }
-
-    // print(framenumber);
-    // connectEnd();
+    print(framenumber);
+    //connectEnd();
+    await channel.shutdown();
   }
 
   Widget setImage(File file) {
