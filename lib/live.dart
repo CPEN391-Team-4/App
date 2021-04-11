@@ -363,12 +363,7 @@ class _LiveState extends State<Live> {
 
   Widget setImage(File file) {
     if (imgAsBytes != null) {
-      return new Container(
-          width: 250.0,
-          height: 250.0,
-          alignment: Alignment.center,
-          decoration: new BoxDecoration(
-              image: DecorationImage(image: MemoryImage(imgAsBytes))));
+      return new Image(image: MemoryImage(imgAsBytes), gaplessPlayback: true);
     }
 
     if (file == null) {
