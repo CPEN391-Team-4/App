@@ -59,6 +59,23 @@ message DeviceVerify{
   string token = 2;
 }
 
+message LockDoorReq {
+  bool locked = 1;
+}
+
+message LockReq {
+  bool request = 1;
+}
+message LockResp {
+  bool success = 1;
+}
+
+//a request from de1 to first time set up the connection with server
+message LockConnection {
+  bool setup = 1;
+}
+
+
 message BluetoothInfo{
   string de1ID = 1;
   string username = 2;
@@ -89,14 +106,15 @@ service Route {
 
   //update the device token 
   rpc UpdateDeviceToken(DeviceVerify) returns (Empty){}
-  
+
+  rpc LockDoor(LockDoorReq) returns (Empty){}
+
+  rpc RequestToLock(stream LockConnection) returns (stream LockReq){}
+
+
   //update the de1 id and username
   rpc SendDe1ID(BluetoothInfo) returns (Empty){}
 
   //get the de1 id and username
   rpc GetDe1ID(MainUser) returns (BluetoothInfo){}
- 
 }
-
-
-
