@@ -90,7 +90,7 @@ class _ProfileState extends State<Profile> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: _width * 0.2),
               child: RaisedButton(
-                  child: Text("Add A Security Device"), onPressed: () {}),
+                  child: Text("Add A Security Device"), onPressed: () {Get.to(FindDevices());}),
             ),
             SizedBox(height: 30),
             Padding(
