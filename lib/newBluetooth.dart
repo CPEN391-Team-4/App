@@ -151,11 +151,11 @@ class _FindDevicesState extends State<FindDevices> {
     try {
       var username = "admin";
       var de1info = BluetoothInfo()..de1ID = id;
-      var res = await stub.sendDe1ID(de1info);
+      final res = await stub.sendDe1ID(de1info);
     } catch (e) {
       print(e);
       await channel.shutdown();
-      return 
+      return;
     }
     await channel.shutdown();
   }

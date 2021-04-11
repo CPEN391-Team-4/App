@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
@@ -127,6 +129,30 @@ class _LiveState extends State<Live> {
     });
   }
 
+  Future<Void> normalUnlock() async {
+    print("enter normal unlock call");
+    final ret = await connectStart(500);
+    stub = ret[0];
+    channel = ret[1];
+    final permissionRequest = Permission()..permit = permit;
+    try {
+      var res = await stub.givePermission(permissionRequest);
+      if (permit == true) {
+        _alert(context, "Door has been unlocked", "Please try again");
+      } else {
+        _alert(context, "Door has been locked", "Please try again");
+      }
+    } catch (e) {
+      _alert(context, "An error occured", "Please try again");
+      connectEnd();
+      return;
+    }
+    connectEnd();
+    return;
+  }
+
+  Future<Void> normalLock() async {}
+
   void _door(context, unlock) async {
     // var local_auth = LocalAuthentication();
     // bool didAuthenticate = await local_auth.authenticate(
@@ -138,8 +164,10 @@ class _LiveState extends State<Live> {
 
     if (unlock == true) {
       _unlockDoor(context);
+      normalUnlock();
     } else {
       _lockDoor(context);
+      normalLock();
     }
     return;
   }
