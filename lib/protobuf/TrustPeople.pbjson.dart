@@ -137,6 +137,46 @@ const DeviceVerify$json = const {
 
 /// Descriptor for `DeviceVerify`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deviceVerifyDescriptor = $convert.base64Decode('CgxEZXZpY2VWZXJpZnkSGgoIZGV2aWNlaWQYASABKAlSCGRldmljZWlkEhQKBXRva2VuGAIgASgJUgV0b2tlbg==');
+@$core.Deprecated('Use lockDoorReqDescriptor instead')
+const LockDoorReq$json = const {
+  '1': 'LockDoorReq',
+  '2': const [
+    const {'1': 'locked', '3': 1, '4': 1, '5': 8, '10': 'locked'},
+  ],
+};
+
+/// Descriptor for `LockDoorReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List lockDoorReqDescriptor = $convert.base64Decode('CgtMb2NrRG9vclJlcRIWCgZsb2NrZWQYASABKAhSBmxvY2tlZA==');
+@$core.Deprecated('Use lockReqDescriptor instead')
+const LockReq$json = const {
+  '1': 'LockReq',
+  '2': const [
+    const {'1': 'request', '3': 1, '4': 1, '5': 8, '10': 'request'},
+  ],
+};
+
+/// Descriptor for `LockReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List lockReqDescriptor = $convert.base64Decode('CgdMb2NrUmVxEhgKB3JlcXVlc3QYASABKAhSB3JlcXVlc3Q=');
+@$core.Deprecated('Use lockRespDescriptor instead')
+const LockResp$json = const {
+  '1': 'LockResp',
+  '2': const [
+    const {'1': 'success', '3': 1, '4': 1, '5': 8, '10': 'success'},
+  ],
+};
+
+/// Descriptor for `LockResp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List lockRespDescriptor = $convert.base64Decode('CghMb2NrUmVzcBIYCgdzdWNjZXNzGAEgASgIUgdzdWNjZXNz');
+@$core.Deprecated('Use lockConnectionDescriptor instead')
+const LockConnection$json = const {
+  '1': 'LockConnection',
+  '2': const [
+    const {'1': 'setup', '3': 1, '4': 1, '5': 8, '10': 'setup'},
+  ],
+};
+
+/// Descriptor for `LockConnection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List lockConnectionDescriptor = $convert.base64Decode('Cg5Mb2NrQ29ubmVjdGlvbhIUCgVzZXR1cBgBIAEoCFIFc2V0dXA=');
 @$core.Deprecated('Use bluetoothInfoDescriptor instead')
 const BluetoothInfo$json = const {
   '1': 'BluetoothInfo',

@@ -716,6 +716,194 @@ class DeviceVerify extends $pb.GeneratedMessage {
   void clearToken() => clearField(2);
 }
 
+class LockDoorReq extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LockDoorReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'locked')
+    ..hasRequiredFields = false
+  ;
+
+  LockDoorReq._() : super();
+  factory LockDoorReq({
+    $core.bool? locked,
+  }) {
+    final _result = create();
+    if (locked != null) {
+      _result.locked = locked;
+    }
+    return _result;
+  }
+  factory LockDoorReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LockDoorReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LockDoorReq clone() => LockDoorReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LockDoorReq copyWith(void Function(LockDoorReq) updates) => super.copyWith((message) => updates(message as LockDoorReq)) as LockDoorReq; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LockDoorReq create() => LockDoorReq._();
+  LockDoorReq createEmptyInstance() => create();
+  static $pb.PbList<LockDoorReq> createRepeated() => $pb.PbList<LockDoorReq>();
+  @$core.pragma('dart2js:noInline')
+  static LockDoorReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LockDoorReq>(create);
+  static LockDoorReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get locked => $_getBF(0);
+  @$pb.TagNumber(1)
+  set locked($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLocked() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLocked() => clearField(1);
+}
+
+class LockReq extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LockReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'request')
+    ..hasRequiredFields = false
+  ;
+
+  LockReq._() : super();
+  factory LockReq({
+    $core.bool? request,
+  }) {
+    final _result = create();
+    if (request != null) {
+      _result.request = request;
+    }
+    return _result;
+  }
+  factory LockReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LockReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LockReq clone() => LockReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LockReq copyWith(void Function(LockReq) updates) => super.copyWith((message) => updates(message as LockReq)) as LockReq; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LockReq create() => LockReq._();
+  LockReq createEmptyInstance() => create();
+  static $pb.PbList<LockReq> createRepeated() => $pb.PbList<LockReq>();
+  @$core.pragma('dart2js:noInline')
+  static LockReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LockReq>(create);
+  static LockReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get request => $_getBF(0);
+  @$pb.TagNumber(1)
+  set request($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => clearField(1);
+}
+
+class LockResp extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LockResp', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'success')
+    ..hasRequiredFields = false
+  ;
+
+  LockResp._() : super();
+  factory LockResp({
+    $core.bool? success,
+  }) {
+    final _result = create();
+    if (success != null) {
+      _result.success = success;
+    }
+    return _result;
+  }
+  factory LockResp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LockResp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LockResp clone() => LockResp()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LockResp copyWith(void Function(LockResp) updates) => super.copyWith((message) => updates(message as LockResp)) as LockResp; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LockResp create() => LockResp._();
+  LockResp createEmptyInstance() => create();
+  static $pb.PbList<LockResp> createRepeated() => $pb.PbList<LockResp>();
+  @$core.pragma('dart2js:noInline')
+  static LockResp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LockResp>(create);
+  static LockResp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get success => $_getBF(0);
+  @$pb.TagNumber(1)
+  set success($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSuccess() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSuccess() => clearField(1);
+}
+
+class LockConnection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LockConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setup')
+    ..hasRequiredFields = false
+  ;
+
+  LockConnection._() : super();
+  factory LockConnection({
+    $core.bool? setup,
+  }) {
+    final _result = create();
+    if (setup != null) {
+      _result.setup = setup;
+    }
+    return _result;
+  }
+  factory LockConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LockConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LockConnection clone() => LockConnection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LockConnection copyWith(void Function(LockConnection) updates) => super.copyWith((message) => updates(message as LockConnection)) as LockConnection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LockConnection create() => LockConnection._();
+  LockConnection createEmptyInstance() => create();
+  static $pb.PbList<LockConnection> createRepeated() => $pb.PbList<LockConnection>();
+  @$core.pragma('dart2js:noInline')
+  static LockConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LockConnection>(create);
+  static LockConnection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get setup => $_getBF(0);
+  @$pb.TagNumber(1)
+  set setup($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSetup() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSetup() => clearField(1);
+}
+
 class BluetoothInfo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BluetoothInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'de1ID', protoName: 'de1ID')

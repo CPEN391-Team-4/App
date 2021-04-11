@@ -67,6 +67,15 @@ class RouteClient extends $grpc.Client {
           '/route.Route/UpdateDeviceToken',
           ($0.DeviceVerify value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$lockDoor = $grpc.ClientMethod<$0.LockDoorReq, $0.Empty>(
+      '/route.Route/LockDoor',
+      ($0.LockDoorReq value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$requestToLock =
+      $grpc.ClientMethod<$0.LockConnection, $0.LockReq>(
+          '/route.Route/RequestToLock',
+          ($0.LockConnection value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.LockReq.fromBuffer(value));
   static final _$sendDe1ID = $grpc.ClientMethod<$0.BluetoothInfo, $0.Empty>(
       '/route.Route/SendDe1ID',
       ($0.BluetoothInfo value) => value.writeToBuffer(),
@@ -151,6 +160,17 @@ class RouteClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Empty> updateDeviceToken($0.DeviceVerify request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateDeviceToken, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> lockDoor($0.LockDoorReq request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$lockDoor, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.LockReq> requestToLock(
+      $async.Stream<$0.LockConnection> request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$requestToLock, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.Empty> sendDe1ID($0.BluetoothInfo request,
@@ -254,6 +274,20 @@ abstract class RouteServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.DeviceVerify.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.LockDoorReq, $0.Empty>(
+        'LockDoor',
+        lockDoor_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.LockDoorReq.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.LockConnection, $0.LockReq>(
+        'RequestToLock',
+        requestToLock,
+        true,
+        true,
+        ($core.List<$core.int> value) => $0.LockConnection.fromBuffer(value),
+        ($0.LockReq value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.BluetoothInfo, $0.Empty>(
         'SendDe1ID',
         sendDe1ID_Pre,
@@ -315,6 +349,11 @@ abstract class RouteServiceBase extends $grpc.Service {
     return updateDeviceToken(call, await request);
   }
 
+  $async.Future<$0.Empty> lockDoor_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.LockDoorReq> request) async {
+    return lockDoor(call, await request);
+  }
+
   $async.Future<$0.Empty> sendDe1ID_Pre(
       $grpc.ServiceCall call, $async.Future<$0.BluetoothInfo> request) async {
     return sendDe1ID(call, await request);
@@ -348,6 +387,10 @@ abstract class RouteServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.Empty> updateDeviceToken(
       $grpc.ServiceCall call, $0.DeviceVerify request);
+  $async.Future<$0.Empty> lockDoor(
+      $grpc.ServiceCall call, $0.LockDoorReq request);
+  $async.Stream<$0.LockReq> requestToLock(
+      $grpc.ServiceCall call, $async.Stream<$0.LockConnection> request);
   $async.Future<$0.Empty> sendDe1ID(
       $grpc.ServiceCall call, $0.BluetoothInfo request);
   $async.Future<$0.BluetoothInfo> getDe1ID(
