@@ -85,7 +85,6 @@ class _LiveState extends State<Live> {
     await channel.shutdown();
   }
 
-
   Future<void> permission(context, permit) async {
     print("enter give permission call");
     final ret = await connectStart(5);
@@ -96,12 +95,11 @@ class _LiveState extends State<Live> {
       var res = await stub.givePermission(permissionRequest);
       if (permit == true) {
         _alert(context, "Door has been unlocked", "Please try again");
-      }
-      else {
+      } else {
         _alert(context, "Door has been locked", "Please try again");
       }
     } catch (e) {
-        _alert(context, "An error occured", "Please try again");
+      _alert(context, "An error occured", "Please try again");
       connectEnd();
       return;
     }
