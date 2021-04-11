@@ -67,6 +67,14 @@ class RouteClient extends $grpc.Client {
           '/route.Route/UpdateDeviceToken',
           ($0.DeviceVerify value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$sendDe1ID = $grpc.ClientMethod<$0.BluetoothInfo, $0.Empty>(
+      '/route.Route/SendDe1ID',
+      ($0.BluetoothInfo value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$getDe1ID = $grpc.ClientMethod<$0.MainUser, $0.BluetoothInfo>(
+      '/route.Route/GetDe1ID',
+      ($0.MainUser value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.BluetoothInfo.fromBuffer(value));
 
   RouteClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -143,6 +151,16 @@ class RouteClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Empty> updateDeviceToken($0.DeviceVerify request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateDeviceToken, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> sendDe1ID($0.BluetoothInfo request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$sendDe1ID, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.BluetoothInfo> getDe1ID($0.MainUser request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getDe1ID, request, options: options);
   }
 }
 
@@ -236,6 +254,20 @@ abstract class RouteServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.DeviceVerify.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.BluetoothInfo, $0.Empty>(
+        'SendDe1ID',
+        sendDe1ID_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.BluetoothInfo.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.MainUser, $0.BluetoothInfo>(
+        'GetDe1ID',
+        getDe1ID_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.MainUser.fromBuffer(value),
+        ($0.BluetoothInfo value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Empty> removeTrustedUser_Pre(
@@ -283,6 +315,16 @@ abstract class RouteServiceBase extends $grpc.Service {
     return updateDeviceToken(call, await request);
   }
 
+  $async.Future<$0.Empty> sendDe1ID_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.BluetoothInfo> request) async {
+    return sendDe1ID(call, await request);
+  }
+
+  $async.Future<$0.BluetoothInfo> getDe1ID_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.MainUser> request) async {
+    return getDe1ID(call, await request);
+  }
+
   $async.Future<$0.Empty> addTrustedUser(
       $grpc.ServiceCall call, $async.Stream<$0.User> request);
   $async.Future<$0.Empty> updateTrustedUser(
@@ -306,4 +348,8 @@ abstract class RouteServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.Empty> updateDeviceToken(
       $grpc.ServiceCall call, $0.DeviceVerify request);
+  $async.Future<$0.Empty> sendDe1ID(
+      $grpc.ServiceCall call, $0.BluetoothInfo request);
+  $async.Future<$0.BluetoothInfo> getDe1ID(
+      $grpc.ServiceCall call, $0.MainUser request);
 }

@@ -137,3 +137,24 @@ const DeviceVerify$json = const {
 
 /// Descriptor for `DeviceVerify`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deviceVerifyDescriptor = $convert.base64Decode('CgxEZXZpY2VWZXJpZnkSGgoIZGV2aWNlaWQYASABKAlSCGRldmljZWlkEhQKBXRva2VuGAIgASgJUgV0b2tlbg==');
+@$core.Deprecated('Use bluetoothInfoDescriptor instead')
+const BluetoothInfo$json = const {
+  '1': 'BluetoothInfo',
+  '2': const [
+    const {'1': 'de1ID', '3': 1, '4': 1, '5': 9, '10': 'de1ID'},
+    const {'1': 'username', '3': 2, '4': 1, '5': 9, '10': 'username'},
+  ],
+};
+
+/// Descriptor for `BluetoothInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List bluetoothInfoDescriptor = $convert.base64Decode('Cg1CbHVldG9vdGhJbmZvEhQKBWRlMUlEGAEgASgJUgVkZTFJRBIaCgh1c2VybmFtZRgCIAEoCVIIdXNlcm5hbWU=');
+@$core.Deprecated('Use mainUserDescriptor instead')
+const MainUser$json = const {
+  '1': 'MainUser',
+  '2': const [
+    const {'1': 'username', '3': 1, '4': 1, '5': 9, '10': 'username'},
+  ],
+};
+
+/// Descriptor for `MainUser`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List mainUserDescriptor = $convert.base64Decode('CghNYWluVXNlchIaCgh1c2VybmFtZRgBIAEoCVIIdXNlcm5hbWU=');
