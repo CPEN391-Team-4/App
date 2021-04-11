@@ -95,13 +95,13 @@ class _LiveState extends State<Live> {
     final permissionRequest = Permission()..permit = permit;
     try {
       var res = await stub.givePermission(permissionRequest);
-      if (permit == true) {
-        _alert(context, "Door has been unlocked", "Please try again");
-      } else {
-        _alert(context, "Door has been locked", "Please try again");
-      }
+      // if (permit == true) {
+      //   _alert(context, "Door has been unlocked", "Please try again");
+      // } else {
+      //   _alert(context, "Door has been locked", "Please try again");
+      // }
     } catch (e) {
-      _alert(context, "An error occured", "Please try again");
+      // _alert(context, "An error occured", "Please try again");
       connectEnd();
       return;
     }
@@ -131,27 +131,46 @@ class _LiveState extends State<Live> {
 
   Future<Void> normalUnlock() async {
     print("enter normal unlock call");
-    final ret = await connectStart(500);
+    final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
-    final permissionRequest = Permission()..permit = permit;
+    final request = LockDoorReq()..locked = false;
     try {
-      var res = await stub.givePermission(permissionRequest);
-      if (permit == true) {
-        _alert(context, "Door has been unlocked", "Please try again");
+      var res = await stub.lockDoor(request);
+      if (res.success == true) {
+        _alert(context, "Door has been unlocked", "");
       } else {
         _alert(context, "Door has been locked", "Please try again");
       }
     } catch (e) {
-      _alert(context, "An error occured", "Please try again");
+      // _alert(context, "An error occured", "Please try again");
+      print(e);
       connectEnd();
-      return;
     }
     connectEnd();
-    return;
   }
 
-  Future<Void> normalLock() async {}
+  Future<Void> normalLock() async {
+    print("enter normal lock call");
+    final ret = await connectStart(500);
+    stub = ret[0];
+    channel = ret[1];
+    final request = LockDoorReq()..locked = true;
+    try {
+      var res = await stub.lockDoor(request);
+      if (res.success == true) {
+        _alert(context, "Door has been locked", "");
+      } else {
+        _alert(context, "Lock Door request did not send success",
+            "Please try again");
+      }
+    } catch (e) {
+      // _alert(context, "An error occured", "Please try again");
+      print(e);
+      connectEnd();
+    }
+    connectEnd();
+  }
 
   void _door(context, unlock) async {
     // var local_auth = LocalAuthentication();
