@@ -67,10 +67,10 @@ class RouteClient extends $grpc.Client {
           '/route.Route/UpdateDeviceToken',
           ($0.DeviceVerify value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
-  static final _$lockDoor = $grpc.ClientMethod<$0.LockDoorReq, $0.Empty>(
+  static final _$lockDoor = $grpc.ClientMethod<$0.LockDoorReq, $0.LockResp>(
       '/route.Route/LockDoor',
       ($0.LockDoorReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+      ($core.List<$core.int> value) => $0.LockResp.fromBuffer(value));
   static final _$requestToLock =
       $grpc.ClientMethod<$0.LockConnection, $0.LockReq>(
           '/route.Route/RequestToLock',
@@ -162,7 +162,7 @@ class RouteClient extends $grpc.Client {
     return $createUnaryCall(_$updateDeviceToken, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> lockDoor($0.LockDoorReq request,
+  $grpc.ResponseFuture<$0.LockResp> lockDoor($0.LockDoorReq request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$lockDoor, request, options: options);
   }
@@ -274,13 +274,13 @@ abstract class RouteServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.DeviceVerify.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.LockDoorReq, $0.Empty>(
+    $addMethod($grpc.ServiceMethod<$0.LockDoorReq, $0.LockResp>(
         'LockDoor',
         lockDoor_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $0.LockDoorReq.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
+        ($0.LockResp value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.LockConnection, $0.LockReq>(
         'RequestToLock',
         requestToLock,
@@ -349,7 +349,7 @@ abstract class RouteServiceBase extends $grpc.Service {
     return updateDeviceToken(call, await request);
   }
 
-  $async.Future<$0.Empty> lockDoor_Pre(
+  $async.Future<$0.LockResp> lockDoor_Pre(
       $grpc.ServiceCall call, $async.Future<$0.LockDoorReq> request) async {
     return lockDoor(call, await request);
   }
@@ -387,7 +387,7 @@ abstract class RouteServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.Empty> updateDeviceToken(
       $grpc.ServiceCall call, $0.DeviceVerify request);
-  $async.Future<$0.Empty> lockDoor(
+  $async.Future<$0.LockResp> lockDoor(
       $grpc.ServiceCall call, $0.LockDoorReq request);
   $async.Stream<$0.LockReq> requestToLock(
       $grpc.ServiceCall call, $async.Stream<$0.LockConnection> request);
