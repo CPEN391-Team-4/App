@@ -75,7 +75,7 @@ class _UsersState extends State<Users> {
                   final username = trustedUser[index];
                   return ListTile(
                     title: new Text(trustedUser[index]),
-                    subtitle: Text("subtitle"),
+                    //subtitle: Text("subtitle"),
                     leading: Icon(Icons.people),
                     trailing: Icon(Icons.arrow_forward),
                     onTap: () {

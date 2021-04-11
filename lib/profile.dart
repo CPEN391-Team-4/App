@@ -76,7 +76,7 @@ class _ProfileState extends State<Profile> {
             ),
             SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: _width * 0.4),
+              padding: EdgeInsets.symmetric(horizontal: _width * 0.3),
               child: RaisedButton(
                   child: Text("Logout"),
                   onPressed: () {

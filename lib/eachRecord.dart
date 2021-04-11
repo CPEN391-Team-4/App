@@ -2,14 +2,10 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:my_app/home_widget.dart';
 import 'package:my_app/protobuf/TrustPeople.pb.dart';
-import 'package:grpc/grpc.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:path_provider/path_provider.dart';
 import 'connect.dart';
 
 class EachrecordScreen extends StatefulWidget {
@@ -118,7 +114,7 @@ class _EachRecordState extends State<EachrecordScreen> {
     final ret = await connectStart(20);
     stub = ret[0];
     channel = ret[1];
-    print(image_address);
+    //print(image_address);
 
     final imagelocation = ImageLocation()..address = image_address;
     try {
@@ -134,7 +130,8 @@ class _EachRecordState extends State<EachrecordScreen> {
     setState(() {
       _image = null;
     });
-    final ret = await connectStart(20);
+    print(image_address);
+    final ret = await connectStart(25);
     stub = ret[0];
     channel = ret[1];
 
@@ -146,7 +143,8 @@ class _EachRecordState extends State<EachrecordScreen> {
       await for (var returnUser in stub.getHistoryImage(imagelocation)) {
         imageBytes.add(returnUser.image);
       }
-      print("Created");
+      print(imageBytes.toBytes());
+      print("get history image");
 
       imageCache.clear();
 

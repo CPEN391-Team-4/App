@@ -73,7 +73,7 @@ class _EachUsersState extends State<EachUserScreen> {
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.grey)),
                 child: Text(
-                  "Devive Storage.",
+                  "Device Storage.",
                   style: TextStyle(color: Colors.black),
                 ),
                 onPressed: () => getImage(1),
@@ -224,7 +224,7 @@ class _EachUsersState extends State<EachUserScreen> {
     setState(() {
       _image = null;
     });
-    final ret = await connectStart(20);
+    final ret = await connectStart(25);
     stub = ret[0];
     channel = ret[1];
 

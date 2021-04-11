@@ -26,7 +26,6 @@ message FaceVerificationResp {
   bool accept = 3;
 }
 
-
 message HistoryRecord{
   string name = 1;
   string status = 2;
@@ -60,6 +59,15 @@ message DeviceVerify{
   string token = 2;
 }
 
+message BluetoothInfo{
+  string de1ID = 1;
+  string username = 2;
+}
+
+message MainUser{
+  string username = 1;
+}
+
 service Route {
   rpc AddTrustedUser(stream User) returns (Empty) {}
   rpc UpdateTrustedUser(stream User) returns (Empty) {}
@@ -79,8 +87,15 @@ service Route {
   //get the latest image when app gets the notification 
   rpc GetLatestImage(Empty) returns (stream Photo){}
 
-    //update the device token 
-    rpc UpdateDeviceToken(DeviceVerify) returns (Empty){}
+  //update the device token 
+  rpc UpdateDeviceToken(DeviceVerify) returns (Empty){}
+  
+  //update the de1 id and username
+  rpc SendDe1ID(BluetoothInfo) returns (Empty){}
+
+  //get the de1 id and username
+  rpc GetDe1ID(MainUser) returns (BluetoothInfo){}
+ 
 }
 
 

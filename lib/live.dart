@@ -17,7 +17,7 @@ class Live extends StatefulWidget {
 }
 
 class _LiveState extends State<Live> {
-  File _imgFile = new File('');
+  File _imgFile = new File('../assets/profile.png');
   bool _inCall = false;
   bool _lockInCall = false;
   bool _unlockInCall = false;
@@ -124,13 +124,14 @@ class _LiveState extends State<Live> {
   }
 
   void _door(context, unlock) async {
-    var local_auth = LocalAuthentication();
-    bool didAuthenticate = await local_auth.authenticate(
-      localizedReason: 'Please authenticate',
-    );
-    if (didAuthenticate == false) {
-      return _alert(context, "Authentication Failed", "Please try again");
-    }
+    // var local_auth = LocalAuthentication();
+    // bool didAuthenticate = await local_auth.authenticate(
+    //   localizedReason: 'Please authenticate',
+    // );
+    // if (didAuthenticate == false) {
+    //   return _alert(context, "Authentication Failed", "Please try again");
+    // }
+
     if (unlock == true) {
       _unlockDoor(context);
     } else {
