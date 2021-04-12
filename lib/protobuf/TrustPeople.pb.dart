@@ -15,6 +15,7 @@ class User extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'restricted')
     ..aOM<Photo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Photo', protoName: 'Photo', subBuilder: Photo.create)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
@@ -23,6 +24,7 @@ class User extends $pb.GeneratedMessage {
     $core.String? name,
     $core.bool? restricted,
     Photo? photo,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (name != null) {
@@ -33,6 +35,9 @@ class User extends $pb.GeneratedMessage {
     }
     if (photo != null) {
       _result.photo = photo;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -85,6 +90,15 @@ class User extends $pb.GeneratedMessage {
   void clearPhoto() => clearField(3);
   @$pb.TagNumber(3)
   Photo ensurePhoto() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.String get mainUser => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set mainUser($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMainUser() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMainUser() => clearField(4);
 }
 
 class Photo extends $pb.GeneratedMessage {
@@ -221,16 +235,21 @@ class Empty extends $pb.GeneratedMessage {
 class FaceVerificationReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaceVerificationReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOM<Photo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Photo', protoName: 'Photo', subBuilder: Photo.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
   FaceVerificationReq._() : super();
   factory FaceVerificationReq({
     Photo? photo,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (photo != null) {
       _result.photo = photo;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -265,6 +284,15 @@ class FaceVerificationReq extends $pb.GeneratedMessage {
   void clearPhoto() => clearField(1);
   @$pb.TagNumber(1)
   Photo ensurePhoto() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get mainUser => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set mainUser($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMainUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMainUser() => clearField(2);
 }
 
 class FaceVerificationResp extends $pb.GeneratedMessage {
@@ -475,16 +503,21 @@ class HistoryRecords extends $pb.GeneratedMessage {
 class ImageLocation extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ImageLocation', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
   ImageLocation._() : super();
   factory ImageLocation({
     $core.String? address,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (address != null) {
       _result.address = address;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -517,12 +550,22 @@ class ImageLocation extends $pb.GeneratedMessage {
   $core.bool hasAddress() => $_has(0);
   @$pb.TagNumber(1)
   void clearAddress() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get mainUser => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set mainUser($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMainUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMainUser() => clearField(2);
 }
 
 class Timestamp extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Timestamp', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'starttime')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'endtime')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
@@ -530,6 +573,7 @@ class Timestamp extends $pb.GeneratedMessage {
   factory Timestamp({
     $core.String? starttime,
     $core.String? endtime,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (starttime != null) {
@@ -537,6 +581,9 @@ class Timestamp extends $pb.GeneratedMessage {
     }
     if (endtime != null) {
       _result.endtime = endtime;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -578,6 +625,15 @@ class Timestamp extends $pb.GeneratedMessage {
   $core.bool hasEndtime() => $_has(1);
   @$pb.TagNumber(2)
   void clearEndtime() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get mainUser => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set mainUser($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMainUser() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMainUser() => clearField(3);
 }
 
 class Permission extends $pb.GeneratedMessage {
@@ -585,6 +641,7 @@ class Permission extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'usernames')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userid')
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'permit')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
@@ -593,6 +650,7 @@ class Permission extends $pb.GeneratedMessage {
     $core.String? usernames,
     $fixnum.Int64? userid,
     $core.bool? permit,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (usernames != null) {
@@ -603,6 +661,9 @@ class Permission extends $pb.GeneratedMessage {
     }
     if (permit != null) {
       _result.permit = permit;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -653,12 +714,22 @@ class Permission extends $pb.GeneratedMessage {
   $core.bool hasPermit() => $_has(2);
   @$pb.TagNumber(3)
   void clearPermit() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get mainUser => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set mainUser($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMainUser() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMainUser() => clearField(4);
 }
 
 class DeviceVerify extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeviceVerify', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceid')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'token')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
@@ -666,6 +737,7 @@ class DeviceVerify extends $pb.GeneratedMessage {
   factory DeviceVerify({
     $core.String? deviceid,
     $core.String? token,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (deviceid != null) {
@@ -673,6 +745,9 @@ class DeviceVerify extends $pb.GeneratedMessage {
     }
     if (token != null) {
       _result.token = token;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -714,21 +789,35 @@ class DeviceVerify extends $pb.GeneratedMessage {
   $core.bool hasToken() => $_has(1);
   @$pb.TagNumber(2)
   void clearToken() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get mainUser => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set mainUser($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMainUser() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMainUser() => clearField(3);
 }
 
 class LockDoorReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LockDoorReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'locked')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
   LockDoorReq._() : super();
   factory LockDoorReq({
     $core.bool? locked,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (locked != null) {
       _result.locked = locked;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -761,21 +850,35 @@ class LockDoorReq extends $pb.GeneratedMessage {
   $core.bool hasLocked() => $_has(0);
   @$pb.TagNumber(1)
   void clearLocked() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get mainUser => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set mainUser($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMainUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMainUser() => clearField(2);
 }
 
 class LockReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LockReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'request')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
   LockReq._() : super();
   factory LockReq({
     $core.bool? request,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (request != null) {
       _result.request = request;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -808,6 +911,15 @@ class LockReq extends $pb.GeneratedMessage {
   $core.bool hasRequest() => $_has(0);
   @$pb.TagNumber(1)
   void clearRequest() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get mainUser => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set mainUser($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMainUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMainUser() => clearField(2);
 }
 
 class LockResp extends $pb.GeneratedMessage {
@@ -860,16 +972,21 @@ class LockResp extends $pb.GeneratedMessage {
 class LockConnection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LockConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setup')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
   LockConnection._() : super();
   factory LockConnection({
     $core.bool? setup,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (setup != null) {
       _result.setup = setup;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -902,12 +1019,22 @@ class LockConnection extends $pb.GeneratedMessage {
   $core.bool hasSetup() => $_has(0);
   @$pb.TagNumber(1)
   void clearSetup() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get mainUser => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set mainUser($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMainUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMainUser() => clearField(2);
 }
 
 class BluetoothInfo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BluetoothInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'de1ID', protoName: 'de1ID')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
@@ -915,6 +1042,7 @@ class BluetoothInfo extends $pb.GeneratedMessage {
   factory BluetoothInfo({
     $core.String? de1ID,
     $core.String? username,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (de1ID != null) {
@@ -922,6 +1050,9 @@ class BluetoothInfo extends $pb.GeneratedMessage {
     }
     if (username != null) {
       _result.username = username;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -963,21 +1094,35 @@ class BluetoothInfo extends $pb.GeneratedMessage {
   $core.bool hasUsername() => $_has(1);
   @$pb.TagNumber(2)
   void clearUsername() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get mainUser => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set mainUser($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMainUser() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMainUser() => clearField(3);
 }
 
 class MainUser extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MainUser', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'route'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
   MainUser._() : super();
   factory MainUser({
     $core.String? username,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (username != null) {
       _result.username = username;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -1010,5 +1155,14 @@ class MainUser extends $pb.GeneratedMessage {
   $core.bool hasUsername() => $_has(0);
   @$pb.TagNumber(1)
   void clearUsername() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get mainUser => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set mainUser($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMainUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMainUser() => clearField(2);
 }
 

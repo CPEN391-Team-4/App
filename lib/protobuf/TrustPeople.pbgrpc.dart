@@ -54,10 +54,6 @@ class RouteClient extends $grpc.Client {
       '/route.Route/DeleteRecords',
       ($0.ImageLocation value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
-  static final _$givePermission = $grpc.ClientMethod<$0.Permission, $0.Empty>(
-      '/route.Route/GivePermission',
-      ($0.Permission value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
   static final _$getLatestImage = $grpc.ClientMethod<$0.Empty, $0.Photo>(
       '/route.Route/GetLatestImage',
       ($0.Empty value) => value.writeToBuffer(),
@@ -143,11 +139,6 @@ class RouteClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Empty> deleteRecords($0.ImageLocation request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deleteRecords, request, options: options);
-  }
-
-  $grpc.ResponseFuture<$0.Empty> givePermission($0.Permission request,
-      {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$givePermission, request, options: options);
   }
 
   $grpc.ResponseStream<$0.Photo> getLatestImage($0.Empty request,
@@ -253,13 +244,6 @@ abstract class RouteServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.ImageLocation.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Permission, $0.Empty>(
-        'GivePermission',
-        givePermission_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.Permission.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Empty, $0.Photo>(
         'GetLatestImage',
         getLatestImage_Pre,
@@ -334,11 +318,6 @@ abstract class RouteServiceBase extends $grpc.Service {
     return deleteRecords(call, await request);
   }
 
-  $async.Future<$0.Empty> givePermission_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.Permission> request) async {
-    return givePermission(call, await request);
-  }
-
   $async.Stream<$0.Photo> getLatestImage_Pre(
       $grpc.ServiceCall call, $async.Future<$0.Empty> request) async* {
     yield* getLatestImage(call, await request);
@@ -381,8 +360,6 @@ abstract class RouteServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.ImageLocation request);
   $async.Future<$0.Empty> deleteRecords(
       $grpc.ServiceCall call, $0.ImageLocation request);
-  $async.Future<$0.Empty> givePermission(
-      $grpc.ServiceCall call, $0.Permission request);
   $async.Stream<$0.Photo> getLatestImage(
       $grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.Empty> updateDeviceToken(

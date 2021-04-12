@@ -15,11 +15,12 @@ const User$json = const {
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'restricted', '3': 2, '4': 1, '5': 8, '10': 'restricted'},
     const {'1': 'Photo', '3': 3, '4': 1, '5': 11, '6': '.route.Photo', '10': 'Photo'},
+    const {'1': 'mainUser', '3': 4, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `User`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List userDescriptor = $convert.base64Decode('CgRVc2VyEhIKBG5hbWUYASABKAlSBG5hbWUSHgoKcmVzdHJpY3RlZBgCIAEoCFIKcmVzdHJpY3RlZBIiCgVQaG90bxgDIAEoCzIMLnJvdXRlLlBob3RvUgVQaG90bw==');
+final $typed_data.Uint8List userDescriptor = $convert.base64Decode('CgRVc2VyEhIKBG5hbWUYASABKAlSBG5hbWUSHgoKcmVzdHJpY3RlZBgCIAEoCFIKcmVzdHJpY3RlZBIiCgVQaG90bxgDIAEoCzIMLnJvdXRlLlBob3RvUgVQaG90bxIaCghtYWluVXNlchgEIAEoCVIIbWFpblVzZXI=');
 @$core.Deprecated('Use photoDescriptor instead')
 const Photo$json = const {
   '1': 'Photo',
@@ -53,11 +54,12 @@ const FaceVerificationReq$json = const {
   '1': 'FaceVerificationReq',
   '2': const [
     const {'1': 'Photo', '3': 1, '4': 1, '5': 11, '6': '.route.Photo', '10': 'Photo'},
+    const {'1': 'mainUser', '3': 2, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `FaceVerificationReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List faceVerificationReqDescriptor = $convert.base64Decode('ChNGYWNlVmVyaWZpY2F0aW9uUmVxEiIKBVBob3RvGAEgASgLMgwucm91dGUuUGhvdG9SBVBob3Rv');
+final $typed_data.Uint8List faceVerificationReqDescriptor = $convert.base64Decode('ChNGYWNlVmVyaWZpY2F0aW9uUmVxEiIKBVBob3RvGAEgASgLMgwucm91dGUuUGhvdG9SBVBob3RvEhoKCG1haW5Vc2VyGAIgASgJUghtYWluVXNlcg==');
 @$core.Deprecated('Use faceVerificationRespDescriptor instead')
 const FaceVerificationResp$json = const {
   '1': 'FaceVerificationResp',
@@ -98,22 +100,24 @@ const ImageLocation$json = const {
   '1': 'ImageLocation',
   '2': const [
     const {'1': 'address', '3': 1, '4': 1, '5': 9, '10': 'address'},
+    const {'1': 'mainUser', '3': 2, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `ImageLocation`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List imageLocationDescriptor = $convert.base64Decode('Cg1JbWFnZUxvY2F0aW9uEhgKB2FkZHJlc3MYASABKAlSB2FkZHJlc3M=');
+final $typed_data.Uint8List imageLocationDescriptor = $convert.base64Decode('Cg1JbWFnZUxvY2F0aW9uEhgKB2FkZHJlc3MYASABKAlSB2FkZHJlc3MSGgoIbWFpblVzZXIYAiABKAlSCG1haW5Vc2Vy');
 @$core.Deprecated('Use timestampDescriptor instead')
 const Timestamp$json = const {
   '1': 'Timestamp',
   '2': const [
     const {'1': 'starttime', '3': 1, '4': 1, '5': 9, '10': 'starttime'},
     const {'1': 'endtime', '3': 2, '4': 1, '5': 9, '10': 'endtime'},
+    const {'1': 'mainUser', '3': 3, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `Timestamp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List timestampDescriptor = $convert.base64Decode('CglUaW1lc3RhbXASHAoJc3RhcnR0aW1lGAEgASgJUglzdGFydHRpbWUSGAoHZW5kdGltZRgCIAEoCVIHZW5kdGltZQ==');
+final $typed_data.Uint8List timestampDescriptor = $convert.base64Decode('CglUaW1lc3RhbXASHAoJc3RhcnR0aW1lGAEgASgJUglzdGFydHRpbWUSGAoHZW5kdGltZRgCIAEoCVIHZW5kdGltZRIaCghtYWluVXNlchgDIAEoCVIIbWFpblVzZXI=');
 @$core.Deprecated('Use permissionDescriptor instead')
 const Permission$json = const {
   '1': 'Permission',
@@ -121,42 +125,46 @@ const Permission$json = const {
     const {'1': 'usernames', '3': 1, '4': 1, '5': 9, '10': 'usernames'},
     const {'1': 'userid', '3': 2, '4': 1, '5': 3, '10': 'userid'},
     const {'1': 'permit', '3': 3, '4': 1, '5': 8, '10': 'permit'},
+    const {'1': 'mainUser', '3': 4, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `Permission`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List permissionDescriptor = $convert.base64Decode('CgpQZXJtaXNzaW9uEhwKCXVzZXJuYW1lcxgBIAEoCVIJdXNlcm5hbWVzEhYKBnVzZXJpZBgCIAEoA1IGdXNlcmlkEhYKBnBlcm1pdBgDIAEoCFIGcGVybWl0');
+final $typed_data.Uint8List permissionDescriptor = $convert.base64Decode('CgpQZXJtaXNzaW9uEhwKCXVzZXJuYW1lcxgBIAEoCVIJdXNlcm5hbWVzEhYKBnVzZXJpZBgCIAEoA1IGdXNlcmlkEhYKBnBlcm1pdBgDIAEoCFIGcGVybWl0EhoKCG1haW5Vc2VyGAQgASgJUghtYWluVXNlcg==');
 @$core.Deprecated('Use deviceVerifyDescriptor instead')
 const DeviceVerify$json = const {
   '1': 'DeviceVerify',
   '2': const [
     const {'1': 'deviceid', '3': 1, '4': 1, '5': 9, '10': 'deviceid'},
     const {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+    const {'1': 'mainUser', '3': 3, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `DeviceVerify`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deviceVerifyDescriptor = $convert.base64Decode('CgxEZXZpY2VWZXJpZnkSGgoIZGV2aWNlaWQYASABKAlSCGRldmljZWlkEhQKBXRva2VuGAIgASgJUgV0b2tlbg==');
+final $typed_data.Uint8List deviceVerifyDescriptor = $convert.base64Decode('CgxEZXZpY2VWZXJpZnkSGgoIZGV2aWNlaWQYASABKAlSCGRldmljZWlkEhQKBXRva2VuGAIgASgJUgV0b2tlbhIaCghtYWluVXNlchgDIAEoCVIIbWFpblVzZXI=');
 @$core.Deprecated('Use lockDoorReqDescriptor instead')
 const LockDoorReq$json = const {
   '1': 'LockDoorReq',
   '2': const [
     const {'1': 'locked', '3': 1, '4': 1, '5': 8, '10': 'locked'},
+    const {'1': 'mainUser', '3': 2, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `LockDoorReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List lockDoorReqDescriptor = $convert.base64Decode('CgtMb2NrRG9vclJlcRIWCgZsb2NrZWQYASABKAhSBmxvY2tlZA==');
+final $typed_data.Uint8List lockDoorReqDescriptor = $convert.base64Decode('CgtMb2NrRG9vclJlcRIWCgZsb2NrZWQYASABKAhSBmxvY2tlZBIaCghtYWluVXNlchgCIAEoCVIIbWFpblVzZXI=');
 @$core.Deprecated('Use lockReqDescriptor instead')
 const LockReq$json = const {
   '1': 'LockReq',
   '2': const [
     const {'1': 'request', '3': 1, '4': 1, '5': 8, '10': 'request'},
+    const {'1': 'mainUser', '3': 2, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `LockReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List lockReqDescriptor = $convert.base64Decode('CgdMb2NrUmVxEhgKB3JlcXVlc3QYASABKAhSB3JlcXVlc3Q=');
+final $typed_data.Uint8List lockReqDescriptor = $convert.base64Decode('CgdMb2NrUmVxEhgKB3JlcXVlc3QYASABKAhSB3JlcXVlc3QSGgoIbWFpblVzZXIYAiABKAlSCG1haW5Vc2Vy');
 @$core.Deprecated('Use lockRespDescriptor instead')
 const LockResp$json = const {
   '1': 'LockResp',
@@ -172,29 +180,32 @@ const LockConnection$json = const {
   '1': 'LockConnection',
   '2': const [
     const {'1': 'setup', '3': 1, '4': 1, '5': 8, '10': 'setup'},
+    const {'1': 'mainUser', '3': 2, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `LockConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List lockConnectionDescriptor = $convert.base64Decode('Cg5Mb2NrQ29ubmVjdGlvbhIUCgVzZXR1cBgBIAEoCFIFc2V0dXA=');
+final $typed_data.Uint8List lockConnectionDescriptor = $convert.base64Decode('Cg5Mb2NrQ29ubmVjdGlvbhIUCgVzZXR1cBgBIAEoCFIFc2V0dXASGgoIbWFpblVzZXIYAiABKAlSCG1haW5Vc2Vy');
 @$core.Deprecated('Use bluetoothInfoDescriptor instead')
 const BluetoothInfo$json = const {
   '1': 'BluetoothInfo',
   '2': const [
     const {'1': 'de1ID', '3': 1, '4': 1, '5': 9, '10': 'de1ID'},
     const {'1': 'username', '3': 2, '4': 1, '5': 9, '10': 'username'},
+    const {'1': 'mainUser', '3': 3, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `BluetoothInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List bluetoothInfoDescriptor = $convert.base64Decode('Cg1CbHVldG9vdGhJbmZvEhQKBWRlMUlEGAEgASgJUgVkZTFJRBIaCgh1c2VybmFtZRgCIAEoCVIIdXNlcm5hbWU=');
+final $typed_data.Uint8List bluetoothInfoDescriptor = $convert.base64Decode('Cg1CbHVldG9vdGhJbmZvEhQKBWRlMUlEGAEgASgJUgVkZTFJRBIaCgh1c2VybmFtZRgCIAEoCVIIdXNlcm5hbWUSGgoIbWFpblVzZXIYAyABKAlSCG1haW5Vc2Vy');
 @$core.Deprecated('Use mainUserDescriptor instead')
 const MainUser$json = const {
   '1': 'MainUser',
   '2': const [
     const {'1': 'username', '3': 1, '4': 1, '5': 9, '10': 'username'},
+    const {'1': 'mainUser', '3': 2, '4': 1, '5': 9, '10': 'mainUser'},
   ],
 };
 
 /// Descriptor for `MainUser`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mainUserDescriptor = $convert.base64Decode('CghNYWluVXNlchIaCgh1c2VybmFtZRgBIAEoCVIIdXNlcm5hbWU=');
+final $typed_data.Uint8List mainUserDescriptor = $convert.base64Decode('CghNYWluVXNlchIaCgh1c2VybmFtZRgBIAEoCVIIdXNlcm5hbWUSGgoIbWFpblVzZXIYAiABKAlSCG1haW5Vc2Vy');

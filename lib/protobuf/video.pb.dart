@@ -14,6 +14,7 @@ class Video extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encoding')
     ..aOM<Frame>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frame', subBuilder: Frame.create)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceId', protoName: 'deviceId')
     ..hasRequiredFields = false
   ;
 
@@ -22,6 +23,7 @@ class Video extends $pb.GeneratedMessage {
     $core.String? name,
     $core.String? encoding,
     Frame? frame,
+    $core.String? deviceId,
   }) {
     final _result = create();
     if (name != null) {
@@ -32,6 +34,9 @@ class Video extends $pb.GeneratedMessage {
     }
     if (frame != null) {
       _result.frame = frame;
+    }
+    if (deviceId != null) {
+      _result.deviceId = deviceId;
     }
     return _result;
   }
@@ -84,6 +89,15 @@ class Video extends $pb.GeneratedMessage {
   void clearFrame() => clearField(3);
   @$pb.TagNumber(3)
   Frame ensureFrame() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.String get deviceId => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set deviceId($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasDeviceId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDeviceId() => clearField(4);
 }
 
 class Frame extends $pb.GeneratedMessage {
@@ -193,16 +207,21 @@ class EmptyVideoResponse extends $pb.GeneratedMessage {
 class PullVideoStreamReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PullVideoStreamReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'video'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
   PullVideoStreamReq._() : super();
   factory PullVideoStreamReq({
     $core.String? id,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (id != null) {
       _result.id = id;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -235,6 +254,15 @@ class PullVideoStreamReq extends $pb.GeneratedMessage {
   $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get mainUser => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set mainUser($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMainUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMainUser() => clearField(2);
 }
 
 class PullVideoStreamResp extends $pb.GeneratedMessage {
@@ -303,16 +331,21 @@ class PullVideoStreamResp extends $pb.GeneratedMessage {
 class EndPullVideoStreamReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EndPullVideoStreamReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'video'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainUser', protoName: 'mainUser')
     ..hasRequiredFields = false
   ;
 
   EndPullVideoStreamReq._() : super();
   factory EndPullVideoStreamReq({
     $core.String? id,
+    $core.String? mainUser,
   }) {
     final _result = create();
     if (id != null) {
       _result.id = id;
+    }
+    if (mainUser != null) {
+      _result.mainUser = mainUser;
     }
     return _result;
   }
@@ -345,6 +378,15 @@ class EndPullVideoStreamReq extends $pb.GeneratedMessage {
   $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get mainUser => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set mainUser($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMainUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMainUser() => clearField(2);
 }
 
 class Streamrequest extends $pb.GeneratedMessage {
