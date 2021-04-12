@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
@@ -12,6 +12,7 @@ import 'protobuf/video.pb.dart';
 import 'protobuf/video.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 import 'connect.dart';
+import 'package:local_auth/error_codes.dart' as auth_error;
 
 class Live extends StatefulWidget {
   @override
@@ -129,14 +130,19 @@ class _LiveState extends State<Live> {
   }
 
   void _door(context, unlock) async {
-    // var local_auth = LocalAuthentication();
-    // bool didAuthenticate = await local_auth.authenticate(
-    //   localizedReason: 'Please authenticate',
-    // );
-    // if (didAuthenticate == false) {
-    //   return _alert(context, "Authentication Failed", "Please try again");
-    // }
-
+    var local_auth = LocalAuthentication();
+    bool didAuthenticate = false;
+    try {
+        didAuthenticate = await local_auth.authenticate(
+                localizedReason: 'Please authenticate',
+        );
+    } on PlatformException catch (e) {
+        didAuthenticate = true;
+        _alert(context, "You do not have a passcode set up", "For added security please set a passcode");
+    }
+    if (didAuthenticate == false) {
+      return _alert(context, "Authentication Failed", "Please try again");
+    }
     if (unlock == true) {
       normalUnlock();
     } else {
