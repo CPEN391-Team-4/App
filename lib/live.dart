@@ -289,7 +289,9 @@ class _LiveState extends State<Live> {
     stub = ret[0];
     channel = ret[1];
 
-    final streamRequest = PullVideoStreamReq()..id = "default";
+    final streamRequest = PullVideoStreamReq()
+      ..id = "default"
+      ..mainUser = "admin";
     var framenumber = 0;
     try {
       await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
