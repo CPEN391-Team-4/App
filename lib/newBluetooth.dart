@@ -42,6 +42,7 @@ class _FindDevicesState extends State<FindDevices> {
     setState(() {
       devicesList.clear();
     });
+    deviceSubscription.cancel();
     startBluetooth();
   }
 
@@ -113,8 +114,10 @@ class _FindDevicesState extends State<FindDevices> {
                     connection.input.listen((data) async {
                       deviceID.add(data);
                       if (deviceID.toBytes()[deviceID.length - 1] == 10) {
-                        print(deviceID.toBytes().toString());
-                        _sendIDtoBackend(deviceID.toBytes().toString());
+                        var idstring = utf8.decode(deviceID.toBytes());
+                        // Strip off the \r\n
+                        _sendIDtoBackend(
+                            idstring.substring(0, idstring.length - 2));
                         await connection.close();
                         await connection.finish();
                         connection.dispose();
@@ -151,6 +154,7 @@ class _FindDevicesState extends State<FindDevices> {
     try {
       var username = "admin";
       var de1info = BluetoothInfo()..de1ID = id;
+      de1info.username = username;
       final res = await stub.sendDe1ID(de1info);
     } catch (e) {
       print(e);
