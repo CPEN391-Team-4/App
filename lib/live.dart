@@ -98,7 +98,8 @@ class _LiveState extends State<Live> {
       var res = await stub.lockDoor(request);
       if (res.success == true) {
       } else {
-        _alert(context, "Unlock Door request did not send success", "Please try again");
+        _alert(context, "Unlock Door request did not send success",
+            "Please try again");
       }
     } catch (e) {
       // _alert(context, "An error occured", "Please try again");
@@ -133,12 +134,13 @@ class _LiveState extends State<Live> {
     var local_auth = LocalAuthentication();
     bool didAuthenticate = false;
     try {
-        didAuthenticate = await local_auth.authenticate(
-                localizedReason: 'Please authenticate',
-        );
+      didAuthenticate = await local_auth.authenticate(
+        localizedReason: 'Please authenticate',
+      );
     } on PlatformException catch (e) {
-        didAuthenticate = true;
-        _alert(context, "You do not have a passcode set up", "For added security please set a passcode");
+      didAuthenticate = true;
+      _alert(context, "You do not have a passcode set up.",
+          " For added security please set a passcode");
     }
     if (didAuthenticate == false) {
       return _alert(context, "Authentication Failed", "Please try again");
