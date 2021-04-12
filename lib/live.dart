@@ -87,48 +87,6 @@ class _LiveState extends State<Live> {
     await channel.shutdown();
   }
 
-  Future<void> permission(context, permit) async {
-    print("enter give permission call");
-    final ret = await connectStart(5);
-    stub = ret[0];
-    channel = ret[1];
-    final permissionRequest = Permission()..permit = permit;
-    try {
-      var res = await stub.givePermission(permissionRequest);
-      // if (permit == true) {
-      //   _alert(context, "Door has been unlocked", "Please try again");
-      // } else {
-      //   _alert(context, "Door has been locked", "Please try again");
-      // }
-    } catch (e) {
-      // _alert(context, "An error occured", "Please try again");
-      connectEnd();
-      return;
-    }
-    connectEnd();
-    return;
-  }
-
-  void _unlockDoor(context) async {
-    setState(() {
-      _unlockInCall = true;
-    });
-    await permission(context, true);
-    setState(() {
-      _unlockInCall = false;
-    });
-  }
-
-  void _lockDoor(context) async {
-    setState(() {
-      _lockInCall = true;
-    });
-    await permission(context, false);
-    setState(() {
-      _lockInCall = false;
-    });
-  }
-
   Future<Void> normalUnlock() async {
     print("enter normal unlock call");
     final ret = await connectStart(20);
@@ -138,9 +96,8 @@ class _LiveState extends State<Live> {
     try {
       var res = await stub.lockDoor(request);
       if (res.success == true) {
-        _alert(context, "Door has been unlocked", "");
       } else {
-        _alert(context, "Door has been locked", "Please try again");
+        _alert(context, "Unlock Door request did not send success", "Please try again");
       }
     } catch (e) {
       // _alert(context, "An error occured", "Please try again");
@@ -159,7 +116,6 @@ class _LiveState extends State<Live> {
     try {
       var res = await stub.lockDoor(request);
       if (res.success == true) {
-        _alert(context, "Door has been locked", "");
       } else {
         _alert(context, "Lock Door request did not send success",
             "Please try again");
@@ -182,10 +138,8 @@ class _LiveState extends State<Live> {
     // }
 
     if (unlock == true) {
-      _unlockDoor(context);
       normalUnlock();
     } else {
-      _lockDoor(context);
       normalLock();
     }
     return;
