@@ -4,6 +4,7 @@ import 'signup.dart';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'home_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Greet extends StatefulWidget {
@@ -18,12 +19,17 @@ class _GreetState extends State<Greet> {
     void initState() {
         FirebaseMessaging.onMessageOpenedApp.listen((message) {
             WidgetsFlutterBinding.ensureInitialized();
-            print("hello*****");
-            Future.delayed(Duration(seconds:2), () {
-
-            });
         });
+        checkLogin();
     }
+
+    void checkLogin() async {
+        final prefs = await SharedPreferences.getInstance();
+        if (prefs.getBool('login') != null && prefs.getBool('login')) {
+            Get.off(Home(false, 0));
+        }
+    }
+
     @override
     Widget build(BuildContext context) {
         var _width = MediaQuery.of(context).size.width;

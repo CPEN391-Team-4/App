@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/protobuf/TrustPeople.pb.dart';
 import 'connect.dart';
@@ -74,15 +74,22 @@ class _LoginState extends State<Login> {
       _inCall = true;
       _loginStatus = 0;
     });
+    final prefs = await SharedPreferences.getInstance();
     await Future.delayed(Duration(seconds: 1), () {
       setState(() {
         _inCall = false;
       });
-      if (!(_username == '' && _pass == '')) {
+      var user = 'admin';
+      if (prefs.getString('password') == null) {
+          prefs.setString('password', 'admin');
+      }
+      var pass = prefs.getString('password');
+      if (!(_username == user && _pass == pass)) {
         setState(() {
           _loginStatus = 1;
         });
       } else {
+          prefs.setBool('login', true);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Home(false, 0)),

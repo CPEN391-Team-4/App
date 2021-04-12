@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'changePassword.dart';
 //import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 //import 'package:my_app/protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pb.dart';
@@ -7,6 +8,7 @@ import 'protobuf/TrustPeople.pbgrpc.dart';
 import 'package:flutter/cupertino.dart';
 import 'connect.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'findDevices.dart';
 import 'newBluetooth.dart';
 import 'package:get/get.dart';
@@ -129,14 +131,18 @@ class _ProfileState extends State<Profile> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: _width * 0.2),
               child: RaisedButton(
-                  child: Text("Change Password"), onPressed: () {}),
+                  child: Text("Change Password"), onPressed: () {
+                      Get.to(ChangePassword());
+                  }),
             ),
             SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: _width * 0.3),
               child: RaisedButton(
                   child: Text("Logout"),
-                  onPressed: () {
+                  onPressed: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      prefs.setBool('login', false);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => Login()),
