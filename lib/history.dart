@@ -1,14 +1,10 @@
 import 'dart:ffi';
 import 'package:intl/intl.dart';
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:grpc/grpc.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
-import 'users.dart';
 import 'connect.dart';
 import 'eachRecord.dart';
 
@@ -24,6 +20,7 @@ class _HistoryState extends State<History> {
   DateTime toTime = DateTime.now();
 
   List<HistoryRecord> historyrecords = [];
+  //built the history page
   @override
   Widget build(BuildContext context) {
     var _width = MediaQuery.of(context).size.width;
@@ -39,6 +36,7 @@ class _HistoryState extends State<History> {
     );
   }
 
+//select the start date
   void _selectFromDate() async {
     final DateTime pickedDate = await showDatePicker(
         context: context,
@@ -51,6 +49,7 @@ class _HistoryState extends State<History> {
       });
   }
 
+//select the end date
   void _selectToDate() async {
     final DateTime pickedDate = await showDatePicker(
         context: context,
@@ -63,6 +62,7 @@ class _HistoryState extends State<History> {
       });
   }
 
+//built a list view of history records show on the history page
   Widget _buildListView(BuildContext context, _width) {
     return Column(
       children: [
@@ -128,8 +128,8 @@ class _HistoryState extends State<History> {
             "Get Records",
             style: TextStyle(color: Colors.black),
           ),
-          onPressed: () =>
-              getHistoryRecord("2021-01-02 03:04:05", "2021-04-02 03:04:05"),
+          //once you press the getrecord button, you can see the records on the page
+          onPressed: () => getHistoryRecord(),
         ),
         Expanded(
             child: ListView.separated(
@@ -165,7 +165,8 @@ class _HistoryState extends State<History> {
     );
   }
 
-  Future<Void> getHistoryRecord(String timestart, String timeend) async {
+// get history records within a certain interval  form the server
+  Future<Void> getHistoryRecord() async {
     final ret = await connectStart(15);
     stub = ret[0];
     channel = ret[1];
@@ -179,11 +180,9 @@ class _HistoryState extends State<History> {
         ..starttime = from
         ..endtime = to;
       var records = await stub.getHistoryRecorded(timestamp);
-      //print(records);
 
       setState(() {
         historyrecords = records.record;
-        //print(historyrecords);
       });
     } catch (e) {
       print(e);

@@ -5,8 +5,9 @@ import 'package:my_app/protobuf/video.pbgrpc.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
 
+//start a connetion with the server normal route with a certain timeout.
 connectStart(int timeout) {
-  final channel = ClientChannel('192.168.0.101',
+  final channel = ClientChannel('cpen391.johnramsden.ca',
       port: 9000,
       options:
           const ChannelOptions(credentials: ChannelCredentials.insecure()));
@@ -17,8 +18,9 @@ connectStart(int timeout) {
   return [stub, channel];
 }
 
+// start a connection with server video stream route, without timeout
 connectStartvideo() {
-  final channel = ClientChannel('192.168.0.101',
+  final channel = ClientChannel('cpen391.johnramsden.ca',
       port: 9000,
       options:
           const ChannelOptions(credentials: ChannelCredentials.insecure()));

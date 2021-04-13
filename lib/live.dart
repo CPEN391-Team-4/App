@@ -261,6 +261,7 @@ class _LiveState extends State<Live> {
     }
   }
 
+// send an end stream signal to the server to notify the de1 to stop sending stream to server
   Future<void> endLiveStream() async {
     print("end stream");
     final ret = await connectStartvideo();
@@ -278,8 +279,8 @@ class _LiveState extends State<Live> {
     await channel.shutdown();
   }
 
+//this function get the live stream frames from the server
   Future<void> getLiveStream() async {
-    print("start stream");
     setState(() {
       _imgFile = null;
     });
@@ -297,14 +298,12 @@ class _LiveState extends State<Live> {
       await for (var streamResponse in stub.pullVideoStream(streamRequest)) {
         print(streamResponse.closed);
         if (streamResponse.closed == true) {
-          print("closingggggggggggggggggggggggggggggggggggg");
           connectEnd();
           break;
         }
         var imageBytes = BytesBuilder();
         imageBytes.add(streamResponse.video.frame.chunk);
         print(streamResponse.video.frame.number);
-        // print(imageBytes.toBytes());
 
         imageCache.clear();
         setState(() {
@@ -315,13 +314,11 @@ class _LiveState extends State<Live> {
         await Future.delayed(Duration(milliseconds: 100));
       }
     } catch (e) {
-      //connectEnd();
       await channel.shutdown();
       print(e);
     }
 
     print(framenumber);
-    //connectEnd();
     await channel.shutdown();
   }
 

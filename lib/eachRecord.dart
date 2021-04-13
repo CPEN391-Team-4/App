@@ -60,17 +60,6 @@ class _EachRecordState extends State<EachrecordScreen> {
               SizedBox(
                 height: 20,
               ),
-              // TextButton(
-              //   style: ButtonStyle(
-              //       backgroundColor: MaterialStateProperty.all(Colors.grey)),
-              //   child: Text(
-              //     "Get Image",
-              //     style: TextStyle(color: Colors.black),
-              //   ),
-              //   onPressed: (() {
-              //     getRecordImage(image_address);
-              //   }),
-              // ),
               SizedBox(
                 height: 10,
               ),
@@ -110,6 +99,7 @@ class _EachRecordState extends State<EachrecordScreen> {
     await channel.shutdown();
   }
 
+// delete the current records
   Future<Void> deleterecord(image_address) async {
     final ret = await connectStart(20);
     stub = ret[0];
@@ -126,6 +116,7 @@ class _EachRecordState extends State<EachrecordScreen> {
     connectEnd();
   }
 
+// get the record image from the server
   Future<void> getRecordImage(String image_address) async {
     setState(() {
       _image = null;
@@ -157,6 +148,7 @@ class _EachRecordState extends State<EachrecordScreen> {
     connectEnd();
   }
 
+//show the record image in the app page
   Widget setImage(File file) {
     if (imgAsBytes != null) {
       return new Container(

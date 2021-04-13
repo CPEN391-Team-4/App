@@ -41,10 +41,6 @@ class FirebaseNotification {
     );
 
     final iosSpec = IOSNotificationDetails();
-    // final androidSettings = AndroidInitializationSettings('app_icon');
-    // final iosSettings = IOSInitializationSettings(onDidReceiveLocalNotification: (int id,
-    // String title, String body, String payload){});
-    // final settings = InitializationSettings(android: androidSettings, iOS: iosSettings);
 
     final spec = NotificationDetails(android: androidSpec, iOS: iosSpec);
 
@@ -62,8 +58,6 @@ class FirebaseNotification {
           1, message.notification.title, message.notification.body, spec,
           payload: "payload");
     });
-
-    // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     return local_not;
   }

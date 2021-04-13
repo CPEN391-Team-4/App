@@ -24,7 +24,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
   var channel;
   var stub;
   var userName;
-  // var Restricted;
   final usernameText = new TextEditingController();
 
   File _image;
@@ -38,7 +37,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
   String _accessType;
 
   String valuechoose;
-  // List listitem = ["limit access", "free access"];
+
+// get image from the device gallery or take a picture directly from the camera
   Future getImage(int source) async {
     var image = PickedFile("");
     if (source == 1) {
@@ -46,8 +46,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
     } else if (source == 0) {
       image = await picker.getImage(source: ImageSource.camera);
     }
-
-    //final image = await ImagePicker.
+    // update the picture show on the page
     setState(() {
       if (image != null) {
         _image = File(image.path);
@@ -58,6 +57,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
     });
   }
 
+//build the whole add trusted page
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,33 +111,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
               SizedBox(
                 height: 20,
               ),
-              // Center(
-              //   child: DropdownButton(
-              //       hint: Text("Select Items: "),
-              //       focusColor: Colors.green,
-              //       dropdownColor: Colors.grey,
-              //       icon: Icon(Icons.arrow_drop_down),
-              //       iconSize: 30,
-              //       isExpanded: false,
-              //       value: valuechoose,
-              //       items: listitem.map((valueItem) {
-              //         return DropdownMenuItem(
-              //           value: valueItem,
-              //           child: Text(valueItem),
-              //         );
-              //       }).toList(),
-              //       onChanged: (newValue) {
-              //         // add new choice button
-              //         setState(() {
-              //           valuechoose = newValue;
-              //           if (valuechoose == "limit access") {
-              //             Restricted = true;
-              //           } else {
-              //             Restricted = false;
-              //           }
-              //         });
-              //       }),
-              // ),
               SizedBox(
                 height: 20,
               ),
@@ -167,10 +140,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
         ));
   }
 
+//end the gprc connection with server
   Future<void> connectEnd() async {
     await channel.shutdown();
   }
 
+// add a trusted user into the server
   Future<bool> AddTrustPeople(
       File image, String username, Image showimage) async {
     print("Add people");
@@ -201,6 +176,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
     return true;
   }
 
+// generate a stream to send the user image into the server.
   Stream<User> generateReqStream(List imageBytes, int size, int chunksize,
       String username, bool restricted) async* {
     print("Generate Stream.");
@@ -226,23 +202,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
     }
   }
 
-  Widget trustedPeoplePhoto() {
-    return Center(
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-              top: 100,
-              right: 50.0,
-              child: Icon(
-                Icons.camera_alt,
-                color: Colors.black,
-                size: 28,
-              )),
-        ],
-      ),
-    );
-  }
-
+// set the image in the app page
   Widget setImage(File file) {
     if (file == null) {
       return new Container(

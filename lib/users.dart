@@ -1,12 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'addUser.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-import 'package:protobuf/protobuf.dart';
 import 'protobuf/TrustPeople.pb.dart';
 import 'protobuf/TrustPeople.pbgrpc.dart';
-import 'package:grpc/grpc.dart';
 import 'eachTrustedUser.dart';
 import 'connect.dart';
 
@@ -27,6 +22,7 @@ class _UsersState extends State<Users> {
     _updateTrustPeopleList();
   }
 
+// built a user page
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +61,7 @@ class _UsersState extends State<Users> {
     connectEnd();
   }
 
+// built a list of view of the trusted user on the user page
   Widget _buildListView(BuildContext context) {
     return Column(
       children: [
@@ -80,6 +77,7 @@ class _UsersState extends State<Users> {
                     trailing: Icon(Icons.arrow_forward),
                     onTap: () {
                       print("work");
+                      //every trusted user entry will leads to a unique page for each trusted user.
                       Navigator.push(
                           context,
                           MaterialPageRoute(
