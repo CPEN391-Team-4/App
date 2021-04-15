@@ -11,6 +11,8 @@ import 'package:grpc/grpc.dart';
 import 'eachTrustedUser.dart';
 import 'connect.dart';
 
+// Uses the non low energy bluetooth library to
+// interface with the De1 
 class FindDevices extends StatefulWidget {
   @override
   _FindDevicesState createState() => new _FindDevicesState();
@@ -25,6 +27,8 @@ class _FindDevicesState extends State<FindDevices> {
     startBluetooth();
   }
 
+  // Start bluetooth discovery and adds discovered devices to
+  // the device list array
   void startBluetooth() {
     deviceSubscription =
         FlutterBluetoothSerial.instance.startDiscovery().listen((r) {
@@ -38,6 +42,7 @@ class _FindDevicesState extends State<FindDevices> {
     });
   }
 
+  // Refresh the bluetooth status
   void refresh() {
     setState(() {
       devicesList.clear();
@@ -46,12 +51,15 @@ class _FindDevicesState extends State<FindDevices> {
     startBluetooth();
   }
 
+  // When we dispose the app, we need to make sure that
+  // the bluetooth is not still scanning
   @override
   void dispose() {
     deviceSubscription.cancel();
     super.dispose();
   }
 
+  // Widget that shows an alert to the user
   Future<void> _alert(context, string1, string2) async {
     return showDialog<void>(
       context: context,
@@ -79,6 +87,8 @@ class _FindDevicesState extends State<FindDevices> {
     );
   }
 
+  // Widget that shows the devices list wrapped in a container
+  // so that the user is able to connect with the device
   ListView _buildListViewOfDevices() {
     List<Container> containers = new List<Container>();
     for (BluetoothDiscoveryResult device in devicesList) {
@@ -104,6 +114,10 @@ class _FindDevicesState extends State<FindDevices> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
+                      // this function will connect to the De1 using 
+                      // the protocol that we specified, get the 
+                      // device ID and then send it to the server
+                      // to link the user and device ID
                     BluetoothConnection connection =
                         await BluetoothConnection.toAddress(
                             device.device.address);
@@ -144,6 +158,9 @@ class _FindDevicesState extends State<FindDevices> {
     );
   }
 
+  // Makes a GRPC call with the device id to send
+  // it to the backend so that we can link the device id
+  // to the user
   Future<void> _sendIDtoBackend(id) async {
     // Make GRPC call
     print("send de1 id to server");

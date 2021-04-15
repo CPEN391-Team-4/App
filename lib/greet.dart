@@ -7,6 +7,8 @@ import 'home_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
+// This is the page that the user first sees when they open the app
+// From here the user will decide to login or signup
 class Greet extends StatefulWidget {
     @override
     State<StatefulWidget> createState() {
@@ -17,12 +19,14 @@ class Greet extends StatefulWidget {
 class _GreetState extends State<Greet> {
     @override
     void initState() {
+        // initialize firebase messaging
         FirebaseMessaging.onMessageOpenedApp.listen((message) {
             WidgetsFlutterBinding.ensureInitialized();
         });
         checkLogin();
     }
 
+    // check if the user is already logged in
     void checkLogin() async {
         final prefs = await SharedPreferences.getInstance();
         if (prefs.getBool('login') != null && prefs.getBool('login')) {

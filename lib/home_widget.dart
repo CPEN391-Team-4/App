@@ -11,6 +11,10 @@ import 'globals.dart';
 import 'notification.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+// This is the main page of the app where the user
+// is able to navigate to new pages
+// and the pages are shown within
+// this class
 class Home extends StatefulWidget {
     bool notif;
     int selected;
@@ -27,6 +31,10 @@ class _HomeState extends State<Home> {
     _HomeState(this.notif, this.selected);
 
 
+    // We need to initialize firebase messaging here. 
+    // Appropriately ensure that when the user clicks on
+    // a notification they are taken to the live page
+    // so that they can view the front door.
     void init() async {
         final notification = FirebaseNotification();
         FlutterLocalNotificationsPlugin local_not = await notification.init();
@@ -45,26 +53,19 @@ class _HomeState extends State<Home> {
         });
     }
 
+    // When user clicks on the notification they
+    // are redirected to the live page.
     void onNotification() {
         Get.off(Home(false, 0));
         setState(() {
             selected = 0;
         });
-        // Communicate with server here after 
-        // receiving notifications
     }
 
 
     @override
     void initState() {
         init();
-        if (notif == true) {
-            getNotificationImage();
-        }
-    }
-
-    void getNotificationImage() {
-
     }
 
     final List<Widget> _render = [
@@ -74,6 +75,8 @@ class _HomeState extends State<Home> {
         Profile(),
     ];
 
+    // Update the index based on which tab the 
+    // user clicked on
     void onTabTapped(int index) {
         setState(() {
             selected = index;

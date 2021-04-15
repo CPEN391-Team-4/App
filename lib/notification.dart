@@ -15,6 +15,7 @@ import 'protobuf/TrustPeople.pbgrpc.dart';
 import 'package:my_app/protobuf/TrustPeople.pb.dart';
 import 'connect.dart';
 
+// This class does all the firebase messaging work
 class FirebaseNotification {
   Future<void> _firebaseMessagingBackgroundHandler(
       RemoteMessage message) async {
@@ -26,6 +27,7 @@ class FirebaseNotification {
 
   FirebaseNotification();
 
+  // Set up the firebase notification system
   Future<FlutterLocalNotificationsPlugin> init() async {
     await Firebase.initializeApp();
 
@@ -62,6 +64,11 @@ class FirebaseNotification {
     return local_not;
   }
 
+  // Get device ID and send it to server so that we have
+  // a list of device ids and users. This helps us know which 
+  // device to send notifications to for this particular user.
+  // This allows us to support one user having multiple devices
+  // so we can send a notification to all the devices
   Future<void> updateDeviceInfo(String tokenstr, String deviceid) async {
     print("333333");
     final ret = await connectStart(10);
@@ -80,6 +87,7 @@ class FirebaseNotification {
     await channel.shutdown();
   }
 
+  // Get ID of the phone
   Future<String> _getId() async {
     var deviceId = "";
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();

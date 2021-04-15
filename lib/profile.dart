@@ -13,6 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'newBluetooth.dart';
 import 'package:get/get.dart';
 
+// This is the profile page where the user
+// must connect to the De1 device
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => new _ProfileState();
@@ -26,6 +28,8 @@ class _ProfileState extends State<Profile> {
     getDe1ID(username);
   }
 
+  // Gets the ID of the De1 that we have already connected
+  // to which is stored in the backend
   Future<void> getDe1ID(String userName) async {
     final ret = await connectStart(10);
     var stub = ret[0];
@@ -46,20 +50,13 @@ class _ProfileState extends State<Profile> {
     await channel.shutdown();
   }
 
+  // Widget that wraps our connected devices in a container
   Widget _listDevices(width) {
     final children = <Widget>[];
     for (var i = 0; i < devices.length; i++) {
       children.add(
         Row(
           children: <Widget>[
-            // Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-            //   child: RaisedButton(
-            //     child: Text("Disconnect"),
-            //     onPressed: () {},
-            //     color: Colors.red[400],
-            //   ),
-            // ),
             Text(
               devices[i],
               style: TextStyle(
@@ -78,21 +75,10 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  // This is called when connect to a new device is called.
+  // This takes us to the find devices page
+  // which will handle bluetooth discovery and connections
   Future<void> connectToBluetooth() async {
-    // FlutterBlue flutterBlue = FlutterBlue.instance;
-    // Start scanning
-    // flutterBlue.startScan(timeout: Duration(seconds: 4));
-
-    // // Listen to scan results
-    // var subscription = flutterBlue.scanResults.listen((results) {
-    // // do something with scan results
-    // for (ScanResult r in results) {
-    // print('${r.device.name} found! rssi: ${r.rssi}');
-    // }
-    // });
-
-    // // Stop scanning
-    // flutterBlue.stopScan();
     Get.to(FindDevices());
   }
 

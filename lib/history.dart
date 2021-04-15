@@ -165,7 +165,7 @@ class _HistoryState extends State<History> {
     );
   }
 
-// get history records within a certain interval  form the server
+// get history records within a certain interval from the server
   Future<Void> getHistoryRecord() async {
     final ret = await connectStart(15);
     stub = ret[0];

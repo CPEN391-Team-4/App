@@ -30,33 +30,10 @@ class _LiveState extends State<Live> {
 
   var imgAsBytes = null;
 
-  Future getImage() async {
-    setInCall(true);
-    await Future.delayed(Duration(seconds: 2), () {
-      setInCall(false);
-    });
-    setState(() {
-      _imgFile = File(
-          "/data/user/0/com.example.my_app/cache/image_picker224874259728420569.jpg");
-    });
-  }
 
-  Future setInCall(bool val) async {
-    setState(() {
-      _inCall = val;
-    });
-  }
 
-  Widget showInCall() {
-    if (_inCall == true) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else {
-      return Container();
-    }
-  }
-
+  // Widget that sends an alert to the user with content
+  // string1 and string 2
   Future<void> _alert(context, string1, string2) async {
     return showDialog<void>(
       context: context,
@@ -88,6 +65,9 @@ class _LiveState extends State<Live> {
     await channel.shutdown();
   }
 
+  // Function that makes the GRPC call 
+  // to unlock the door when user presses
+  // the unlock button
   Future<Void> normalUnlock() async {
     print("enter normal unlock call");
     final ret = await connectStart(20);
@@ -109,6 +89,9 @@ class _LiveState extends State<Live> {
     connectEnd();
   }
 
+  // Function that makes the GRPC call 
+  // to lock the door when user presses
+  // the lock button
   Future<Void> normalLock() async {
     print("enter normal lock call");
     final ret = await connectStart(500);
@@ -130,6 +113,13 @@ class _LiveState extends State<Live> {
     connectEnd();
   }
 
+  // Function that uses the local auth library
+  // to do a 2 step verification before the user
+  // is able to lock or unlock the door. If the phone
+  // does not have a passcode set up then the user
+  // is still able to lock and unlock the door
+  // but they get an alert that asks them
+  // to set up a passcode for added security
   void _door(context, unlock) async {
     var local_auth = LocalAuthentication();
     bool didAuthenticate = false;
@@ -153,6 +143,7 @@ class _LiveState extends State<Live> {
     return;
   }
 
+  // Widget that displays the lock button
   Widget _lockButton(context) {
     if (_lockInCall == false) {
       return TextButton(
@@ -178,6 +169,7 @@ class _LiveState extends State<Live> {
     }
   }
 
+  // Widget that displays the lock button
   Widget _unLockButton(context) {
     if (_unlockInCall == false) {
       return TextButton(

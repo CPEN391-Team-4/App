@@ -16,6 +16,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     var _pass2 = '';
     bool _inCall = false;
     int _pwdStatus = 0;
+    // Button that interacts with user and shows state of the call
     Widget _changeButton(width, context) {
         if (_inCall == true) {
             return Padding(
@@ -46,6 +47,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         }
     }
 
+    // Alert function
   Future<void> _alert(context, string1, string2) async {
     return showDialog<void>(
       context: context,
@@ -72,6 +74,8 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 
+  // Function called when change button is pressed. 
+  // Checks the passwords and does security checking.
     Future _change(context) async{
         final prefs = await SharedPreferences.getInstance();
         var password = prefs.getString('password');
@@ -109,6 +113,9 @@ class _ChangePasswordState extends State<ChangePassword> {
 
         }
     }
+    // Checks what the status of the change password
+    // request is and accordingly update widgets for 
+    // user feedback
     Widget _auth() {
         if (_pwdStatus == 0) {
             return SizedBox(height: 17);

@@ -35,9 +35,12 @@ class _EachUsersState extends State<EachUserScreen> {
 
   @override
   void initState() {
+      // Automatically get the user image when the page is first built
     getUserImage(userName);
   }
 
+  // Function that gets an image from the camera or photo
+  // gallery when the user wants to update the picture
   Future getImage(int source) async {
     var image = PickedFile("");
     if (source == 1) {
@@ -46,7 +49,6 @@ class _EachUsersState extends State<EachUserScreen> {
       image = await picker.getImage(source: ImageSource.camera);
     }
 
-    //final image = await ImagePicker.
     setState(() {
       if (image != null) {
         _image = File(image.path);
@@ -97,33 +99,6 @@ class _EachUsersState extends State<EachUserScreen> {
               SizedBox(
                 height: 10,
               ),
-              // Center(
-              //   child: DropdownButton(
-              //       hint: Text("Select Items: "),
-              //       focusColor: Colors.green,
-              //       dropdownColor: Colors.grey,
-              //       icon: Icon(Icons.arrow_drop_down),
-              //       iconSize: 30,
-              //       isExpanded: false,
-              //       value: valuechoose,
-              //       items: listitem.map((valueItem) {
-              //         return DropdownMenuItem(
-              //           value: valueItem,
-              //           child: Text(valueItem),
-              //         );
-              //       }).toList(),
-              //       onChanged: (newValue) {
-              //         // add new choice button
-              //         setState(() {
-              //           valuechoose = newValue;
-              //           if (valuechoose == "limit access") {
-              //             Restricted = true;
-              //           } else {
-              //             Restricted = false;
-              //           }
-              //         });
-              //       }),
-              // ),
               TextButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.grey)),
@@ -154,6 +129,8 @@ class _EachUsersState extends State<EachUserScreen> {
     await channel.shutdown();
   }
 
+  // Funtion that makes a GRPC call to remove this user
+  // when the remove button is called.
   Future<bool> RemoveTrustedUser(String username) async {
     print("Remove User");
     final ret = await connectStart(10);
@@ -173,6 +150,8 @@ class _EachUsersState extends State<EachUserScreen> {
     return false;
   }
 
+  // Function called when update button is pressed to update the photo
+  // of the current user
   Future<bool> UpdateUserPhoto(String username, File image) async {
     print("Update user photo");
     print(username);
@@ -195,6 +174,8 @@ class _EachUsersState extends State<EachUserScreen> {
     return true;
   }
 
+  // Creates a stream from the photo in accordance with GRPC streaming
+  // guidlines
   Stream<User> generateReqStream(List imageBytes, int size, int chunksize,
       String username, bool restricted) async* {
     print("Generate Stream.");
@@ -220,6 +201,11 @@ class _EachUsersState extends State<EachUserScreen> {
     }
   }
 
+  // Function that gets the image of the user from the backend by
+  // making a GRPC call. It then stores this image in memory and 
+  // appropriately changes the state of the page so that
+  // this image can be displayed in the app. 
+  // Note: This will clear the image cache.
   Future<File> getUserImage(String username) async {
     setState(() {
       _image = null;
@@ -237,15 +223,10 @@ class _EachUsersState extends State<EachUserScreen> {
         imageBytes.add(returnUser.image);
       }
       print("Created");
-
-      // await File(imgPath).create();
-      // File imgFile = File(imgPath);
-      // imgFile.writeAsBytesSync(imageBytes.toBytes());
-
+      // Clear image cache
       imageCache.clear();
 
       setState(() {
-        // _image = imgFile;
         imgAsBytes = imageBytes.toBytes();
       });
     } catch (e) {
@@ -254,6 +235,8 @@ class _EachUsersState extends State<EachUserScreen> {
     connectEnd();
   }
 
+  // Responsive function that displays an image on the page
+  // based on the state of imgAsBytes and file
   Widget setImage(File file) {
     if (imgAsBytes != null) {
       return new Container(

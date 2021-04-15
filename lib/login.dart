@@ -9,6 +9,7 @@ import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
+// Displays the login page to the user
 class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -25,6 +26,7 @@ class _LoginState extends State<Login> {
   var channel;
   String deviceid;
 
+  // Widget to show the login button
   Widget _loginButton(width, context) {
     if (_inCall == true) {
       return Padding(
@@ -52,6 +54,9 @@ class _LoginState extends State<Login> {
     }
   }
 
+  // When the login button is pressed this function checks
+  // the entered username and password and sets
+  // _loginstatus based on what it has detected
   Widget _auth() {
     if (_loginStatus == 0) {
       return SizedBox(height: 15);
@@ -69,6 +74,7 @@ class _LoginState extends State<Login> {
     }
   }
 
+  // Function called when the login button is pressed
   Future _login(context) async {
     setState(() {
       _inCall = true;

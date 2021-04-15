@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 
 
+// Deprecated intermediate page to help with notificaion
+// navigation. Currently not used in the codebase
+// but left in if future changes require needing an
+// intermediate page
 class Intermediate extends StatefulWidget {
     @override
     State<StatefulWidget> createState() {

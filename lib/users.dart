@@ -41,6 +41,8 @@ class _UsersState extends State<Users> {
     await channel.shutdown();
   }
 
+  // Get the list of users that are trusted for the 
+  // owner of this particular security system
   Future<void> _updateTrustPeopleList() async {
     //print("updatelist");
     final ret = await connectStart(15);

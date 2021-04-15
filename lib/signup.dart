@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
 
+// This is the signup page
 class SignUp extends StatefulWidget {
     @override
     State<StatefulWidget> createState() {

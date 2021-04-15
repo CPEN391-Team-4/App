@@ -14,6 +14,8 @@ class _FindDevicesState extends State<FindDevices> {
 
     @override
     void initState() {
+        // When the page is built we automatically start scanning
+        // for bluetooth devices
         super.initState();
         flutterBlue = FlutterBlue.instance;
         flutterBlue.connectedDevices
@@ -31,6 +33,8 @@ class _FindDevicesState extends State<FindDevices> {
         flutterBlue.startScan();
     }
 
+    // When a device is discovered, we add it to the list
+    // if it is not already there.
     void _addDeviceTolist(final BluetoothDevice device) {
         print(device.id);
         if (device.name != "" && !devicesList.contains(device)) {
@@ -41,6 +45,9 @@ class _FindDevicesState extends State<FindDevices> {
         }
     }
 
+    // Returns a widget with the list of devices in 
+    // a container so that the user is able to see
+    // all the available devices.
     ListView _buildListViewOfDevices() {
         List<Container> containers = new List<Container>();
         for (BluetoothDevice device in devicesList) {

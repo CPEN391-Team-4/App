@@ -7,9 +7,7 @@ import 'package:get/get.dart';
 import 'home_widget.dart';
 import 'dart:math';
 
-
-
-
+// Builds the actual app
 void main() async{
     WidgetsFlutterBinding.ensureInitialized();
     
@@ -57,12 +55,13 @@ class _MyAppState extends State<MyApp> {
                 );
     }
 
+    // Init firebase messaging
     Future<bool> setCheck() async {
         FirebaseMessaging.onMessageOpenedApp.listen((message) async {
             WidgetsFlutterBinding.ensureInitialized();
         });
     }
-  // This widget is the root of your application.
+  // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
       if (check == true) {

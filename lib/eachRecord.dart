@@ -43,6 +43,8 @@ class _EachRecordState extends State<EachrecordScreen> {
 
   @override
   void initState() {
+      // Automatically get the user image when the page
+      // is first built
     getRecordImage(image_address);
   }
 
